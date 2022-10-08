@@ -1,0 +1,59 @@
+---
+title: 'querySelectorAllで取得した要素は配列ではないらしい'
+date: 2020-01-08
+tags: ['javascript', 'web']
+---
+
+## 流れ
+
+同じクラス名のやつとってきてループ処理したい!
+
+```javascript
+const dom = document.querySelectorAll("クラス名");
+dom.map((x) => {
+  // 処理
+});
+```
+
+そしたら返ってくるのは `Uncaught TypeError: dom.map is not a function` という..
+
+## 原因
+
+実行しようとしているのは `Array.prototype.map()` という関数.\
+エラーとして `dom.map is not a function` と返ってくるということは dom は配列ではないということ..\
+試しにデバッガで `console.log(dom)`とすると `NodeList` というオブジェクトであることがわかった.\
+ドキュメントには map は見当たらないのでエラーがでていることがわかった.
+
+## 解決方法
+
+`forEach()` もしくは `Array.from()` を使うことで解決できる.\
+`forEach()` を使う場合は
+
+```javascript
+dom.forEach((x) => {
+  // 処理
+});
+```
+
+`Array.from()` を使う場合は
+
+```javascript
+Array.from(document.querySelectorAll("クラス名"), (x) => {
+  // 処理
+});
+```
+
+と書くことができる.\
+`Array.from()`の第一引数は `arrayLike` なものを渡せる.\
+そして第二引数に `mapFn` を渡せるので最初にやりたかった `Array.map()` の処理を実現することができる.
+
+**個人的には `Array.from()` の方が好き♡**
+
+> Array.prototype.map() [MDN]\
+> https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+> NodeList [MDN]\
+> https://developer.mozilla.org/ja/docs/Web/API/NodeList
+
+> Array.from() [MDN]\
+> https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/from

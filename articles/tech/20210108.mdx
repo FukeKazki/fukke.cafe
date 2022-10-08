@@ -1,0 +1,135 @@
+---
+title: 'useReducerでAPIアクセス'
+date: 2021-01-07
+tags: ['react']
+---
+
+## useReducerの使い所
+
+> **ja.reactjs.org** :
+> 複数の値にまたがる複雑なstateロジックがある場合や、前のstateに基づいて次のstateを決める必要がある場合。
+
+APIアクセス結果には、アクセス結果やアクセス状態、エラーの有無など複数の状態があります。
+
+useStateを使って実現しようとすると、
+
+```js
+const [result, setResult] = useState({});
+const [error, setError] = useState("");
+const [status, setStatus] = useState("idle");
+```
+
+のように複数のuseStateが必要になりますが、useRedeucerを使うとまとめて管理できるようになります。
+
+今回はAtCoderのコンテストAPIにリクエストを送ります。
+
+```typescript
+// コンテスト情報の型
+interface Contest {
+  id: string;
+  title: string;
+  rate_change: string;
+  duration_second: number;
+  start_epoch_second: number;
+}
+
+// リクエスト状態
+type Status = "idle" | "loading" | "failed" | "success";
+
+// 管理するState
+type State = {
+  contests: Contest[];
+  error: null | string;
+  status: Status;
+};
+
+// アクションの定義
+type Action = {
+  type: "FETCH_CONTEST";
+} | {
+  type: "FETCH_CONTEST_SUCCESS";
+  contests: Contest[];
+} | {
+  type: "FETCH_CONTEST_FAILED";
+  error: string;
+};
+
+// reducerの作成
+const reducer: Reducer<State, Action> = (state, action) => {
+  switch (action.type) {
+    case "FETCH_CONTEST":
+      return {
+        ...state,
+        contests: [],
+        status: "loading",
+        error: null,
+      };
+    case "FETCH_CONTEST_SUCCESS":
+      return {
+        ...state,
+        contests: action.contests,
+        status: "success",
+        error: null,
+      };
+    case "FETCH_CONTEST_FAILED":
+      return {
+        ...state,
+        contests: [],
+        status: "failed",
+        error: action.error,
+      };
+    default:
+      throw new Error();
+  }
+};
+
+const IndexPage = () => {
+  // stateとdispatchメソッド、第2引数は初期値
+  const [state, dispatch] = useReducer(reducer, {
+    contests: [],
+    error: null,
+    status: "idle",
+  });
+
+  useEffect(() => {
+    // idle状態のときにFETCHを開始
+    if (state.status === "idle") {
+      dispatch({ type: "FETCH_CONTEST" });
+      fetch("https://kenkoooo.com/atcoder/resources/contests.json")
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then((res) => {
+          // 成功した場合
+          dispatch({
+            type: "FETCH_CONTEST_SUCCESS",
+            contests: res,
+          });
+        })
+        .catch((err) => {
+          // 失敗した場合
+          dispatch({
+            type: "FETCH_CONTEST_FAILED",
+            error: err,
+          });
+        });
+    }
+  }, []);
+
+  return (
+    <>
+      // このようにstatusによって簡単に表示を分けることが可能
+      {state.status === "loading" && <p>Loading...</p>}
+      {state.status === "success" && <p>{state.contests}</p>}
+      {state.status === "failed" && <p>{state.error}</p>}
+    </>
+  );
+};
+```
+
+useStateをつかうよりも状態管理が簡単になりました。
+
+状態管理にflagや条件分岐が増えたときはuseReducerをつかうと良いかもしれません。

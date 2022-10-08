@@ -1,0 +1,94 @@
+---
+title: 'DjangoでGraphQLサーバーの作成'
+date: 2022-07-24
+tags: []
+---
+
+Web+DB PRESS vol.123で勉強した内容です。
+
+# がんばってDjangoのプロジェクトを作成
+
+```bash
+# 仮想環境の作成
+python3 -m venv venv
+# djangoの導入
+pip install django
+# graphql関連パッケージの導入
+# バージョン合わなかったら壊れるので気をつける！！
+pip install "graphene>=2.0" "graphene-django>=2.0"
+# プロジェクトの作成
+django-admin startproject bookstore
+cd bookstore
+# アプリケーションの作成
+python manage.py startapp books
+```
+
+#### pip使い方
+
+pipはパッケージ同士のバージョン管理が弱いのであまり使いたくない。
+
+```bash
+# 導入したパッケージ
+pip freeze
+# パッケージのインストール
+pip install package
+# パッケージのアップデート
+pip install -U package
+# バージョンが合ってるか確認
+pip check
+```
+
+#### djangoの使い方
+
+`manage.py`を経由して操作する。
+
+```bash
+# サーバーの起動
+python manage.py runserver
+# マイグレーションの作成と実行
+python manage.py makemigrations
+python manage.py migrate
+# シェルに入る、sqliteのデータ追加など
+python manage.py shell
+```
+
+`settings.py`にプロジェクトの設定がある。
+
+# モデルの作成
+
+`books/model.py`等にアプリケーションのモデルを実装する。
+
+# スキーマの作成
+
+アプリケーションごとにスキーマを定義しプロジェクトレベルにまとめて`Graphene`に渡す。
+
+モデルから型を自動生成ために`Graphene-Django`を使用する。
+
+# クエリの実装
+
+GraphQL APIを実装するときは入出料の型とAPI処理を分けて実装する。
+
+# GraphQLのメモ
+
+Graphene-Djangoで`GraphQLView`というGraphiQL(グラフィカル)を扱える。
+
+```graphql
+# クエリの例
+{
+  books {
+    title
+  }
+}
+
+# ミューテーションの例
+mutation newBook($myNewBook: NewBookInput!) {
+  registerBook(book: $myNewBook) {
+    id
+    title
+    authors {
+      firstName
+      lastName
+    }
+  }
+}
+```

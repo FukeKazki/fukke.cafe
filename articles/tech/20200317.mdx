@@ -1,0 +1,170 @@
+---
+title: 'Kaggle 住宅価格予測 単回帰分析してみる'
+date: 2020-03-17
+tags: ['機械学習']
+---
+
+## はじめに
+
+単回帰分析のお勉強がてら, Kaggleのチュートリアル House Prices をやっていきます.
+
+> House Prices\
+> https://www.kaggle.com/c/house-prices-advanced-regression-techniques
+
+## コンペ内容
+
+### 導入
+
+住宅購入者に地下の天井の高さとかから説明しないよね？\
+だけど, このデータセットを使えば寝室の数とかフェンスのあるなしよりも価格交渉にはるかに影響を与えていることがわかるよ.(要翻訳
+
+### 目標
+
+エイムズというアイオワ州にある都市の住宅のデータが与えられる.\
+それらを利用して各住宅の最終価格を予測する.
+
+## やってみる
+
+### ライブラリのインポート
+
+### 入っているデータ内容の確認
+
+```python
+# データの読み込み
+train = pd.read_csv('train.csv')
+test = pd.read_csv('test.csv')
+
+# データの内容の確認
+print(train.columns)
+```
+
+!['データの内容'](https://i.gyazo.com/42d4cc475318a7459d2633e9ce2868cb.png)
+
+いっぱいありますね。。(79種類あるみたい\
+サイトのデータタブには各データの説明が書かれています.\
+ここから気になるデータを一つ選んで単回帰してみたいと思います.
+
+予測するのは SalePrice なので一番それに関係ありそうなデータを選んでみます.\
+ザーッと見た感じ OverallQualが一番関係ありそうですね..
+
+> OverallQual：全体的な素材と仕上げの品質(google翻訳)
+
+この値で単回帰してみます.
+
+### データの分析
+
+とりあえず, OverallQual と SalePrice のデータを取り出します.
+
+```python
+OverallQual = train['OverallQual']
+SalePrice = train['SalePrice']
+
+print(OverallQual)
+print(SalePrice)
+
+print(type(OverallQual))
+print(type(SalePrice))
+```
+
+!['タイトル'](https://i.gyazo.com/e4ed77d9eb3441ad755842042832f7d3.png)
+
+DataFrame型のtrainからそれぞれ一列取り出したのでSeries型になっています.
+
+２つの値の相関行列を見てみましょう.
+
+相関行列はDataFrame型じゃないと見れないので２つの値をくっつけてDataFrame型にします.
+
+```python
+df = pd.concat([OverallQual, SalePrice], axis=1)
+print(df)
+```
+
+!['タイトル'](https://i.gyazo.com/40bbf637e932fa53f673b8b1c3922091.png)\
+concatメソッドを使うとSeries型をくっつけてDataFrame型にしてくれます.\
+axis=1は横方向につなげるための引数です.
+
+```python
+print(df.corr())
+```
+
+!['タイトル'](https://i.gyazo.com/829f1bd4f4c2280c1c116ac9fe01e5af.png)
+
+相関係数は0.79ぐらいですね.\
+正の相関が強いみたいです.
+
+### 単回帰分析
+
+sklearnのLinearRegressionモデルを使って単回帰分析します.
+
+> LinearRegression\
+> https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+
+```python
+X = train[['OverallQual']].values
+y = train['SalePrice'].values
+reg = LinearRegression()
+reg.fit(X, y)
+```
+
+X が `[[]]` になっているのはLinearRegressionの引数の形に合わせるためです.
+
+LinearRegressionインスタンスを生成し, fitメソッドで学習させます.
+
+```python
+# 散布図の表示
+plt.scatter(X, y)
+# 予測した結果を追加
+plt.plot(X, reg.predict(X), color='red')
+# グラフの表示
+plt.show()
+```
+
+!['タイトル'](https://i.gyazo.com/b85759c3c16b7935fd45326502f77968.png)
+
+matplotlibを使って学習結果を確認します.\
+scatterメソッドでデータの散布図を表示しています.\
+plotメソッドでは LinearRegressionのpredictメソッドで予測させ, その結果を表示しています.
+
+```python
+reg.score(X, y)
+```
+
+!['タイトル'](https://i.gyazo.com/910f336a821edb41308325074a19da8a.png)
+
+scoreメソッドで決定係数を確認できます.\
+決定係数はデータに対して予測された回帰式の当てはまりの度合いを表し, 0~1の値です.\
+1に近いほどデータに当てはまっているということです.\
+今回は 0.625 でした.
+
+```python
+X_test = test[['OverallQual']].values
+y_pred = reg.predict(X_test)
+print(y_pred)
+```
+
+!['タイトル'](https://i.gyazo.com/e0db904ed98c051c1af2804c42e845bb.png)
+
+testデータの OverallQual を使って SalePrice を予測します.\
+predictメソッドで予測し y_pred には予測結果が入っています.
+
+```python
+test['SalePrice'] = y_pred
+test[['Id','SalePrice']].to_csv('submission.csv',index=False)
+```
+
+最後に予測結果をtestデータに挿入して, IdとSalePriceだけを取り出しcsvファイルにします.
+
+!['タイトル'](https://i.gyazo.com/c71a4efac6ae21ba7932db55bb6706bb.png)
+
+そして提出！\
+scoreは1.16083でした.\
+順位は大体4600位ぐらいですね.\
+このコンテストはscoreは小さいほうが良いです.\
+1位は0.00000..?? って感じですね。。
+
+## 終わりに
+
+一つの説明変数だけを使う単回帰分析をやってみました.\
+簡単にするためにかなり雑な解析ですが, 全体的な流れはつかめたと思います.\
+特にデータの型をあわせたり引数の形に合わせるように変形したりするので僕は最初つまづいたので, そこらへんを重点的に説明しました.\
+次は重回帰分析などをやってみたいと思います.

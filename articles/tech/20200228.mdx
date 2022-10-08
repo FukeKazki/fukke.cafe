@@ -1,0 +1,67 @@
+---
+title: 'Heroku PostgreSQL の使い方'
+date: 2020-02-28
+tags: ['DataBase']
+---
+
+## 意図
+
+ハッカソンなどの簡単なプロダクトでは無料で使用できる Heroku PostgreSQL をよく使うので、記事にします.
+
+## 接続
+
+Heroku CLI のコマンドをターミナルで打つと接続できます.
+
+```bash
+$ heroku pg:psql ****** --app appname
+```
+
+## コマンド
+
+接続したら最初にタイムゾーンの設定を行います.\
+変更したら再接続を行います.
+
+```sql
+alter database database_name set timezone = 'Asia/Tokyo';
+```
+
+現在時刻の確認
+
+```sql
+select current_timestamp;
+```
+
+PostgreSQLのバージョンの確認
+
+> ローカルにインストールされているpostgreSQLとバージョンが違う場合、コマンドでエラーがでる場合がある.
+
+```sql
+select version();
+```
+
+テーブルの作成
+
+```sql
+CREATE TABLE table_name (
+    id SERIAL NOT NULL,
+    user_id VARCHAR(225) NOT NULL,
+    created_at TIMESTAMP,
+    PRIMARY KEY (id)
+);
+```
+
+テーブルのデータの削除
+
+```sql
+DELETE FROM table_name WHERE price = 10;
+```
+
+テーブル一覧・定義
+
+```bash
+$ \dt
+$ \d table_name
+```
+
+> PostgreSQLの基本的なコマンド [Qiita]\
+> https://qiita.com/H-A-L/items/fe8cb0e0ee0041ff3ceb

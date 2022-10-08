@@ -1,0 +1,79 @@
+---
+title: 'Next.js GitPressのRSSを取得して自分のサイトに表示する'
+date: 2020-04-28
+tags: ['next.js', 'react', 'javascript', 'web']
+---
+
+## はじめに
+
+Next.jsのアップデートでSSG(Server Side Generate)が追加され,
+ポートフォリオサイトをNext.jsで書き換える機運が高まっております。\
+ポートフォリオにはブログ情報を載せたいですし,
+GitPressがRSSを配信してくれていて自分の記事情報を取得してサイトに表示ができますのでその実装していきます.\
+Next.jsかどうかはあまり関係ないですね. Node.jsのコードになります.\
+TypeScriptですが。。 (Node.ts?
+
+取得できるXMLは以下です.\
+!['タイトル'](https://i.gyazo.com/038ac7d19f26f44379bb311ca6caefdb.png)
+
+## コード
+
+```typescript
+import fetch from "isomorphic-unfetch";
+import XMLParser from "xml2js";
+
+const GitPressAtomURL =
+  "https://gitpress.io/static/6495a013a74997b89b08be0a51c8eb77bf6652eb934985f92035eb8b75b813d7/atom.xml";
+
+const fetchGitPressXML = async (): Promise<string | null> => {
+  try {
+    const response = await fetch(GitPressAtomURL);
+    const xml = await response.text();
+
+    return xml;
+  } catch (err) {
+    console.error("GitPress fetch Error", err);
+
+    return null;
+  }
+};
+
+export const getGitPressArticles = async (): Promise<object[]> => {
+  const xml = await fetchGitPressXML();
+  const parsed_xml = await XMLParser.parseStringPromise(xml).catch(null);
+  const articles = parsed_xml.feed.entry.map((article) => {
+    // article contained {title, summary, id, link, updated}
+    return {
+      title: article.title.toString(),
+      link: article.id.toString(),
+      updated: article.updated.toString(),
+    };
+  });
+
+  return articles;
+};
+```
+
+!['タイトル'](https://i.gyazo.com/a89572795f25ba3df45f7eab640f6824.png)
+
+## 解説
+
+Next.jsでのデータ取得は`isomorphic-unfetch`を使うのが良いみたいです.\
+取得したxmlは`xml2js`を使用してパースします.
+
+まず、`fetchGitPressArticle`関数でXMLをデータを取得します.\
+`await`を使って`Promise`が解決するまで待ちます.\
+`async-await`構文を使うときは`try-catch`で囲むようにしています. Promiseでrejectしたときに異常終了しないように。。\
+いつも考えるんだけど, catchしたときのreturnって何返したらいいんですかね..\
+null ? 空文字列 ? いい記事ないかな〜..
+
+次に`getGitPressArticles`関数でXMLから欲しい記事情報を取得します.\
+`xml2js`のパーサーを使ってパースしてから, `map`でいい感じに加工します. パースのところは`try-catch`ではなく,
+`await-catch`を使っています.\
+1つの`await`だけだったら`await-catch`構文を使った方がきれいきれいになるきがしてます.
+
+## 終わりに
+
+Next.jsのSSGめっちゃやばくない？になってます.\
+SSGとSSRをうまく使い分ければ最強のサイトになるじゃん！って感じですね(\
+JAMStackに興味が沸いたので今後も追っかけたいと思います.

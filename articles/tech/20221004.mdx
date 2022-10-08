@@ -1,0 +1,17 @@
+---
+title: 'imagemagickのメモ'
+date: 2022-10-04
+tags: []
+---
+
+# Document
+
+公式ドキュメントはこちら。 https://imagemagick.org/script/command-line-options.php
+
+# gif画像を展開する
+
+- `convert -coalesce input.gif output%02d.jpg`
+
+# 連番画像をgif画像にする
+
+- `convert -loop 0 -delay 20 output*.jpg output.gif`

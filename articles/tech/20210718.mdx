@@ -1,0 +1,91 @@
+---
+title: '個人的実装されてほしいECMA Script Proposal'
+date: 2021-07-18
+tags: []
+---
+
+先日の #tc39_study で知った多くのプロポーサルの中から個人的に実装されると嬉しい提案を書き留めておきます。
+
+## do expression
+
+doブロック内で計算した値を返すことができる
+
+```javascript
+const res = do {
+    // この中の計算結果を返す
+}
+```
+
+## decimal
+
+jsの苦手な浮動小数点の演算がいい感じに
+
+```javascript
+let total = 0m
+const items = [{price: 1.25m, count: 5}, {price: 5m, count: 1}]
+const tax = .0735m
+
+for (let {price, count} of items) {
+    total += price * BigDecimal(count)
+}
+
+console.log(total * (1m + tax))
+```
+
+## temporal
+
+jsの一番嫌いなところ。Dateオブジェクトの欠点を克服する新たなAPI
+
+## URL
+
+ブラウザに導入されているURLオブジェクトをECMAScriptにも導入しようってやつ。
+
+## change array by copy
+
+Array.prototypeから生えているメソッドのいくつかは破壊的変更を行う。
+
+これをコピーした配列を返すようにしようってやつ。
+
+## JavaScript standard library UUID
+
+標準ライブラリとしてRFC4122に基づいたUUIDを提供する提案
+
+```javascript
+const uuid = randomUUID();
+```
+
+## pipeline operator
+
+piplineきたーっ
+
+```javascript
+let person = { score: 25 };
+
+let newScore = person.score
+  |> double
+  |> (_ => add(7, _))
+  |> (_ => boundScore(0, 100, _));
+```
+
+## slice notation
+
+pythonでおなじみ構文。配列の一部の取得をわかりやすく。
+
+```javascript
+const arr = ['a', 'b', 'c', 'd'];
+
+arr[1:3];
+// → ['b', 'c']
+```
+
+## string dedent
+
+de + indentでdedent。ヒアドキュメントのインデントをいいかんじにしてくれる。
+
+````javascript
+console.log(```
+	query QueryName {
+		handleName
+	}
+​```);
+````

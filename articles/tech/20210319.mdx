@@ -1,0 +1,63 @@
+---
+title: コンポーネントを作るときに気をつけてる2つのこと
+date: 2021-03-19
+tags: ['nextjs', 'typescript', 'javascript', 'react']
+
+---
+
+当たり前のことすぎて誰も教えてくれなかった。
+
+## コンポーネントを作るときに気をつけてる2つのこと
+
+1. 親コンポーネントからstyleを当てれるようにする
+
+2. コンポーネント自体に`width, height`や`margin`を指定しない
+
+1についてはpropsにclassNameを追加することで実装できます。
+
+スタイリングにはtailwindcssを使っています。実装例を見てみましょう。
+
+```typescript
+type Props = {
+    // classNameを受け取る
+    className?: string
+}
+
+const Component: React.FC<Props> = ({ className }) => {
+    return (
+        {/*配列にしてjoinで繋げることで親からのclassNameを適用*/}
+    	<div className={['border rounded-2xl', className].join(' ')}>...</div>
+    )
+}
+```
+
+2についてはそのままなのですが、コンポーネント自体に例えば `margin-top: 1rem`とつけたとき、
+
+もし他の場所では`margin-top: 2rem`にしたいってなると融通がききませんね。
+
+なのでmargin等の指定は親コンポーネントですることで呼び出し元から制御できます。
+
+で、そのためには1が必要ってわけですね。
+
+1で実装したComponentを呼び出す例を見てみましょう。
+
+```typescript
+const Page = () => {
+  return (
+    <>
+      {/*親からclassNameを追加できる*/}
+      <Component className="mt-2" />
+      {/*widthも親から指定しましょう*/}
+      <Component className="w-1/2" />
+    </>
+  );
+};
+```
+
+簡単なことですがこれら2つを気をつけるだけで、再利用可能なコンポーネントを作ることができます。
+
+でわ。
+
+> [!NOTE] 親コンポーネントからstyleを当てれるようにする
+
+> [!NOTE] コンポーネント自体に`width, height`や`margin`を指定しない

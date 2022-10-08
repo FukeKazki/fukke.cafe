@@ -1,0 +1,58 @@
+---
+title: 'Gatsbyでよく使うプラグイン'
+date: 2022-05-26
+tags: ['gatsby']
+---
+
+# plugins
+
+## gatsby-plugin-image
+
+画像を最適化するためのプラグイン。
+
+#### 依存関係
+
+- gatsby-plugin-sharp
+- gatsby-transformer-sharp
+- gatsby-source-filesystem
+
+## gatsby-background-image
+
+`gatsby-plugin-image`を背景画像でも扱うプラグイン。
+
+#### 依存関係
+
+- gatsby-plugin-sharp
+
+## gatsby-plugin-react-helmet
+
+`react-helmet`をgatsbyで扱うプラグイン。 meta関連の設定をする。
+
+#### 依存関係
+
+- react-helmet
+- @types/react-helmet
+
+## gatsby-plugin-typegen
+
+GraphQLのクエリから型を自動生成するプラグイン。 `gatsby v4.15`からは公式でサポートしているため入れる必要はない(未検証)。
+
+## gatsby-plugin-manifest
+
+faviconを設定するためのプラグイン。 PWAの設定もする。
+
+#### 依存関係
+
+- gatsby-plugin-offline
+
+## gatsby-plugin-emotion
+
+`emotion`をgatsbyで扱うためのプラグイン。
+
+#### 依存関係
+
+- @emotion/react
+
+## gatsby-plugin-alias-imports
+
+ビルド時にパスエイリアスを解決するためのプラグイン。

@@ -1,0 +1,16 @@
+---
+title: 'JavaScriptのprototypeを使う'
+date: 2022-08-25
+tags: ['JavaScript']
+---
+
+```js
+String.prototype.equals = function (s) {
+  return this.toString() === s;
+};
+
+"hello".equals("world"); // false
+"hello".equals("hello"); // true
+```
+
+prototypeを使えばオブジェクトを拡張できる。

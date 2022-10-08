@@ -1,0 +1,35 @@
+---
+title: 'Core Web Vitals'
+date: 2022-06-01
+tags: []
+---
+
+## LCP (Largest Contentful Paint)
+
+ビューポート内で最大のコンテンツが画面にレンダリングされるタイミングを測定している。
+
+| time(ms) | score             |
+| -------- | ----------------- |
+| 0 ~ 2.5  | Green (fast)      |
+| 2.5 ~ 4  | Orange (moderate) |
+| Over 4   | Red (slow)        |
+
+![](https://web-dev.imgix.net/image/tcFciHGuF3MxnTr1y5ue01OGLBn2/elqsdYqQEefWJbUM2qMO.svg)
+
+### LCPで測定される要素
+
+- img
+- svg内のimage
+- video
+- url()で読み込まれる画像
+- ブロックレベルの要素 (display: block)
+
+> https://web.dev/lighthouse-largest-contentful-paint/
+> https://web.dev/lcp/#how-to-improve-largest-contentful-paint-on-your-site
+
+## LCPの改善
+
+- サーバーの応答時間が遅い
+- レンダリングを妨げるJavaScript及びCSS
+- リソースの読み込み時間
+- クライアント側のレンダリング

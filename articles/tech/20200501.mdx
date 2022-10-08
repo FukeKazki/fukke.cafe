@@ -1,0 +1,37 @@
+---
+title: 'Node.js アスキーアートで遊ぶ'
+date: 2020-05-01
+tags: ['node.js', 'javascript']
+---
+
+## はじめに
+
+ときにはなんの意味のないことしたくなるよね。\
+ただAAを表示させるだけですよ
+
+> figlet(GitHub)\
+> https://github.com/patorjk/figlet.js#readme
+
+## 実装
+
+```bash
+$ yarn add figlet
+$ yarn add -D @types/figlet
+```
+
+```typescript
+import { figlet } from "figlet";
+
+const result = figlet.textSync(`I'm Fukke!!`, { horizontalLayout: "fitted" });
+console.log(result);
+```
+
+!['タイトル'](https://i.gyazo.com/cb6a924510145da60ab4878327e959f5.png)
+
+第一引数が表示させる文で第二引数がオプションです.\
+オプションはフォントと縦横のレイアウトをいじれるみたいです.\
+詳しくは型定義ファイルへ。。
+
+## おわりに
+
+全部の関数、値を返して欲しいマンなのでtextSyncを使うんだ。

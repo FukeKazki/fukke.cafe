@@ -1,0 +1,104 @@
+---
+title: '推しのブログをスクレイピング'
+date: 2020-04-09
+tags: ['node.js']
+---
+
+## はじめに
+
+ブログとかみてるとスクレイピングしたくなりますね(なりません).\
+なので今回は推しのブログをスクレイピングします.
+
+> 推しのブログ (乃木坂46) http://blog.nogizaka46.com/momoko.oozono/?p=1
+
+これ->\
+!['タイトル'](https://i.gyazo.com/67ab3b94da74e8951955afd3db85d3c7.jpg)
+
+最初にソースコードの確認をします.\
+!['タイトル'](https://i.gyazo.com/37ab51e0a8a0f08758ed55c595365cd2.png)
+優しいソースコードですね..\
+entrybodyってクラスのところにあるみたいです.\
+ただ, 推しが空白文字や改行を多用するのでそこらへんの処理が必要そうです.
+
+## コード
+
+```typescript
+import axios from "axios";
+import cheerio from "cheerio";
+import * as fs from "fs";
+
+const scraping = async (i: number): Promise<string> => {
+  try {
+    const response = await axios.get(
+      "http://blog.nogizaka46.com/momoko.oozono/",
+      {
+        params: {
+          p: i,
+        },
+      },
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return "";
+  }
+};
+
+const analysis = (result: string) => {
+  const $ = cheerio.load(result);
+  console.log($("title").text());
+
+  const body: string[] = [];
+  $(".entrybody").map((i, element) => {
+    body.push($(element).text().replace(/[\r\n\t\s]/g, ""));
+  });
+  return body;
+};
+
+export const main = async () => {
+  const news = [];
+  for (let i = 1; i <= 6; ++i) {
+    const result = await scraping(i);
+    const tmp = analysis(result);
+    news.push(tmp);
+  }
+  const article = news
+    .flat()
+    .reduce((prev, current) => prev + current + "\n", "");
+  fs.writeFile("article.txt", article, (err) => {
+    if (err) console.log(err);
+    else console.log("write success");
+  });
+};
+
+// メインの実行
+(async () => {
+  await main();
+})();
+```
+
+## 解説
+
+コードの流れはいつもと同じです.\
+fsモジュールを使って結果をtxtファイルに書き出すようにしました.
+
+先ほど言っていた改行や空白文字は正規表現を使って削除します.\
+感覚で書いても動かなかったのでちゃんとお勉強しました..\
+\r, \t, \n、\s が改行とか空白で[]で1文字でも一致したら~です.
+
+> JavaScript 正規表現まとめ (Qiita) https://qiita.com/iLLviA/items/b6bf680cd2408edd050f
+
+getリクエスト部分は?p=6まで存在したのでループで回してます.
+
+flatとreduceしてるところは, 配列に配列をpushしていくのでネストが一段階深くなってしまうのを戻してから 全ての文字を結合してひとつにする感じです.
+
+だって、ブログなのに配列じゃやだじゃん.. (これは偽でflatとかreduce使いたかっただけ)\
+ちなみにflatメソッドはtsconfigを少しいじらないと使えないみたいです.
+
+## 実行結果
+
+!['タイトル'](https://i.gyazo.com/1af3ec67d9d655f940853fbc6225a58e.jpg)
+
+## おわりに
+
+いやぁ、流石にきもいね(

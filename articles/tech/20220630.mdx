@@ -1,0 +1,125 @@
+---
+title: 'HTTP通信まとめ'
+date: 2022-06-30
+tags: []
+---
+
+# HTTP/1.1
+
+- TCP
+- TLS
+
+```text
+GET / HTTP/1.1              ←リクエストライン
+Host: example.com           ↓リクエストヘッダ
+User-Agent: curl/7.68.0
+Accept: */*
+
+                            ↓コンテンツ
+```
+
+```text
+HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Age: 234274
+Cache-Control: max-age=604800
+Content-Type: text/html; charset=UTF-8
+
+コンテンツデータ
+```
+
+#### 問題点
+
+1回の接続で連続してリクエストを送信するKeep-Alive機能があった。しかしリクエストがきた順番にレスポンスを返す必要があった。
+そのためHead-of-Line-Blockingという通信待ち状態が発生した。
+
+# HTTP/2
+
+- Binary
+- HPACK
+- TCP
+- TLS
+- Server PUSH
+
+バイナリベースのプロトコルに変更された。 フレームという単位でデータを送受信する。
+
+1つのTCPコネクションの中にストリームという仮想TCPソケットを作成して並列にフレームの送受信がされる。
+
+フレームは用途ごとに10タイプ定義されている。
+
+受信側のバッファがあふれないようにするためのウィンドウ制御。
+
+HPACKでヘッダ圧縮する。
+
+サーバープッシュ。優先度制御。エラーハンドリング。
+
+リクエストラインはなく疑似ヘッダで表される。
+
+```text
+:method: GET
+:authority: example.com
+:scheme: https
+:path: /
+sec-ch-ua: "Chromiium";v="92";
+```
+
+#### 問題点
+
+下位層でTCPを使ってるためパケットロスが発生した場合は送り直す必要があった。
+パケットロスが解決するまでは処理待ちになっていた。(Head-of-Line-Blocking)
+
+# HTTP/3
+
+- QPACK
+- UDP(QUIC)
+- TLS/1.3
+- Server PUSH
+
+QUICというUDPを用いたプロトコル上で動作する。 QUICはトランスポート層の話。
+
+優先度制御。サーバープッシュ。
+
+HPACKの代わりにQPACKでヘッダ圧縮する。
+
+```text
+:method = GET
+:scheme = https
+:path = /resource
+:authority = example.org
+accept = image/jpeg
+```
+
+```text
+:status = 200
+Age: 234274
+Cache-Control = max-age=604800
+Content-Type = text/html; charset=UTF-8
+```
+
+# QPACK
+
+ハフマン符号と辞書データを組み合わせてデータ量の削減する。
+
+- 静的テーブル
+
+| インデックス | フィールド名     | フィールド値 |
+| ------ | ---------- | ------ |
+| 0      | :authority |        |
+
+- 動的テーブル
+
+## QUIC
+
+コネクションの識別にコネクションIDを用いるためTCPと違いIPアドレスやポート番号が変わっても通信継続できる。
+パケットにパケット番号を付与しているためパケットロスが発生しても必要なものだけ再送できる。 TCPと同様にAckを実装している。
+内部的にTLSを使用することで制御情報も暗号化される。 TCPがOSで処理されるのに対しQUICはブラウザなどのアプリケーションで処理される。
+接続の確立時にはロングヘッダパケット、確立後はショートヘッダパケットが使用される。
+
+# メモ
+
+```text
+アプリケーション層(HTTP, HTTP/3, SMTP) データやメッセージの通信ルール
+トランスポート層(TCP, UDP, QUIC) アプリケーション層で規定されたデータやメッセージを相手に届ける通信ルール
+インターネット層(IP) パケットをインターネット上で中継させて適切な相手に届けるための通信ルール
+ネットワークインターフェース層(MAC) 隣接するマシン同士がやりとりするための通信ルール
+```

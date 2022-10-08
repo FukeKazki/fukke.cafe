@@ -1,0 +1,125 @@
+---
+title: '路線情報のスクレイピングをDenoで'
+date: 2020-05-30
+tags: ['Deno']
+---
+
+## 前からやりたかったやつ
+
+LINEでよく親に「〇〇分〇〇駅発」って送るけど、毎回何時につくか確認するのめんどくさいし、LINEBOTで自動化したいねって思って
+今回はそれのデータ取得部分を試しに実装してみます。\
+Denoにしたのは使いたかっただけです。
+
+具体的には !['タイトル'](https://i.gyazo.com/868acb0c4b429561bc36d2dcdb13f000.png)
+この上の表を取得します。
+
+処理の流れとしては
+
+1. 今の時刻を取得
+2. yahoo路線情報からデータを取得
+3. パースして時刻情報を取得\
+   って感じです。
+
+ライブラリはcheerioとmomentを使います。
+
+> yahoo 路線情報\
+> https://transit.yahoo.co.jp
+
+## コード
+
+```typescript
+import cheerio from "https://dev.jspm.io/cheerio@0.22.0";
+import { moment } from "https://deno.land/x/moment/moment.ts";
+
+interface url_parameter {
+  from: string;
+  to: string;
+  y: string;
+  m: string;
+  d: string;
+  hh: string;
+  m2: string;
+  m1: string;
+}
+
+const setUrl = ({ from, to, y, m, d, hh, m2, m1 }: url_parameter): string => {
+  return encodeURI(
+    `https://transit.yahoo.co.jp/search/result?flatlon=&fromgid=&from=${from}&tlatlon=&togid=&to=${to}&viacode=&via=&viacode=&via=&viacode=&via=&y=${y}&m=${m}&d=${d}&hh=${hh}&m2=${m2}&m1=${m1}&type=1&ticket=ic&expkind=1&userpass=1&ws=1&s=1&kw=${to}`,
+  );
+};
+
+const parameter: url_parameter = {
+  from: "新大阪",
+  to: "大国町",
+  y: moment().year().toString(),
+  m: (moment().month() + 1).toString().padStart(2, "0"),
+  d: moment().date().toString().padStart(2, "0"),
+  hh: moment().hour().toString().padStart(2, "0"),
+  m2: moment().minute().toString().padStart(2, "0")[1],
+  m1: moment().minute().toString().padStart(2, "0")[0],
+};
+
+const url = setUrl(parameter);
+console.log(url);
+const data = await fetch(url);
+const html = await data.text();
+const $ = cheerio.load(html);
+const result = Array.from(
+  $("#rsltlst ul li.time"),
+  (x: string) => $(x).text().match(/\d{2}/g),
+);
+const createText = (result: Array<Array<string>>): Array<string> => {
+  return result.map((x) => {
+    return `${x[0]}時${x[1]}分発\n${x[2]}時${x[3]}分着`;
+  });
+};
+const sentence = createText(result);
+console.log(`${parameter.from} -> ${parameter.to}`);
+sentence.map((x) => {
+  console.log("---------------");
+  console.log(x);
+});
+```
+
+## 解説
+
+`setUrl`は自力で解析しました。()\
+APIは準備されてないので頑張りましょう.
+
+`padStart(2, '0')` これは例えば 今月が 1月だったときに 1 => 01 というふうに二桁で足りないとこを0で埋めるってメソッドです。
+
+`match(/\d{2}/g)` 正規表現ですね。これは取得した文字列を正規表現にそって分割？してるんですけど、
+!['タイトル'](https://i.gyazo.com/ca574fd2295a58e5aa54f009ffa85b21.png)
+
+こんな感じで2文字ずつ数値を取り出したらいい感じになります。
+
+> 正規表現チェッカー\
+> https://weblabo.oscasierra.net/tools/regex/
+
+## Denoっぽいところ
+
+ここ！！
+
+```typescript
+const data = await fetch(url);
+const html = await data.text();
+```
+
+これがトップレベルawait!! async で囲まなくていい！！ (言語仕様です)
+
+URLインポート！!
+
+```typescript
+import cheerio from "https://dev.jspm.io/cheerio@0.22.0";
+import { moment } from "https://deno.land/x/moment/moment.ts";
+```
+
+cheerioは型定義ファイルがなかったので（多分)ちょっと悲しい。
+
+でもなんといってもnpmがない！つまり！！このコードコピペするだけでうごく！！！！
+
+## 実行結果
+
+!['タイトル'](https://i.gyazo.com/0a5c9721d38c855199634f6eff313704.png)
+
+Great!!

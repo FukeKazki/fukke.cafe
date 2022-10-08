@@ -1,0 +1,118 @@
+---
+title: React Native Styleをいい感じに
+date: 2020-03-11
+tags: ['react', 'reactnative', 'javascript']
+---
+
+## はじめに
+
+React Nativeでアプリ開発をするとき, UIライブラリーとして NativeBase 等を使うと思います. そのとき
+素のままではなくしっかりとStyleをあてることで一気にアプリ感(語彙力) がでて, 開発モチベーションも上がります.
+
+> native-base (公式)\
+> https://nativebase.io/
+
+## 例えば
+
+!['適用前'](https://i.gyazo.com/410048734961931da2537baf0abfc11c.png)
+
+!['適用後'](https://i.gyazo.com/7278c4d69d0f6f4e6a9731b84f6882f5.png)
+
+タスクを表示しているところに注目してください.\
+一枚目は NativeBase のコンポーネントをそのままつかったもので, 二枚目はStyleをあてたものです.\
+見た瞬間にその差はわかると思います.\
+NativeBaseの良いところは一枚目のように最低限の機能を提供してくれて, 二枚目のように自由にStyleを当てれる拡張性です.
+
+## Styleをあてる
+
+React NativeでのStyleのあてかたはいくつかあり, そのうちの一つは公式Documentにも書いてある `StyleSheet.create`
+メソッドを使う方法です.
+
+> StyleSheet (React Native)\
+> https://reactnative.dev/docs/stylesheet
+
+この方法でもよいのですがcssを `textAlign: center` のようにキャメルケースでかかないといけないというのが,
+普段cssを書くときと違い混乱してしまいます.
+
+そこで今回は `styled-components` を使用して 普段と同じようにcssをかけるようにします.
+
+> styled components (公式)\
+> https://styled-components.com/
+
+## 導入方法
+
+```bash
+$ yarn add styled-components
+```
+
+```typescript
+import styled from "styled-components/native";
+```
+
+## 書いてみる
+
+### styles.ts
+
+```typescript
+// styled-componentsの読み込み
+import Styled from "styled-components/native";
+// 使用するnative-baseのcomponentを読み込む
+import { List, ListItem } from "native-base";
+
+export const Shadow = Styled.View`
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.38);
+`;
+
+export const TaskList = Styled(List)`
+    background-color: #fffaf1;
+    border-width: 1px;
+    overflow: hidden;
+    border-color: #fffaf1;
+    border-radius: 16px;
+    padding: 20px 0;
+`;
+export const TaskListItem = Styled(ListItem)`
+    padding: 20px 16px;
+    background-color: #fffaf1;
+`;
+```
+
+記法は上記のような感じで, react-native が標準で提供しているコンポーネント `View` 等は import する必要はないです.\
+`Styled(List)` を使うことで native-base が提供している `List` にあたっている css を受け継いだまま上から css
+あてることができます.\
+cssの記法もわざわざキャメルケースにする必要はなくhtml・cssで書くときと同じようにすることができます.
+
+### index.tsx
+
+```typescript
+import {
+    Shadow,
+    TaskList,
+    TaskListItem,
+} from './styles'
+
+const TaskView: React.FC = () => {
+    // 処理
+    return (
+        <TaskListContainer>
+            <Shadow> // View
+                <TaskList> // List
+                    <TaskListItem 
+                        key={}
+                        itemDivider={true}
+                    > // ListItem
+                    // 中身
+                    </TaskListItem>
+                </TaskList>
+            </Shadow>
+        </TaskListContainer>
+    )
+}
+```
+
+index.tsxでstyles.tsを読み込めばあとは native-base のコンポーネントAPIに沿って使用することができます.
+
+## おわりに
+
+styled-componentsを使用することで react等でのcss記法と同じ方法で react-nativeでもcssを書くことができます.\
+とても便利ですので, ぜひ開発に導入してみてください.

@@ -1,0 +1,75 @@
+---
+title: 'スタバのAPI見つけたから遊んで見る'
+date: 2021-03-21
+tags: []
+---
+
+['スターバックス'](https://www.starbucks.co.jp)のjsファイルを漁ってたら商品リストAPIを発見。
+
+Next.js, Tailwind cssの勉強に使ってみます。
+
+![img](https://i.gyazo.com/dbcc6f01b12984af929d116198f1c3c1.png)
+
+みつけたURL:
+https://product.starbucks.co.jp/api/category-product-list/beverage/index.json
+
+### 作成したコード
+
+```typescript
+const Starbucks = ({ data }) => {
+	return (
+		<>
+			<ul className='container mx-auto mt-4 pb-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 gap-y-4'>
+				{data.map(product => {
+					const image = `https://product.starbucks.co.jp${product.image1}`
+					return (
+						<li key={product.id}>
+							<div>
+								<img src={image} alt='画像' className='border border-gray' />
+							</div>
+							<div className='p-4'>
+								<p className='text-sm font-bold'
+								   dangerouslySetInnerHTML={{ __html: `${product.product_name}` }} />
+							</div>
+						</li>
+					)
+				})}
+			</ul>
+		</>
+	)
+}
+
+export default Starbucks
+
+export async function getStaticProps() {
+	try {
+		const res = await fetch('https://product.starbucks.co.jp/api/category-product-list/beverage/index.json')
+		const data = await res.json()
+
+		return {
+			props: {
+				data
+			}
+		}
+	} catch (e) {
+		console.error(e)
+
+		return {
+			props: {
+				data: []
+			}
+		}
+	}
+```
+
+`getStaticProps`内で商品データを取得します。取得したデータはpropsとしてコンポーネントに流れます。
+
+コンポーネント内では `data`の中に商品データの配列が入っています。
+
+`map`メソッドで展開して tailwind css でデザインしてあげましょう。
+
+このようなレイアウトには`grid`が効果的です。`grid-cols-{n}`で横に並ぶ要素数を定義できます。
+
+また`gap-{n}`で縦横の`margin`を指定できます。
+
+`grid`内の要素の`width`は自動的に計算されるので指定する必要はありません。

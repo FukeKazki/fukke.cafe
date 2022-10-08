@@ -1,0 +1,82 @@
+---
+title: 'フロントエンド'
+date: 2021-05-17
+tags: ['web']
+
+---
+
+Web+DB Press v120のフロントエンド、思考まとめ
+
+## フロントエンドエンジニアの職域
+
+今まではHTML5とCSS3が使えることがHTMLコーダーとして必要な技術であったが、
+
+現代のフロントエンジニアにはそれらに加えて動的機能のプログラミング、要するにJavaScriptが技術領域に加わった。
+
+## ブラウザ市場
+
+２大レンダリングエンジン、BlinkとWebKit。
+
+Microsoft Edge、Chrome、OperaはBlinkレンダリングエンジンを搭載。
+
+SafariはWebKitを搭載。
+
+レンダリングエンジンの違いがCSSのレイアウト崩れの原因となる。
+
+## プライバシー
+
+各々ブラウザがプライバシー保護のためのトラッキング制御技術を開発している。
+
+- Safari: ITP(Intelligent Tracking Prevention)
+- Chrome: Privacy Sandbox
+- Firefox: ETP(Enhanced Tracking Protection)
+
+## Webの品質
+
+セキュリティ・パフォーマンス・アクセシビリティが品質の指標。
+
+Lighthouseのようなツールを使い測定。
+
+UXを高めるためのPWA技術。
+
+## 技術
+
+フロントエンド技術はコンポーネント指向がスタンダードになっている。
+
+各々すきなフレームワークを使っている。
+
+ビルドツール・CSS管理・テストなども同様。
+
+## HTML生成手段の多様化
+
+- CSR(Client-Side Rendering)
+- SSR(Server-Side Rendering)
+- SG(Static Generation)
+
+SGとCMSを組み合わせたJamstack技術の原点回帰感。
+
+## 職人技術のコモディティ化
+
+> コモディティ化
+
+> 市場参入時に、高付加価値を持っていた商品の市場価値が低下し、一般的な商品になること。
+
+FirebaseやAWS Amplifyのようにバックエンドを提供してくれるmBaaS、
+
+NetlifyやVercelのようにCI/CDを含む開発ワークフローで開発者体験を向上させてくれるPaaSの登場。
+
+## 次世代技術
+
+システム配信のためのCDN。
+
+CDNなどのサービスを提供するCloudfrare、Akamai。
+
+処理高速化のためのWebAssembly。
+
+## 考察
+
+フロントエンド領域が広くなっている。
+
+どこまでカバーするのか、知る必要があるのか。線引は難しい。
+
+フロントエンドの中でも自分の得意領域を見つけることが重要だと思う。

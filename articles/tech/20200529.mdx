@@ -1,0 +1,49 @@
+---
+title: 'Deno RESTAPI作ってみた'
+date: 2020-05-29
+tags: ['Deno']
+---
+
+## Denoを触ってみたかった
+
+のでこちらの記事を参考にRESTAPIを作ってみました
+
+> https://dev.to/am77/deno-v1-0-303j
+
+リポジトリ↓
+
+> https://github.com/FukeKazki/DenoSampleRestAPI
+
+## 環境構築
+
+公式サイトを参考にbrewでインストールしました
+
+> https://deno.land
+
+### コード補完
+
+WebStormにはまだなかったのでVSCODEのやつを探して使いました.(JetBrains系にもでたらしい)
+!['タイトル'](https://i.gyazo.com/b7a15232a6e5f438f26e53025c79b6bc.png)
+
+## 実行結果
+
+実行コマンドは `deno run --allow-net --allow-env app.ts` です。\
+確認にPostmanっていうアプリを使いました\
+めっちゃ便利です(curlするのがめんどくさかった)
+
+!['タイトル'](https://i.gyazo.com/46bb691ba3370112dd3b629735834b49.png)
+
+## 感想
+
+TSの設定せずに使えるのが便利だと感じました。tsconfigとか一切書かずともデフォルトで設定されています。
+
+npmないおかげでフォルダがスッキリしてるのも良いですね。フォルダを圧迫する node_modulesとかpackage.json,
+yarn.lock等その関連のものがなくなったのでスッキリです。
+
+urlインポートは探すの大変だなって感じたけど公式さんがまとめてくれてるのでこの中から探せばいいのかな
+
+> https://deno.land/x
+
+意外といっぱいあってどれがベストプラクティスかわかんないですね。。まぁ色々使ってみましょう
+
+圧倒的Node.jsよりも便利だと感じたのでこれからおっていきたいと思います(Slackにも参加できた)

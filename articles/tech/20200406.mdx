@@ -1,0 +1,161 @@
+---
+title: 'イコラブのニュースをスクレイピングする！'
+date: 2020-04-06
+tags: ['node.js']
+---
+
+## はじめに
+
+どうもスクレイピング芸人です.\
+今回はいこらぶのニュースを取得します.
+
+> **=LOVE NEWS**\
+> https://equal-love.jp/news/
+
+これ->\
+!['タイトル'](https://i.gyazo.com/d8cabf07c06e3591db15007fb1f36f0b.png)
+
+前回と同様, ソースコードを確認します.\
+!['タイトル'](https://i.gyazo.com/90ff1a873d187ea991cb6204fef07abf.png)
+
+おぉ、なんと良心的なソースコード..\
+日向坂とは大違い.. と思いきや, "日 付 の と こ ろ"\
+いやお前なんでタグで囲まれてないねん.. めんどくせぇ..
+
+でもおれはあきらめんぞぉ
+
+## 技術選定
+
+今回もaxiosとcheerioを使ってスクレイピングします.
+
+## ソースコード
+
+```typescript
+import axios from "axios";
+import cheerio from "cheerio";
+
+interface news {
+  date: string;
+  category: string;
+  body: string;
+}
+
+const scraping = async (): Promise<string> => {
+  try {
+    const response = await axios.get("https://equal-love.jp/news/");
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return "";
+  }
+};
+
+const analysis = (result: string): news[] => {
+  const $ = cheerio.load(result);
+  console.log($("title").text());
+
+  const news: news[] = [];
+  $(".infoList li").map((i, element) => {
+    const body = $(element).find(".tit").text();
+    const category = $(element).find("span:first-child").text();
+    const date = $(element).find(".date").text().replace(/[^0-9\.]/g, "");
+
+    const object: news = {
+      date: date,
+      category: category,
+      body: body.trim(),
+    };
+    news.push(object);
+  });
+  return news;
+};
+
+export const main = async () => {
+  const result = await scraping();
+  const news = analysis(result);
+  console.log(news);
+};
+
+// メインの実行
+(async () => {
+  await main();
+})();
+```
+
+## 解説
+
+大体前回といっしょですね.\
+違うのはgetリクエストになったところですかね.\
+あ、さっき言ってた日付のところは魔法(正規表現)を使いました.\
+正規表現よくわかんないけど動いたからヨシ！
+
+他には span:first-child 使ってカテゴリー取得したりしてます.
+
+## 実行結果
+
+!['タイトル'](https://i.gyazo.com/836b4661dfb1270db269efc07a84932e.png)
+!['タイトル'](https://i.gyazo.com/85f528b3603e0ca68c1d780bb7e0935c.png)
+
+よきね.\
+でもちょっと少なくね？
+
+!['タイトル'](https://i.gyazo.com/f1109026d24155bf8dae47983166ee30.png)
+
+サイトには表示されているのに..
+
+## 解決策
+
+そう、このサイト 一定以上スクロールするとオートロードされるやつです.\
+ではどうやってこれを取得するのか..
+
+多分、外部となんか通信してるでしょ！っていうノリで探し出します.
+
+あった. !['タイトル'](https://i.gyazo.com/6a1630d689fd09c446ccfc1afff52ba3.png)
+
+pageパラメータをつけてgetリクエスト送ってますね.\
+見つけたのでもう勝ちです.\
+あとは実装するだけ.
+
+## ソースコード修正部分
+
+```typescript
+const scraping = async (i: number): Promise<string> => {
+  try {
+    const response = await axios.get("https://equal-love.jp/news/", {
+      params: {
+        page: i,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return "";
+  }
+};
+
+export const main = async () => {
+  const news = [];
+  for (let i = 1; i < 11; ++i) {
+    const result = await scraping(i);
+    const tmp = analysis(result);
+    news.push(tmp);
+  }
+  console.log(news);
+};
+```
+
+## 解説
+
+とりあえず1~10ページ分取得するコードです.\
+axiosのパラメータに指定します.
+
+## 実行結果
+
+!['タイトル'](https://i.gyazo.com/00d7c723c5a2f0f0abe20fc2b213ee04.png)
+
+見事に1月まで取得できました.\
+余裕ですね(
+
+## おわりに
+
+スクレイピング楽しいね！！

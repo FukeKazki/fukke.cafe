@@ -1,0 +1,157 @@
+---
+title: '日向坂46のニュースをスクレイピング'
+date: 2020-04-05
+tags: ['node.js']
+---
+
+## はじめに
+
+今回は日向坂46のニュース情報をスクレイピングしたいと思います.
+
+> **日向坂46**\
+> https://www.hinatazaka46.com/s/official/news/list
+
+仕様としては単純にスクレイピングではなく, メンバーを指定して取得できるようにします.\
+これ →\
+!['タイトル'](https://i.gyazo.com/6d5dfac1c9cea2c99b2a8e9b736ef6a2.jpg)
+
+んで, ソースコードを確認すると...\
+おいっ, おまえフォームなのかよ？？\
+しかもPOSTリクエスト..\
+めんどくせぇ..\
+!['タイトル'](https://i.gyazo.com/a39126db248f2039edffa6490f0fe876.png)
+
+てっきりjsでいい感じにフィルターしてると思ったので戸惑いました、、が諦めませんよ。\
+なんとしてでもにぶちゃんの出演情報を取得してやる..
+
+## 技術選定
+
+前提としてnode.jsを使ってスクレイピングをするわけですが,
+いつも使っているcheerio-httpcliはデフォでgetリクエストを送るようになってるんですよ.\
+なので今回のようなフォームをつかったpostリクエストの送信はまぁまぁめんどくさいコードをかかなきゃならんのです.\
+よって, 今回は axios を使ってpostリクエストを送った後, cheerioを使ってDOMの解析をするようにしました.\
+axiosなら慣れてるしフォームいじるよりも簡単なのでいけそうです.
+
+## コード
+
+```typescript
+import axios from "axios";
+import querystring, { ParsedUrlQueryInput } from "querystring";
+import cheerio from "cheerio";
+
+interface news {
+  date: string;
+  category: string;
+  body: string;
+}
+// スクレイピングの実行
+const scraping = async (data: ParsedUrlQueryInput): Promise<string> => {
+  try {
+    const response = await axios({
+      method: "post",
+      url: "https://www.hinatazaka46.com/s/official/news/list",
+      data: querystring.stringify(data),
+    });
+    console.log("success");
+    return response.data;
+  } catch (err) {
+    console.log("failed", err);
+    return "";
+  }
+};
+// DOMの解析
+const analysis = (result: string): news[] => {
+  const $ = cheerio.load(result);
+  console.log($("title").text());
+
+  const news: news[] = [];
+  // newsの取得
+  $(".p-news__item").map((i, element) => {
+    const date = $(element).find(".c-news__date").text();
+    const category = $(element).find(".c-news__category").text();
+    const body = $(element).find(".c-news__text").text();
+
+    const object: news = {
+      date: date,
+      category: category,
+      body: body.trim(),
+    };
+    news.push(object);
+  });
+  return news;
+};
+
+const MEMBERS = [
+  null,
+  null,
+  "潮 紗理菜",
+  null,
+  "影山 優佳",
+  "加藤 史帆",
+  "齊藤 京子",
+  "佐々木 久美",
+  "佐々木 美玲",
+  "高瀬 愛奈",
+  "高本 彩花",
+  "東村 芽依",
+  "金村 美玖",
+  "河田 陽菜",
+  "小坂 菜緒",
+  "富田 鈴花",
+  "丹生 明里",
+  "濱岸 ひより",
+  "松田 好花",
+  "宮田 愛萌",
+  "渡邉 美穂",
+  "上村 ひなの",
+];
+
+const main = async () => {
+  // メンバーの選択
+  MEMBERS.map((member, i) => console.log(i, member));
+  const data = {
+    // 複数人選択可能
+    list: [16],
+  };
+
+  const result = await scraping(data);
+  const news = analysis(result);
+  console.log(news);
+};
+
+// メインの実行
+(async () => {
+  await main();
+})();
+```
+
+## 解説
+
+axios, cheerio, querystringをimportします.\
+querystringはaxiosでフォームの値を使ったpostリクエストを送るときに必要です.\
+typescriptを使用したので少し型を意識しています.
+
+最近 async-await に対して try-catch を使ってエラー処理をちゃんとすることを覚えました..(バのおかげ
+
+analysis関数は取得したDOMからニュースを探し出して配列に格納しています.\
+cheerioはjQueryの書き方ができるのでjQueryを通ってきたぼくからするとかなり良いライブラリです.
+
+最後にメンバーを選択できるように日向のサイトを参考にしながらリストを作成します.\
+欲しいメンバーのindex番号をリストに格納する感じです.
+
+リスト作成してるとなぜか2番からだからなんでやろぉ。。ってなったんやけど, これいないところって卒業したんかな。。\
+nullってちょっと悲しいな
+
+## 実行結果
+
+!['タイトル'](https://i.gyazo.com/c034f98051223d59b1ca2bd984b4050a.png)
+
+これはにぶちゃんの取得結果.\
+よきね
+
+## おわりに
+
+日向のサイト意外と取得めんどくさかったです..\
+まぁこれが取得できたので俺の手にかかれば大体のサイトいけるんちゃうか(
+
+スクレイピングたのしいね

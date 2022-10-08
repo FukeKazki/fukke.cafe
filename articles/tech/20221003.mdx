@@ -1,0 +1,28 @@
+---
+title: 'ffmpegのメモ'
+date: 2022-10-03
+tags: []
+---
+
+# ファイルの情報を得る
+
+- `ffmpeg -i input.mp4`
+
+# 変換
+
+- `ffmpeg -i input.mp4 output.gif`
+
+# フォーマットを指定
+
+- `-f gif`
+
+# サイズを指定
+
+- `-vf scale=w:h`
+- `-vf scale=380:-1`
+
+`-1`は可変になる。
+
+# フレームレートを調整
+
+- `-r 30`

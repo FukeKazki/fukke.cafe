@@ -1,0 +1,138 @@
+---
+title: 'シェルスクリプトでちょっと便利に'
+date: 2020-05-12
+tags: []
+---
+
+最近Next.jsを使うことが増えていつもプロジェクト作成時に行っている色々のインストールを一気にできたら便利だなぁってなったのでシェルスクリプトで解決しました。
+
+## コード
+
+下記を参考にしながら作りました。
+
+> 初心者向けシェルスクリプトの基本コマンドの紹介(Qiita)\
+> https://qiita.com/zayarwinttun/items/0dae4cb66d8f4bd2a337
+
+出力と入力は
+
+```shell
+#!/bin/bash
+
+echo -e "Hello!!\nThis Shell will Create Next.js App\n"
+echo -n "APP_NAME: " 
+read app_name
+echo $app_name
+```
+
+こんな感じでできます。
+
+実行は `bash helloworld.sh`です。
+
+!['タイトル'](https://i.gyazo.com/3a818c6edf0b5f57fd90d4c628236c44.png)
+
+普通のコマンド？いわゆる`yarn add ~~`とかはそのまま直書きしてしまえば良いので、\
+最終的にはこんな感じになりました。
+
+```shell
+#!/bin/bash
+
+echo -e "Hello!!\nThis Shell will Create Next.js App\n"
+echo -n "APP_NAME: " 
+read app_name
+
+# Create Next App
+yarn create next-app $app_name
+cd $app_name
+
+# Add module
+yarn add isomorphic-unfetch styled-components @material-ui/core @material-ui/icons
+yarn add -D typescript @types/node @types/react @types/styled-components babel-plugin-styled-components
+
+# Create Folders
+mkdir src
+cd src
+mkdir api components lib pages styles types util
+cd ../
+mv pages/index.js src/pages/
+mv src/pages/index.js src/pages/index.tsx
+mv pages/api src/pages
+rm -rf pages
+
+# Edit Files
+touch .babelrc
+echo '{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}' > .babelrc
+touch src/util/index.ts
+echo "export const debug = (content: any): void => {
+    console.log('--- DEBUG ---')
+    if (Array.isArray(content)) {
+        console.log('Array', ':')
+        console.table(content)
+    } else if (Number.isNaN(content)) {
+        console.log('NaN', ':', content)
+    } else {
+        console.log(Object.prototype.toString.call(content).slice(8, -1), ':', content)
+    }
+}
+
+export const isNullOrUndefined = (content: any): boolean => {
+    return content === null || content === undefined
+}" > src/util/index.ts
+touch src/styles/global.css
+echo 'html,
+body {
+    padding: 0;
+    margin: 0;
+    line-height: 1.4;
+    font-size: 16px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}' > src/styles.global.css
+touch src/pages/_app.tsx
+echo 'import '../styles/global.css'
+
+const App = ({Component, pageProps}) => {
+    return (
+        <Component {...pageProps} />
+    )
+}
+
+export default App' > src/pages/_app.tsx
+
+# Git
+git add .
+git commit -m "Add: Initial Commit"
+
+exit 0
+```
+
+結構長いんですけど、いつも使ってるコードをファイルに出力しているのがながーくなってるだけです。\
+moduleのインストールをいっぺんにやってくれるだけでもかなり有能！

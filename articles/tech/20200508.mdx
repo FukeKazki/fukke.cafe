@@ -1,0 +1,105 @@
+---
+title: 'styled-components と material-ui でダークモードを実装する'
+date: 2020-05-08
+tags: ['javascript', 'typescript', 'web', 'next.js', 'react']
+---
+
+まず、ダークモード時とライトモード時での配色を定義します。\
+`createMuiTheme`でmaterial-uiの配色を継承して自分の配色を定義できます。
+ダークモード時のテーマに`type: 'dark'`とすることでmaterial-uiが定義してくれているダークモードの配色を使うことができます。\
+自分で配色を上書きもできます。urlを参考に。
+
+> Material-UI palatte\
+> https://material-ui.com/customization/palette/
+
+そしてテーマを切り替える`getTheme`関数を作成します。\
+**theme.ts**
+
+```typescript
+import { createMuiTheme } from "@material-ui/core";
+
+const lightTheme = createMuiTheme({
+  palette: {},
+});
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: "dark",
+  },
+});
+
+export const getTheme = (colorMode) => {
+  switch (colorMode) {
+    case "light":
+      return lightTheme;
+    case "dark":
+      return darkTheme;
+  }
+};
+```
+
+テーマをどこからでも参照、切り替えできるようにContextを作成します。\
+createContextの引数にContextの配列を入れます。\
+配列の中身はテーマの状態（デフォルトをライトモード）と切り替え用の関数です。\
+そしてコンテキストに流す用のカスタムフックを作成します。\
+`useState`と`useCallback`を使っています。（命名はらくしました
+
+**themeContext.ts**
+
+```typescript
+import { createContext, useCallback, useState } from "react";
+
+type ThemeContext = [string, (mode: string) => void];
+
+const defaultContext: ThemeContext = ["light", () => {}];
+
+export const ThemeContext = createContext<ThemeContext>(defaultContext);
+
+export const useMode = (): ThemeContext => {
+  const [mode, _setMode] = useState("light");
+
+  const setMode = useCallback((_mode: string): void => {
+    _setMode(_mode);
+  }, []);
+
+  return [mode, setMode];
+};
+```
+
+最後にmaterial-uiとstyled-componentsのProviderにテーマを流して、作成したテーマコンテキストにはカスタムフックを流します。\
+これでmaterial-uiではテーマによる自動的に配色の変更、styled-componentsではpropsとしてどこからでも配色を受け取れるようになり、テーマの切り替えはどのコンポーネントでもできるようになります。
+
+**themeProvider.ts**
+
+```typescript
+import React from "react";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import {
+  StylesProvider,
+  ThemeProvider as MaterialThemeProvider,
+} from "@material-ui/styles";
+
+import { useMode } from "./themeContext";
+import { ThemeContext } from "./themeContext";
+import { getTheme } from "./theme";
+
+export const ThemeProvider = ({ children }) => {
+  const [mode, setMode] = useMode();
+
+  return (
+    <StylesProvider injectFirst>
+      <MaterialThemeProvider theme={getTheme(mode)}>
+        <StyledThemeProvider theme={getTheme(mode)}>
+          <ThemeContext.Provider value={[mode, setMode]}>
+            {children}
+          </ThemeContext.Provider>
+        </StyledThemeProvider>
+      </MaterialThemeProvider>
+    </StylesProvider>
+  );
+};
+```
+
+### 参考文献
+
+> https://qiita.com/Ouvill/items/c6761c32d31ffb11e114#usestyles-の嬉しいところ

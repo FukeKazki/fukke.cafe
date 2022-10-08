@@ -1,0 +1,122 @@
+---
+title: 'TSで競プロしやすくするためにメソッドチェーンを自作してみた'
+date: 2020-06-02
+tags: ['typescript', '競プロ']
+---
+
+## よく使う処理を関数化してみる
+
+```typescript
+const output = (x: string | number | boolean): void => console.log(x);
+const splitLine = (string: string): Array<string> => string.split("\n");
+const splitBlank = (string: string): Array<string> => string.split(" ");
+const toNumbers = (array: string[]): Array<number> =>
+  array.map((v) => Number(v));
+const range = (end: number, start: number = 0): Array<number> =>
+  [...Array(end - start)].map((v, i) => i + start);
+```
+
+### でもこれ使うときって...
+
+```typescript
+const [A, B, C] = toNumbers(splitBlank(input));
+```
+
+ちょっと書きづらいですね.. 入力を空白で分割して、数値にして、って思考してるのにコードは逆で囲んでいかないといけないのは気持ちが悪い
+
+### やりたいこと
+
+```typescript
+const [A, B, C] = input.splitBlank().toNumbers();
+```
+
+これだと思考順序とコードの書き順が一致していて理解しやすいです
+
+この書き方をメソッドチェーンと言います
+
+例えば Array型には `.map` メソッドや `.filter`メソッドが存在してそれらをつなげることができます
+
+```typescript
+const array = [1, 2, 3, 4, 5];
+const newArray = array.map((n) => n * 2).filter((n) => n > 3); // 配列の中身を2倍して3以上のものだけを取り出す
+```
+
+今回はこれを実装していきます
+
+## メソッドチェーンの実装方法
+
+JavaScriptがプロトタイプベースの言語なので Array型などにむりやり実装することもできますが、今回はクラスを使って実装します。
+
+```typescript
+type input = string | Array<string> | number | Array<number>;
+
+class Input {
+  input: input;
+  constructor(input: string) {
+    this.input = input;
+  }
+}
+```
+
+Inputクラスを作成しました。\
+constructorとして入力を渡します。TSなのでinputの型も定義しておきます.
+
+### メソッドを追加する
+
+ここからがメソッドチェーンの実装です。\
+内容は簡単で返り値として `this`(自分自身)を返せばメソッドチェーンができます.\
+自分を返すので、また自分のメソッドを呼べる。。ということです.\
+なので中身の値を取得したいときはgetメソッドで値を返すようにすると良いです.
+
+```typescript
+type input = string | Array<string> | number | Array<number>;
+
+class Input {
+  input: input;
+
+  constructor(input: string) {
+    this.input = input;
+  }
+
+  splitLine(): this {
+    if (typeof this.input === "string") {
+      this.input = this.input.split("\n");
+    }
+    return this;
+  }
+
+  splitBlank(): this {
+    if (typeof this.input === "string") {
+      this.input = this.input.split(" ");
+    }
+    return this;
+  }
+
+  toNumbers(): this {
+    if (Array.isArray(this.input)) {
+      this.input = (this.input as Array<string>).map((v) => Number(v));
+    }
+    return this;
+  }
+
+  get(): input {
+    return this.input;
+  }
+}
+```
+
+`return this`で自分自身を返しています.
+
+## 使ってみる
+
+```typescript
+const i = new Input(input);
+const [A, B, C, K] = i.splitBlank().toNumbers().get() as Array<number>;
+```
+
+思考と同じ順番でコードを書くことができました!
+
+## 課題
+
+asを使って無理やり型を決めてるところがあって、決して安心とは言えません..\
+そのあたりをなんとか出来たら良いなって思います。

@@ -1,0 +1,43 @@
+---
+title: '.editorconfigでコーディングスタイルを統一'
+date: 2020-09-26
+tags: []
+---
+
+# EditorConfigとは
+
+EditorConfigは様々な開発環境(editor, IDE)でコーディングスタイルを統一するための設定ファイルです。
+
+プロジェクトフォルダのルートに`.editorconfig`ファイルを作成するだけで設定できます。
+
+多くの editor, IDEで使うことができ、僕が使っているWebStormにも対応しています。
+
+> EditorConfig: https://editorconfig.org/#overview
+
+## 設定する
+
+`.editorconfig`ファイルを作成します。
+
+```
+root = true
+
+[*]
+# 文字コードの設定
+charset = utf-8
+# 改行コードの設定
+end_of_line = lf
+# インデントのスタイルを設定(space / tab)
+indent_style = tab
+# インデントのサイズを設定
+indent_size = tab
+# tabのサイズを設定
+tab_width = 4
+# 文末のスペースを削除するかの設定
+trim_trailing_whitespace = true
+```
+
+このような感じで設定することができます。
+
+## おわりに
+
+インデントはTab派です。宜しくおねがいします。

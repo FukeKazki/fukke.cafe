@@ -1,0 +1,51 @@
+---
+title: ラズパイとLEDマトリクスパネルで遊ぶ
+date: 2020-01-24
+tags: ['ラズパイ']
+---
+
+![LEDマトリクスパネル](https://dl.dropboxusercontent.com/s/51sb17is3fpk7r4/RGB%E3%83%9E%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9LED.gif?dl=0)
+
+## はじめに
+
+12月にCA Tech Pitch Battleのため東京に行ったついでに秋葉原で最近ハマっている電子部品たちを購入してきました.\
+そこでLEDマトリクスパネルという電光掲示板(?)を買ってきたのでラズパイとつなげて遊んだ話を書きます.
+
+## お買い物
+
+![レシート](https://dl.dropboxusercontent.com/s/b1drcapjxe1qve5/%E7%A7%8B%E8%91%89%E5%8E%9F%E9%9B%BB%E5%AD%90%E9%83%A8%E5%93%81%E3%83%AC%E3%82%B7%E3%83%BC%E3%83%88.jpeg?dl=0)
+
+このお店にたくさん電光掲示板(?)が飾ってあって見た瞬間いろいろ面白いアイデアが浮かんでほしくなって買いましたぁ.\
+「ラズパイもってるしパネルだけ買えばいいかな？」って思ってたらなんか電源やら変換やらを買わなきゃでちょっと高かったです...
+
+![電子部品たち](https://dl.dropboxusercontent.com/s/pl23egstxo4r471/%E7%A7%8B%E8%91%89%E5%8E%9F%E9%9B%BB%E5%AD%90%E9%83%A8%E5%93%81.jpeg?dl=0)
+
+## ラズパイと接続
+
+以下の記事を参考にしながらラズパイと接続します.
+
+> ラズパイ3でRGBマトリクスLED(16×32)を輝かせて遊ぶ話 [Qiita]\
+> https://qiita.com/t_slash_k/items/35ccf49ce85e5cbd045b
+
+すべてつなげるとこんな感じです.
+![接続済み](https://dl.dropboxusercontent.com/s/v2gqtzsiq8ct378/%E3%83%A9%E3%82%BA%E3%83%91%E3%82%A4%E3%81%A8%E3%81%AE%E6%8E%A5%E7%B6%9A.jpeg?dl=0)
+
+## ラズパイからの実行
+
+以下のリポジトリをクローンしてビルドしコマンドを使用します.
+
+> rpi-rgb-led-matrix [GitHub]\
+> https://github.com/hzeller/rpi-rgb-led-matrix
+
+例えば以下のコマンドを実行するとHello Worldの出力ができます.
+
+```zsh
+sudo examples-api-use/demo --led-no-hardware-pulse --led-rows=16 --led-cols=32 -D 1 -m 20  /home/pi/rpi-rgb-led-matrix/examples-api-use/runtext16.ppm
+```
+
+![ハローワールド](https://dl.dropboxusercontent.com/s/ep9vt5f1akooxk4/%E3%83%9E%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9%E3%83%91%E3%83%8D%E3%83%AB%E3%83%8F%E3%83%AD%E3%83%BC%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89.gif?dl=0)
+
+## おわりに
+
+接続と実行までは以上です.\
+つぎはこれを応用してプログラムから弄れるようにしたいと思います.

@@ -1,0 +1,72 @@
+---
+title: 'デバッグ関数とかnullチェック関数をutil/index.tsにおいとけば楽なことに今頃気づいた。'
+date: 2020-05-02
+tags: ['typescript', 'javascript', 'Node.js']
+---
+
+## はじめに
+
+いつもデバッグの時は `console.log(typeof content, content)`とかやってたけど書くのめんどくさいし,
+utilに入れときゃいいじゃんってなりました。\
+なので, debug関数をいい感じに実装したのでその解説です.
+
+#### 参考文献
+
+> JavaScriptの型などの判定いろいろ(Qiita)\
+> https://qiita.com/amamamaou/items/ef0b797156b324bb4ef3
+
+## コード
+
+```typescript
+export const debug = (content: any): void => {
+  console.log("--- DEBUG ---");
+  if (Array.isArray(content)) {
+    console.log("Array", ":");
+    console.table(content);
+  } else if (Number.isNaN(content)) {
+    console.log("NaN", ":", content);
+  } else {
+    console.log(
+      Object.prototype.toString.call(content).slice(8, -1),
+      ":",
+      content,
+    );
+  }
+};
+```
+
+JSの型システムってめんどくさくて, `typeof []`ってすると ArrayじゃなくてObjectってなったりするんだよね。\
+なのでそこらへんをいい感じにカバーしながら, 表示も見やすくしました. NaNの判定も
+`typeof NaN`だとNumberになってしまうので切り分けました.
+
+### 実行してみる
+
+```typescript
+debug(undefined);
+debug(null);
+debug(true);
+debug([null, undefined, true, 1, "wow"]);
+debug({ name: "fukke", age: 18 });
+debug([{ name: "fukke", age: 18 }, { name: "momoko", age: 20 }]);
+debug(NaN);
+debug(111);
+debug("party parrot");
+```
+
+!['タイトル'](https://i.gyazo.com/ed662772a98ddca7ea1059df9fb52f6d.png)
+
+配列の時は `console.table`で見やすくなります.
+
+## Null, Undefined判定の関数も入れとく
+
+こちらもよく使うので追加しときます.
+
+```typescript
+export const isNullOrUndefined = (content: any): boolean => {
+  return content === null || content === undefined;
+};
+```
+
+### おわりに
+
+これでデバッグが少し楽になるね

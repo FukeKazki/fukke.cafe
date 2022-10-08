@@ -1,0 +1,156 @@
+---
+title: 'WASM入門'
+date: 2022-07-31
+tags: []
+---
+
+## WebAssemblyとは
+
+ブラウザ上で動く仮想マシンを動かすための仕様のこと。
+
+## WebAssemblyアセンブリ言語の例
+
+| 命令語          | 16進数 |
+| ------------ | ---- |
+| get_local $n | 20   |
+| i32.const n  | 41   |
+| i32.add      | 6a   |
+
+## WebAssemblyアセンブリ言語→WebAssemblyマシン語
+
+アセンブリ言語からマシン語に変換することをアセンブル、その機械をアセンブラという。
+
+例えばWebAssemblyアセンブリ言語で足し算をする関数を書いてみます。
+
+```assembly
+get_local 0
+i32.const 1
+i32.add
+end
+```
+
+これをアセンブルすると、WebAssemblyマシン語(wasm)の完成。
+
+```text
+0x00, 0x61, 0x73, 0x6d,
+0x01, 0x00, 0x00, 0x00,
+0x01, 0x06, 0x01, 0x60, 0x01, 0x7f, 0x01, 0x7f,
+0x03, 0x02, 0x01, 0x00,
+0x07, 0x05, 0x01, 0x01, 0x66, 0x00, 0x00,
+0x0a, 0x09, 0x01, 0x07, 0x00, 0x20, 0x00, 0x41, 0x01, 0x6a, 0x0b
+```
+
+> `0x20, 0x00, 0x41, 0x01, 0x6a`
+
+福野さん作の手書きWebAssembly。
+
+> https://fukuno.jig.jp/app/wasm/testenv/
+
+## アセンブリを書くのは辛い
+
+マシン語を手書きするのは勿論、アセンブリ言語の手書きもつらいので高級言語を使います。
+
+高級言語を用いることで、`高級言語→コンパイル→アセンブリ言語→アセンブル→マシン語`と変換できます。
+
+## zig言語を使う
+
+[zig言語](https://ziglang.org/)を使ってWebAssemblyを吐かせてみます。
+
+zig言語はC++やRustなどの他の言語に比べて仕様がシンプルだそう。
+
+### プロジェクトの作成
+
+```bash
+brew install zig
+
+mkdir zig-playground
+cd zig-playground
+
+zig init-exe
+```
+
+### ハローワールド
+
+`src/main.zig`を編集します。
+
+```zig main.zig
+const std = @import("std");
+
+pub fn main() anyerror!void {
+    std.debug.print("Hello, {s}!\n", .{"World"});
+}
+```
+
+実行。
+
+```bash
+zig run src/main.zig
+```
+
+[![Image from Gyazo](https://i.gyazo.com/5d627942f62d7e0c3e9115c237a737cb.png)](https://gyazo.com/5d627942f62d7e0c3e9115c237a737cb)
+
+### wasmを吐かせる
+
+`src/main.zig`を編集します。
+
+```zig main.zig
+export fn add(a: i32, b: i32) i32 {
+  return a + b;
+}
+```
+
+コンパイル。
+
+```bash
+zig build-lib src/main.zig -target wasm32-freestanding-musl -dynamic -O ReleaseSmall
+```
+
+中身を見てみる。
+
+[![Image from Gyazo](https://i.gyazo.com/71f4e6d38c5890e75c9ddc2118bb2386.png)](https://gyazo.com/71f4e6d38c5890e75c9ddc2118bb2386)
+
+### ブラウザからwasmを読み取る
+
+`index.html`を作成。
+
+```html index.html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <title>WebAssembly</title>
+</head>
+<body>
+  <script>
+    WebAssembly.instantiateStreaming(fetch('main.wasm'))
+      .then(obj => {
+        const res = obj.instance.exports.add(1, 2);
+        console.log(res)
+      });
+  </script>
+</body>
+</html>
+```
+
+Webサーバーを立ち上げる。なんでもいいですがかんたんなので`python`使ってます。
+
+```bash
+python3 -m http.server 8000
+```
+
+`localhost:8000`にアクセスしコンソールで確認。
+
+[![Image from Gyazo](https://i.gyazo.com/f5bf05883314fab1734b8f666c883729.png)](https://gyazo.com/f5bf05883314fab1734b8f666c883729)
+
+## wasmが見やすいWAT
+wasmファイルはバイナリなので見づらいです。
+そこでWAT(WebAssembly Text format)という形式にすると見やすくなります。
+
+[![Image from Gyazo](https://i.gyazo.com/580276112653cfbc36cc7da8d22bb973.png)](https://gyazo.com/580276112653cfbc36cc7da8d22bb973)
+
+## WebAssemblyの仕様を知れば自作プログラミング言語をつくることも可能
+
+## 参考文献
+
+> https://fukuno.jig.jp/1933
+
+> https://webassembly.github.io/spec/core/binary/index.html

@@ -1,0 +1,71 @@
+---
+title: ''
+date: 2020-09-27
+tags: []
+---
+
+# Pretterとは
+
+PretterはJS, JSXからTSなど様々な言語をサーポートしているコードフォーマッターです。
+
+Pretterを使うことで自動でコード整形され、きれいなコード、統一された記法のコードを書くことができます。
+
+## 導入方法
+
+```bash
+yarn add pretter
+```
+
+## 設定
+
+`.pretterrc`ファイルを作成します。
+
+```js
+{
+	"singleQuote": true,
+	"trailingComma": "none",
+	"tabWidth": 4,
+	"useTabs": true,
+	"semi": false,
+	"jsxSingleQuote": true,
+	"arrowParens": "avoid",
+	"bracketSpacing": true,
+	"jsxBracketSameLine": false
+}
+```
+
+- singleQuote: " " → ' '
+- trailingComma: 文末のコンマ ,
+- tabWidth: タブサイズ
+- useTabs: インデントにタブを使用
+- Semi: セミコロンの有無
+- jsxSingleQuote: jsxにおける " " → ' '
+- arrowParens: allow関数での ( ) の有無
+- bracketSpacing: {module} → { module }
+- jsxBracketSameLine: jsxを複数行に分けるか
+
+## フォーマットする
+
+`package.json`にformatコマンドを追加します。
+
+```javascript
+{
+    "scripts": {
+        "format": "prettier --write 'src/**/*.ts'"
+    }
+}
+```
+
+### 実行
+
+```bash
+yarn run format
+```
+
+上記のコマンドでsrc下のファイルが設定した内容にフォーマットされます。
+
+## おわりに
+
+`git commit`直前に自動でフォーマットするように設定するといいかも。
+
+singleQuote派、noneSemi派、tab4派です。宜しくおねがいします。

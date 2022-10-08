@@ -1,0 +1,106 @@
+---
+title: 'Python MeCabを使って形態素解析'
+date: 2020-04-29
+tags: ['python']
+---
+
+## はじめに
+
+オンラインのハックツハッカソンで文章から重量単語を抽出する処理を書きました.\
+MeCabを使用したのでそれについての記事です.
+
+> [!NOTE] MeCabは京都大学情報学研究科−日本電信電話株式会社コミュニケーション科学基礎研究所
+> 共同研究ユニットプロジェクトを通じて開発されたオープンソース 形態素解析エンジンです。\
+> https://taku910.github.io/mecab/
+
+> 環境構築参考記事(Qiita)\
+> https://qiita.com/taroc/items/b9afd914432da08dafc8
+
+## 試してみる
+
+```python
+import MeCab
+
+class Analysis():
+    def __init__(self, dir=u'./dic/mecab-ipadic-neologd'):
+        # 辞書を選択
+        self.mecab = MeCab.Tagger('-d ' + dir)
+
+    def main(self, text):
+        self.parseText(text)
+
+    def parseText(self, text):
+        node = self.mecab.parseToNode(text).next
+
+        while node.next:
+            print('{}: {}'.format(node.surface, node.feature))
+            node = node.next
+
+
+if __name__ == '__main__':
+    text = '合法的なトビ方ノススメ'
+
+    analysis = Analysis()
+    analysis.main(text)
+```
+
+モジュール化するためにクラスで実装しています.\
+コンストラクタで形態素解析に使う辞書を指定して、インスタンス変数`mecab`を初期化します.\
+辞書は↓から取ってきました. 最新の単語も収集していて自動でクロール・更新しているみたいです.
+
+> mecab-ipadic-NEologd\
+> https://github.com/neologd/mecab-ipadic-neologd/blob/master/README.ja.md
+
+mainメソッドは外部から呼ぶ用で、parseTextメソッドで形態素解析します.\
+parseToNodeメソッドがイテレータを返してくれるのでwhileでひとつづつ見ていきます.
+
+!['タイトル'](https://i.gyazo.com/0b4fa44345e428726aeb57cc5bf3aad3.png)
+
+なんかすごくいい感じ(国語嫌いなのでよくわかりません)
+
+まぁあとは実用的？っぽく名詞だけ取り出したりしてみます.
+
+```python
+import MeCab
+
+class Analysis():
+    def __init__(self, dir=u'./dic/mecab-ipadic-neologd'):
+        # 辞書を選択
+        self.mecab = MeCab.Tagger('-d ' + dir)
+
+    def main(self, text):
+        wordList = self.pickUpNoun(text)
+        
+        return wordList
+
+    def pickUpNoun(self, text):
+        node = self.mecab.parseToNode(text).next
+        result = []
+        while node.next:
+            # 名詞のとき配列に追加
+            if node.feature.split(',')[0] == '名詞':
+                result.append(node.surface)
+            node = node.next
+
+        return result
+
+if __name__ == '__main__':
+    text = '合法的なトビ方ノススメ'
+
+    analysis = Analysis()
+    result = analysis.main(text)
+    print(result)
+```
+
+!['タイトル'](https://i.gyazo.com/a9111d8ef60dd210280904df36334db9.png)
+
+名詞だけをいい感じに取り出しました.\
+何かには使えるんじゃない？(
+
+## 終わりに
+
+形態素解析はたのしいですね。マルコフと組み合わせるともっとたのしいかも?
+
+コード書いてるとpythonの言語仕様でけっこう詰まります..\
+でも出来上がったコードは綺麗だしわりと好きかも\
+でも型欲しいな〜

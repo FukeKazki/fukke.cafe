@@ -1,0 +1,630 @@
+---
+title: React Movie Search を TS で.
+date: 2020-03-08
+tags: ['react', 'web', 'javascript']
+---
+
+![react-todo-app](https://i.gyazo.com/b6e6d3490ce9943849dffa658d79849f.gif)
+
+## はじめに
+
+[2020年フロントエンドマスターになりたければこの9プロジェクトを作れ](https://qiita.com/rana_kualu/items/915345b8f3f870cfe2aa)に載ってある,
+[How to build a movie search app using React
+Hooks](https://www.freecodecamp.org/news/how-to-build-a-movie-search-app-using-react-hooks-24eb72ddfaf7/)を参考にしながら,
+material-uiとTypeScriptを使って作成をしていきます.
+
+## 内容
+
+映画のポスターAPIを使って, 映画の名前からポスター画像を検索するサービスの作成です.\
+検索中はローディング画面を表示し, 検索が終わるとポスター画像を表示, 失敗するとエラーメッセージを表示します.
+
+**画面構成** ![画面構成](https://i.gyazo.com/2b3f0f1f1663dd1188cb9821740eb899.jpg)
+
+## 導入
+
+**プロジェクトの作成**
+
+```bash
+$ create-react-app project_name --template typescript
+```
+
+**マテリアルUIの導入**
+
+```bash
+$ yarn add @material-ui/core
+```
+
+**フォルダ構成** src配下を以下のようにしてください.
+
+```
+src
+├── component
+│   ├── organisms
+│       ├── Header.tsx
+│       ├── Movie.tsx
+│       ├── Search.tsx
+│   └── App.tsx
+├── index.tsx
+├── react-app-env.d.ts
+└── serviceWorker.ts
+```
+
+organismsについては, 以下のAtomic Designの記事を御覧ください.
+
+> Atomic Designとは\
+> https://design.dena.com/design/atomic-design-%E3%82%92%E5%88%86%E3%81%8B%E3%81%A3%E3%81%9F%E3%81%A4%E3%82%82%E3%82%8A%E3%81%AB%E3%81%AA%E3%82%8B/
+
+> 完成品URL\
+> https://fukekazki.github.io/Movie-Search-TS/\
+> リポジトリ\
+> https://github.com/FukeKazki/Movie-Search-TS
+
+**TypeScriptとは** 動的言語であるJavaScriptに静的な型やオブジェクト指向を加えたもので、要するにJavaScriptの上位互換です.\
+TypeScriptを使うことでエラーを未然に防ぐことができ, 保守性が上がります.
+
+> 「型は強ければ強いほどよい」\
+> TypeScript (Wikipedia)\
+> https://ja.wikipedia.org/wiki/TypeScript
+
+## コード解説
+
+### index.tsx
+
+```typescript
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./component/App";
+import * as serviceWorker from "./serviceWorker";
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
+```
+
+Appコンポーネントを読み込んで, index.htmlのidがrootのDOMに出力しています.
+
+### App.tsx
+
+```typescript
+import React, { useEffect, useReducer } from "react";
+import { Box, Container, CssBaseline, Typography } from "@material-ui/core";
+import Header from "./organisms/Header";
+import Movie from "./organisms/Movie";
+import Search from "./organisms/Search";
+
+export interface Movie {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+}
+
+interface State {
+  loading: boolean;
+  movies: Movie[];
+  errorMessage: string | null;
+}
+
+enum ActionName {
+  REQUEST = "SEARCH_MOVIES_REQUEST",
+  SUCCESS = "SEARCH_MOVIES_SUCCESS",
+  FAILURE = "SEARCH_MOVIES_FAILURE",
+}
+
+interface REQUEST {
+  type: ActionName.REQUEST;
+}
+
+interface SUCCESS {
+  type: ActionName.SUCCESS;
+  payload: Movie[];
+}
+
+interface FAILURE {
+  type: ActionName.FAILURE;
+  error: string;
+}
+
+type MovieActions = REQUEST | SUCCESS | FAILURE;
+
+const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=4a3b711b";
+
+const initialState: State = {
+  loading: true,
+  movies: [],
+  errorMessage: null,
+};
+
+const reducer: React.Reducer<State, MovieActions> = (state, action): State => {
+  switch (action.type) {
+    case ActionName.REQUEST:
+      return {
+        ...state,
+        loading: true,
+        errorMessage: null,
+      };
+    case ActionName.SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        movies: action.payload,
+      };
+    case ActionName.FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    default:
+      throw new Error();
+  }
+};
+
+const App: React.FC = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    fetch(MOVIE_API_URL)
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        dispatch({
+          type: ActionName.SUCCESS,
+          payload: jsonResponse.Search,
+        });
+      });
+  }, []);
+
+  const search = (searchValue: string): void => {
+    dispatch({
+      type: ActionName.REQUEST,
+    });
+
+    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        if (jsonResponse.Response === "True") {
+          dispatch({
+            type: ActionName.SUCCESS,
+            payload: jsonResponse.Search,
+          });
+        } else {
+          dispatch({
+            type: ActionName.FAILURE,
+            error: jsonResponse.Error,
+          });
+        }
+      });
+  };
+
+  const { movies, errorMessage, loading } = state;
+
+  return (
+    <React.Fragment>
+      <Header text="MovieSearch" />
+      <Container component="main" maxWidth="md">
+        <CssBaseline />
+        <Box
+          mt={4}
+          textAlign="center"
+        >
+          <Search search={search} />
+          <Typography component="p">
+            Sharing a few of our favourite movies
+          </Typography>
+        </Box>
+        <Box
+          mt={4}
+          display="flex"
+          flexWrap="wrap"
+          justifyContent="space-around"
+        >
+          {loading && !errorMessage
+            ? <Typography component="p">loading...</Typography>
+            : errorMessage
+            ? <Typography component="p">{errorMessage}</Typography>
+            : (
+              movies.map((movie: Movie, index: number) => (
+                <Movie key={`${index}-${movie.Title}`} movie={movie} />
+              ))
+            )}
+        </Box>
+      </Container>
+    </React.Fragment>
+  );
+};
+
+export default App;
+```
+
+#### 定義する
+
+_**12~18行目**_
+
+```typescript
+export interface Movie {
+  Title: string;
+  Year: string;
+  imdbID: string;
+  Type: string;
+  Poster: string;
+}
+```
+
+TypeScriptのinterfaceでクラスやオブジェクトにどのプロパティが存在するかを定義します.\
+この場合は Movie オブジェクトには Title, Year, imdbID, Type, Poster プロパティが存在し, 全て
+string型であることを定義しています.\
+export をつけることで, 他のファイルからMovie interfaceを参照することができます.
+
+_**20~24行目**_
+
+```typescript
+interface State {
+  loading: boolean;
+  movies: Movie[];
+  errorMessage: string | null;
+}
+```
+
+こちらも同じように loadingプロパティには boolean型, moviesプロパティには Movieの配列, errorMessageプロパティには
+string型あるいはnullが入ることを定義しています.
+
+_**26~30行目**_
+
+```typescript
+enum ActionName {
+  REQUEST = "SEARCH_MOVIES_REQUEST",
+  SUCCESS = "SEARCH_MOVIES_SUCCESS",
+  FAILURE = "SEARCH_MOVIES_FAILURE",
+}
+```
+
+Enumsとは列挙型と呼ばれ, 関連する値の集合の定義をします.\
+今回はRedux(後ほど説明)でのActionの集合を定義しています.
+
+_**46行目**_
+
+```typescript
+type MovieActions = REQUEST | SUCCESS | FAILURE;
+```
+
+typeを使うと新しい型を作成できます.\
+MovieActions型は REQUEST or SUCCESS or FAILURE のいずれかであることを定義しています.
+
+#### 変数の宣言
+
+_**50~54行目**_
+
+```typescript
+const initialState: State = {
+  loading: true,
+  movies: [],
+  errorMessage: null,
+};
+```
+
+initialStateオブジェクトは State interfaceに沿って定義します.\
+よってinitialStateのプロパティはState interfaceと同じものを持ち, 同じ型でないとエラーがでます.
+
+#### Reducerを使う
+
+_**56~79行目**_
+
+```typescript
+const reducer: React.Reducer<State, MovieActions> = (state, action): State => {
+  switch (action.type) {
+    case ActionName.REQUEST:
+      return {
+        ...state,
+        loading: true,
+        errorMessage: null,
+      };
+    case ActionName.SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        movies: action.payload,
+      };
+    case ActionName.FAILURE:
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    default:
+      throw new Error();
+  }
+};
+```
+
+_**82行目**_
+
+```typescript
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+Hooksで導入されたuseReducerを使います.\
+useReducerはreducer関数と初期stateを受け取り、現在のstateとdispath関数を返します.\
+そしてreducer関数は, stateとactionを受け取りそれに応じて,適当なstateを返す関数です.\
+受け取ったActionNameに応じて処理を分けており, REQUESTのときは loading プロパティを trueにし, SUCCESSのときは
+loadingをfalseに, moviesにactionのpayloadプロパティをセット, FAILUREのときは loadingをfalse
+errorMessageをactionのerrorプロパティにセットしています.\
+Reactのhooksを用いたstateの宣言は `useState`と`useReducer`の２つがあります.
+
+> useReducer が useState より好ましいのは、複数の値にまたがる複雑な state ロジックがある場合や、前の state に基づいて次の
+> state を決める必要がある場合です。また、useReducer を使えばコールバックの代わりに dispatch
+> を下位コンポーネントに渡せるようになるため、複数階層にまたがって更新を発生させるようなコンポーネントではパフォーマンスの最適化にもなります。(公式からの引用)
+
+わかりやすい解説は `React useReducer` で検索してもらうとたくさんでてきますので, そちらを参考にしてください..\
+reducer関数の構文は,
+
+```typescript
+const 変数名: React.Reducer<引数1の型, 引数2の型> = (引数1, 引数2): 返り値の型 => {
+  処理;
+};
+```
+
+となっています.
+
+> React Hooks useReducer\
+> https://ja.reactjs.org/docs/hooks-reference.html#usereducer
+
+#### useEffectを使う
+
+_**84~93行目**_
+
+```typescript
+useEffect(() => {
+  fetch(MOVIE_API_URL)
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      dispatch({
+        type: ActionName.SUCCESS,
+        payload: jsonResponse.Search,
+      });
+    });
+}, []);
+```
+
+useEffectは渡された関数を, 画面の表示が終わったあと, また第二引数の配列の中身が変更されたときに実行します.\
+今回は空配列を渡しているので最初の一回だけ実行されます.\
+内容は, MOVIE_APIへfetch(データの受取り)をして, その内容をjsonに直し, dispatchを使ってreducerに流しています.\
+dispatchの引数は, fetchが成功したときの処理なので, typeはSUCCESS, payloadはfetchの結果です.
+
+#### search関数
+
+_**95~115行目**_
+
+```typescript
+const search = (searchValue: string): void => {
+  dispatch({
+    type: ActionName.REQUEST,
+  });
+
+  fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+    .then((response) => response.json())
+    .then((jsonResponse) => {
+      if (jsonResponse.Response === "True") {
+        dispatch({
+          type: ActionName.SUCCESS,
+          payload: jsonResponse.Search,
+        });
+      } else {
+        dispatch({
+          type: ActionName.FAILURE,
+          error: jsonResponse.Error,
+        });
+      }
+    });
+};
+```
+
+検索するタイトルを受け取り, fetchを使って検索する関数です.\
+voidは返り値がないことを示しています.\
+関数の最初でREQUEST中であること(loadingを表示するため)をdispatch関数に渡します.\
+fetchが終わり, 成功したときは typeはSUCCESS, payloadはfetchの結果\
+失敗したときは typeはFAILURE, errorにレスポンスのerrorを渡します.
+
+#### 画面に表示
+
+_**137~145行目**_
+
+```typescript
+{
+  loading && !errorMessage
+    ? <Typography component="p">loading...</Typography>
+    : errorMessage
+    ? <Typography component="p">{errorMessage}</Typography>
+    : (
+      movies.map((movie: Movie, index: number) => (
+        <Movie key={`${index}-${movie.Title}`} movie={movie} />
+      ))
+    );
+}
+```
+
+loadingがtrueかつerrorMessageがnullのときは loading... を表示し,\
+errorMessageが存在するときは errorMessage を表示,\
+それ以外の場合で Movie を表示します.
+
+### Header.tsx
+
+```typescript
+import React from "react";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
+
+interface HeaderProps {
+  text: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ text }) => {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography component="h2">
+          {text}
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Header;
+```
+
+#### propsを受け取る
+
+_**8~10行目**_
+
+```typescript
+interface HeaderProps {
+  text: string;
+}
+```
+
+_**App.tsx 121行目**_
+
+```typescript
+<Header text="MovieSearch" />;
+```
+
+propsとは親コンポーネントから子コンポーネントへ渡すstateのことです.\
+App.tsxでtextを渡しているので, Header.tsxでは Headerpropsで text:string を受け取るように, 定義しています.
+
+### Movie.tsx
+
+```typescript
+import React from "react";
+import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Movie } from "../App";
+
+const DEFAULT_PLACEHOLDER_IMAGE =
+  "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg";
+
+interface MovieProps {
+  movie: Movie;
+}
+
+const MovieComponent: React.FC<MovieProps> = ({ movie }) => {
+  const poster = movie.Poster === "N/A"
+    ? DEFAULT_PLACEHOLDER_IMAGE
+    : movie.Poster;
+  return (
+    <Card
+      style={{
+        width: 200,
+        marginTop: "8px",
+      }}
+    >
+      <CardMedia
+        style={{
+          height: 300,
+        }}
+        image={poster}
+        title={`The movie titled: ${movie.Title}`}
+        component="img"
+      />
+      <CardContent>
+        <Typography component="h2">{movie.Title}</Typography>
+        <Typography component="p">({movie.Year})</Typography>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default MovieComponent;
+```
+
+#### propsを受け取る
+
+Header.tsxと同様にpropsを受け取ります.\
+Movie interfaceを App.tsxからimportして, MoviePropsでの定義で使用しています.
+
+### Search.tsx
+
+```typescript
+import React, { useState } from "react";
+import { TextField } from "@material-ui/core";
+
+interface SearchProps {
+  search: (arg: string) => void;
+}
+
+const Search: React.FC<SearchProps> = ({ search }) => {
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchInputChanges = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setSearchValue(e.target.value);
+  };
+
+  const resetInputField = () => {
+    setSearchValue("");
+  };
+
+  const callSearchFunction = (e: React.MouseEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    search(searchValue);
+    resetInputField();
+  };
+
+  return (
+    <form
+      onSubmit={callSearchFunction}
+    >
+      <TextField
+        type="text"
+        value={searchValue}
+        onChange={handleSearchInputChanges}
+      />
+      <TextField
+        type="submit"
+        value="SEARCH"
+      />
+    </form>
+  );
+};
+
+export default Search;
+```
+
+#### propsを受け取る
+
+_**6~8行目**_
+
+```typescript
+interface SearchProps {
+  search: (arg: string) => void;
+}
+```
+
+_**App.tsx 128行目**_
+
+```typescript
+<Search search={search} />;
+```
+
+App.tsxではpropsとしてsearch関数を渡しています.\
+なのでinterfaceで渡される関数を定義しています.\
+関数名はsearchで, 引数は string型, 返り値は void型 です.
+
+#### フォームの作成
+
+todo-appのtutorialの復習です.\
+TSのため型が追加されていますが, 処理内容は同じです.
+
+> React Hook でTODOアプリを作る\
+> https://gitpress.io/c/1332/2020-01-03
+
+TextFieldのonChangeメソッドを使い, 入力が変化するたびに handleSearchInputChanges関数が呼ばれます.\
+Enterキーが押されると formのonSubmitメソッドが実行され, callSearchFunctionが実行されます.
+
+## おわりに
+
+本家のMovie searchを作るTutorialは英語だったため, 日本語に直して解説記事をあげようと思ったのですが,\
+TypeScriptを導入したことでさらに難しくなってしまった感が否めないです(\
+TypeScriptは実際の開発でも使用されているのでこれを気に勉強してみてはどうでしょうか.

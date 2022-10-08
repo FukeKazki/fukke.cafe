@@ -1,0 +1,61 @@
+---
+title: 'Dockerを使ってGatsbyjsの環境作成'
+date: 2021-08-23
+tags: []
+---
+
+# モダンな開発環境とは
+
+WEB+DB PRESS Vol.
+118にてリモートでのアプリケーション開発についての記事がありました。モダンな開発環境を整えることでリモートでも開発体験を上げることができます。
+
+今回はDockerを用いてアプリケーションの開発環境を構築してモダンな開発環境の整備に取り組みたいと思います。
+
+# Dockerを用いる利点
+
+Dockerを用いることで
+
+- バージョンの統一
+- 手順書での手作業が不要
+
+などの利点があります。
+
+今回作成したコンテナには
+
+- node:14.17.5
+- git
+- gatsby-cli
+
+が含まれています。
+
+# リポジトリの使い方
+
+前提環境: Dockerインストール済みのPC
+
+[リポジトリのリンク](https://github.com/FukeKazki/gatsby-docker)
+
+READMEに沿って作業します。
+
+1. クローンする
+
+```bash
+git clone git@github.com:FukeKazki/gatsby-docker.git
+```
+
+2. セットアップスクリプトを実行する
+
+```bash
+./bin/bootstrap.sh
+```
+
+3. コンテナ内に入る
+
+```bash
+docker exec -it gatsby bash
+```
+
+4. devサーバーを立ち上げる
+
+```bash
+npm run develop
+```

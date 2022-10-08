@@ -1,0 +1,52 @@
+---
+title: 'perlでシフト時間計算ツールを作った'
+date: 2021-08-31
+tags: ['perl']
+---
+
+# シフト時間計算ツール
+
+[リポジトリはこちら](https://github.com/FukeKazki/time_parser_for_perl)
+
+[![Image from Gyazo](https://i.gyazo.com/a3f9cdb37cb12d1d27697e313d16332f.png)](https://gyazo.com/a3f9cdb37cb12d1d27697e313d16332f)
+
+# Perl文法メモ
+
+標準入力
+
+```perl
+my $input = <STDIN>;
+```
+
+配列
+
+```perl
+my @array = (1, 2);
+my ($a, $b) = split(/,/, $input);
+```
+
+改行コードを削除
+
+```perl
+chomp($input);
+```
+
+文字列比較 & ループ抜け
+
+```perl
+if ($input eq "n") {
+	last;
+}
+```
+
+標準出力+改行コード
+
+```perl
+say $input;
+```
+
+# 所感
+
+`python2`を書いてる気分になる。
+
+文字列比較の構文が面白い。書きづらいけど味があって良いわ。

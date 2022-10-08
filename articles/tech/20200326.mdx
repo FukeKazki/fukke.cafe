@@ -1,0 +1,298 @@
+---
+title: 'Next.js 北九州市のイベント情報を取得する'
+date: 2020-03-26
+tags: ['web', 'react', 'next.js']
+---
+
+!['タイトル'](https://i.gyazo.com/6dba50b5238ab28733e59bc5e017d420.png)
+
+## はじめに
+
+Next.jsを使って北九州市のイベント情報サイトを作成するチュートリアルです.\
+Next.jsを使ってサーバーから外部のサイトにアクセスすることでCORS対策にもなります.
+
+## 完成品
+
+> サイトURL\
+> https://kitakyushu-event-site.fukekazki.now.sh/
+
+> リポジトリ\
+> https://github.com/FukeKazki/Kitakyushu-event-site
+
+## 準備
+
+### プロジェクトの作成
+
+```bash
+$ yarn create next-app
+```
+
+### ライブラリの導入
+
+```bash
+# API通信ライブラリ
+$ yarn add axios
+# CSSライブラリ
+$ yarn add styled-components
+$ yarn add @material-ui/core
+# TypeScriptライブラリ
+$ yarn add @types/node @types/react typescript
+```
+
+## 作成
+
+### pages/index.tsx
+
+```typescript
+import React from "react";
+import Head from "next/head";
+import { NextPage } from "next";
+
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+
+const Home: NextPage = () => {
+  return (
+    <React.Fragment>
+      <Head>
+        <title>北九州イベントサイト</title>
+      </Head>
+      <CssBaseline />
+      <main>
+        <Container maxWidth="lg">
+          <h1>Hello Next.js</h1>
+        </Container>
+      </main>
+    </React.Fragment>
+  );
+};
+
+export default Home;
+```
+
+index.jsのファイル名をindex.tsxに変えるのを忘れないようにしましょう.
+
+### サーバーの起動
+
+```bash
+$ yarn run dev
+```
+
+コマンドを実行するとtypescript用のconfigファイルが自動生成されて, 3000番で実行されます.
+
+### 北九州市のサイトからイベント情報を取得してくる
+
+Next.jsのgetInitialPropsという関数を使ってサーバーからデータを取得します.\
+pages/index.tsxにコードを追加します.
+
+```typescript
+// 略
+import axios from "axios"; // 追加
+
+const Home: NextPage = () => {
+  // 略
+};
+// 追加
+Home.getInitialProps = async () => {
+  try {
+    const res = await axios.get(
+      "https://www.city.kitakyushu.lg.jp/cgi-bin/event/api.cgi",
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export default Home;
+```
+
+!['タイトル'](https://i.gyazo.com/dd8e1d40f2ab6241a48a4a9a42ea4e3a.png)
+ターミナル画面にイベント情報が表示されます.
+
+getInitialPropsはサーバーでHTMLが生成される前に実行されます.\
+axios.get()で引数のURLへGetリクエストを送りデータが帰ってくるまでawaitを使って待ちます.\
+データがきたらreturnでデータの中身をHomeコンポーネントへ返します.\
+また, try catch文を使ってエラーが起きた場合の対処をしています.
+
+### 画面に表示
+
+```typescript
+// import文 略
+type event = {
+  event_name: string;
+  ent_wday: string;
+  ctg1: string;
+  pc_flag: string;
+  place: string;
+  begin_date: string;
+  begin_wday: string;
+  description: string;
+  disp_flag: string;
+  Area: string;
+  end_data: string;
+  url: string;
+};
+
+type HomeProps = {
+  events: event[];
+};
+
+const Home: NextPage<HomeProps> = ({ events }) => {
+  return (
+    <React.Fragment>
+      // 略
+      <main>
+        <Container maxWidth="lg">
+          {events.map((event, index) => (
+            <div>
+              <h2>{event.event_name}</h2>
+              <p>{event.description}</p>
+            </div>
+          ))}
+        </Container>
+      </main>
+    </React.Fragment>
+  );
+};
+// 略
+```
+
+せっかくtypescriptを使うのでtypeを使ってイベントの型を定義しています.\
+HomePropsの型はeventの配列です.\
+配列はmapを使ってループを回して表示しています.
+
+### 見た目をいい感じに
+
+```typescript
+// 追加
+import styled from "styled-components";
+import Box from "@material-ui/core/Box";
+
+const Home: NextPage<HomeProps> = ({ events }) => {
+  return (
+    <React.Fragment>
+      // 略
+      <main>
+        <Container maxWidth="lg">
+          {events.map((event, index) => (
+            // 書き換え
+            <EventCard>
+              <h2>{event.event_name}</h2>
+              <p>{event.description}</p>
+            </EventCard>
+          ))}
+        </Container>
+      </main>
+    </React.Fragment>
+  );
+};
+// 追加
+const EventCard = styled(Box)`
+    border: 1px solid #4d4d4d;
+    padding: 1em 2em;
+    margin-top: 1em;
+    border-radius: 16px;
+`;
+```
+
+!['タイトル'](https://i.gyazo.com/322091c94598fe13b63637bca36ab546.png)
+こんな感じに表示がされれば完成です.
+
+styled-componentを使って, CSSを書いています.\
+利点は記述をキャメルケースにしなくてよく, 通常CSSを書く記法で良いというところです.
+
+## デプロイ
+
+NowというPaaSを使ってデプロイします.
+
+```bash
+# nowコマンドのインストール
+$ npm i -g now
+# nowのアカウントを作成・ログイン
+$ now login
+# デプロイコマンド
+$ now
+```
+
+## 最終的なコード
+
+```typescript
+import React from "react";
+import Head from "next/head";
+import { NextPage } from "next";
+import axios from "axios";
+import styled from "styled-components";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+
+type event = {
+  event_name: string;
+  ent_wday: string;
+  ctg1: string;
+  pc_flag: string;
+  place: string;
+  begin_date: string;
+  begin_wday: string;
+  description: string;
+  disp_flag: string;
+  Area: string;
+  end_data: string;
+  url: string;
+};
+
+type HomeProps = {
+  events: event[];
+};
+
+const Home: NextPage<HomeProps> = ({ events }) => {
+  return (
+    <React.Fragment>
+      <Head>
+        <title>北九州イベントサイト</title>
+      </Head>
+      <CssBaseline />
+      <main>
+        <Container maxWidth="lg">
+          {events.map((event, index) => (
+            <EventCard>
+              <h2>{event.event_name}</h2>
+              <p>{event.description}</p>
+            </EventCard>
+          ))}
+        </Container>
+      </main>
+    </React.Fragment>
+  );
+};
+
+Home.getInitialProps = async () => {
+  try {
+    const res = await axios.get(
+      "https://www.city.kitakyushu.lg.jp/cgi-bin/event/api.cgi",
+    );
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+const EventCard = styled(Box)`
+    border: 1px solid #4d4d4d;
+    padding: 1em 2em;
+    margin-top: 1em;
+    border-radius: 16px;
+`;
+
+export default Home;
+```
+
+## おわりに
+
+データの取得 => 表示 が自由自在にできるようになればもう最強です(\
+今回取得してきた北九州市のイベント情報もパブリックに公開しているものではなく, 自分で探しだしたやつなので,
+フロントからデータを取得しようとするとCORSで弾かれます.\
+こういうときにSSRを使えば(用途が合ってるのかは置いといて)CORSをくぐり抜けてデータの取得ができます(ニアッ)\
+またNowを使ったデプロイも超ラクなのでおすすめです.

@@ -1,0 +1,67 @@
+---
+title: 'Slack Botの作成! perl言語で実装'
+date: 2021-07-06
+tags: ['perl', 'slack']
+---
+
+1. perlの環境構築
+
+cpanmのインストール
+
+```
+brew install cpanminus
+```
+
+.zshrcへライブラリディレクトリへのパスを通す
+
+```.zshrc
+# Perl
+export PERL_CPANM_OPT="--local-lib=~/perl5"
+export PATH=$HOME/perl5/bin:$PATH
+export PERL5LIB=$HOME/perl5/lib/perl5:$PERL5LIB
+```
+
+2. ライブラリのインストール
+
+```bash
+cpanm WebService::Slack::WebApi
+```
+
+3. サイトでBOTの作成
+
+[Slack API](https://api.slack.com)
+
+Bot Scopeの設定わすれずに！
+
+![img](https://i.gyazo.com/4e3b507b279b444ebda2d0d5f14b566e.png)
+
+4. コーディング
+
+slack.plファイルの作成
+
+```perl
+use strict;
+
+use WebService::Slack::WebApi;
+
+my $token = 'slack api key';
+
+my $slack = WebService::Slack::WebApi->new(
+    token => $token,
+);
+
+my $res = $slack->chat->post_message(
+    channel => 'channel id',
+    text => 'hello world',
+);
+```
+
+5. 実行
+
+```bash
+perl slack.pl
+```
+
+![img](https://i.gyazo.com/b2875ee5f9536e211e4c4db640b4a7ac.png)
+
+できた！

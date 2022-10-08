@@ -1,0 +1,70 @@
+---
+title: '音声をなみなみさせる'
+date: 2022-08-26
+tags: []
+---
+
+[![Image from Gyazo](https://i.gyazo.com/1d31872620e07469c516078a1df01473.gif)](https://gyazo.com/1d31872620e07469c516078a1df01473)
+
+マイクで入力した音声をフーリエ変換してcanvasに表示するデモです。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>音声なみなみ</title>
+</head>
+<body>
+  <body>
+    <main>
+      <h1>音声をなみなみで表示します！</h1>
+      <canvas></canvas>
+      <button id="btn">音声！</button>
+    </main>
+    <script type="module">
+      document.querySelector('#btn').addEventListener('click', async () => {
+        // マイクアクセス
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+
+        const context = new AudioContext()
+        // 音源を作成
+        const mediaStream = context.createMediaStreamSource(stream);
+
+        const analyzer = context.createAnalyser();
+        // 音源　→　解析機　→　出力
+        mediaStream.connect(analyzer);
+        analyzer.connect(context.destination);
+
+        analyzer.fftSize = 2048;
+
+        const canvas = document.querySelector('canvas');
+        const canvasContext = canvas.getContext('2d');
+        canvasContext.strokeStyle = "blue"
+
+        window.setInterval(() => {
+            const times = new Uint8Array(analyzer.fftSize);
+            analyzer.getByteTimeDomainData(times);
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            canvasContext.beginPath();
+
+            for (let i = 0, len = times.length; i < len; i++) {
+              const x = (i / len) * canvas.width; // 正規化
+              const y = (1 - (times[i] / 255)) * canvas.height; // 正規化
+
+              if (i === 0) {
+                canvasContext.moveTo(x, y);
+              } else {
+                canvasContext.lineTo(x, y);
+              }
+            }
+            canvasContext.stroke();
+        }, 300);
+      })
+    </script>
+  </body>
+</body>
+</html>
+```

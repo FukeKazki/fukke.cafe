@@ -1,0 +1,189 @@
+---
+title: 'ngrxつかってみた'
+date: 2022-06-23
+tags: []
+---
+
+# NgRxってなに
+
+状態管理ライブラリの一種でAngular版のReduxです。 Rxとついている通りRxJsを使って状態にアクセスします。
+
+# なんで必要なの
+
+Angularはサービスがシングルトンなのでサービス内に状態を定義できるが、状態が多くなると管理が複雑になりバグの原因になる。
+対策として状態管理のベストプラクティスであるFluxアーキテクチャを適用するためにNgRxを用いる。
+
+# なにがいるの
+
+```bash
+# 状態管理
+yarn add @ngrx/store
+
+# developer-toolsでのデバッグができるようになる
+yarn add -D @ngrx/store-devtools
+
+# 副作用の管理
+yarn add @ngrx/effects
+```
+
+# 構成
+
+大体こんな感じ。
+
+```
+.
+├── counter.component.ts
+├── counter.module.ts
+└── store
+    ├── counter.actions.ts
+    ├── counter.effect.ts
+    ├── counter.reducer.ts
+    └── counter.selector.ts
+```
+
+# コードを書く
+
+## 1. actionを定義
+
+```ts counter.actions.ts
+import { createAction, props } from '@ngrx/store';
+
+export const increment = createAction('[Counter Component] increment');
+export const decrement = createAction('[Counter Component] decrement');
+
+# propsを受け取るaction
+export const reset = createAction('[Counter Component] decrement', props<{m: number}>());
+```
+
+## 2. reducerを定義
+
+```ts counter.reducer.ts
+import { createReducer, on, Action } from '@ngrx/store';
+import { decrement, increment, reset } from './counter.actions';
+
+export const featureName = 'counter';
+
+export interface State {
+  count: number;
+}
+
+export const initialState: State = {
+  count: 0,
+};
+
+const _counterReducer = createReducer(
+  initialState,
+  on(increment, (state) => ({ ...state, count: state.count + 1 })),
+  on(decrement, (state) => ({ ...state, count: state.count - 1 })),
+  on(reset, (state, { m }) => ({ ...state, count: m }))
+);
+
+export const counterReducer = (state: State, action: Action) =>
+  _counterReducer(state, action);
+```
+
+## 3. selectorを定義
+
+```ts counter.selector.ts
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { featureName, State } from './counter.reducer';
+
+export const selectCounterState = createFeatureSelector<State>(featureName);
+
+export const selectCount = createSelector(
+  selectCounterState,
+  (state) => state.count
+);
+```
+
+## 4. effectsを定義
+
+```ts counter.effect.ts
+import { Injectable } from '@angular/core';
+import { Actions } from '@ngrx/effects';
+import { createEffect, ofType } from '@ngrx/effects';
+import { tap } from 'rxjs/operators';
+import { increment } from './counter.actions';
+
+@Injectable()
+export class CounterEffects {
+  constructor(private actions$: Actions) {}
+
+  increment$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(increment), # 発火してほしいアクションを入れる
+        tap(() => console.log('icrementするたびに呼ばれるよ'))
+      ),
+    { dispatch: false }
+  );
+}
+```
+
+## 5. モジュールに登録
+
+```ts counter.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer, featureName } from './counter.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { CounterEffects } from './counter.effect';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    StoreModule.forRoot({ [featureName]: counterReducer }), # feature rootもある
+    EffectsModule.forRoot([CounterEffects]), # feature rootもある
+    StoreDevtoolsModule.instrument(), # devtool用
+  ],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+## 6. コンポーネントから呼ぶ
+
+```ts counter.component.ts
+import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { State } from './counter.reducer';
+import { selectCount } from './counter.selector';
+import * as CounterActions from './counter.actions';
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  constructor(private store: Store<State>) {}
+  count$ = this.store.pipe(select(selectCount));
+
+  increment() {
+    this.store.dispatch(CounterActions.increment());
+  }
+
+  decrement() {
+    this.store.dispatch(CounterActions.decrement());
+  }
+
+  reset() {
+    this.store.dispatch(CounterActions.reset(0));
+  }
+}
+```
+
+## 7. HTMLから呼ぶ
+
+```html counter.component.html
+<div>
+  <button (click)="increment()">+</button>
+  <button (click)="decrement()">-</button>
+  <button (click)="reset()">reset</button>
+  <p>{{ count$ | async }}</p>
+</div>
+```

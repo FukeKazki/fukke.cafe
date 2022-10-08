@@ -1,0 +1,39 @@
+---
+title: 'ImageMagickで日本語を画像に変換'
+date: 2021-01-01
+tags: ['ImageMagick']
+---
+
+マトリクスパネルに日本語表示ができるととても嬉しいのでimagemagickを使って実装していきます!
+
+過去記事[ラズパイとLEDマトリクスパネルで遊ぶ](https://gitpress.io/@fukke0906/2020-01-24)
+
+### 日本語フォントのダウンロード
+
+```bash
+$ sudo apt-get install fonts-ipafont-mincho
+```
+
+### 日本語を画像に変換
+
+```bash
+$ convert -background none -fill blue -font /usr/share/fonts/truetype/fonts-japanese-gothic.ttf -size 281x16 -pointsize 16 label:ソンナコトナイヨー image.jpg
+```
+
+- -background 背景色
+- -fill 文字色
+- -font フォントの場所
+- -size 画像サイズ
+- -pointsize フォントサイズ
+- label 日本語
+
+## rpi-rgb-led-matrixで実行してみる
+
+```bash
+$ cd rpi-rgb-led-matrix/bindings/python/samples
+$ sudo python3 image-scroller.py -r 16 -c 2 --led-no-hardware-pulse yes -i image.jpg
+```
+
+!['gif'](https://dl.dropboxusercontent.com/s/3oj9ko8m98og21l/matrix.gif?dl=0)
+
+Twitter: https://twitter.com/fukke0906/status/1344981396138336256

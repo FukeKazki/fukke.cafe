@@ -1,0 +1,58 @@
+---
+title: 'node.jsでシェルコマンドを実行'
+date: 2020-06-20
+tags: ['typescript', 'nodejs']
+---
+
+## シェルコマンドを使いたい
+
+標準モジュールの`child_process`を使ってコマンドを実行することができます。
+
+今回はプログラムからアプリケーションの起動を実装します。
+
+## シェルコマンド
+
+シェルコマンドでは
+
+```bash
+$ open -a ApplicationName
+```
+
+で任意のアプリケーションを起動できます。
+
+## プログラム
+
+child_processモジュールのexecメソッドを使うことで、内部的にシェルを実行することができます。
+
+callback形式の関数になっているのでpromise化して使用します。
+
+execメソッドにコマンドを渡すとなんでも実行できてしまうので結構危険ですね。 `shell injection`と言うらしい。
+
+```typescript
+import { exec } from "child_process";
+
+const execAsync = (command: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    exec(command, (error, stdout, stderr) => {
+      if (error) reject(error);
+      if (stderr) reject(stderr);
+      resolve(stdout);
+    });
+  });
+};
+
+(async function () {
+  const result = await execAsync("ls").catch(() => "");
+  console.log(result);
+})();
+```
+
+resultにlsコマンドの結果が入ります。
+
+やりたかったアプリケーションの起動は `execAsync`関数の引数を変更するだけですね。
+
+```type
+await execAsync('open -a Typora')
+```
+
+Typoraの起動ができます。

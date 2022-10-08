@@ -1,0 +1,71 @@
+---
+title: 'Node.js QiitaAPIで自分の投稿を取得する'
+date: 2020-05-04
+tags: ['node.js', 'web', 'typescript', 'javascript']
+---
+
+## はじめに
+
+Qiitaの投稿を取得します。\
+投稿の取得には認証とかいらないのでAPIで簡単にできます.\
+!['タイトル'](https://i.gyazo.com/87a83b21db51f7b26dd70280396a8a9f.png)
+
+## コード
+
+最終的に欲しいデータの型を定義しておきます.\
+ファイルは types/index.d.ts とかです.
+
+```typescript
+export type Article = {
+  title: string;
+  link: string;
+  updated: string;
+};
+```
+
+取得のコードで定義した型をインポートして使います. GETリクエストを送るURLは `/api/v2/users/{userName}/items` です.
+
+```typescript
+import fetch from "isomorphic-unfetch";
+import { Article } from "../types";
+
+const QiitaURL = "https://qiita.com/api/v2/users/fukke0906/items";
+
+type QiitaArticle = {
+  title: string;
+  url: string;
+  updated_at: string;
+};
+
+const fetchQiitaJson = async (): Promise<object[] | null> => {
+  try {
+    const response = await fetch(QiitaURL);
+    const json = await response.json();
+
+    return json;
+  } catch (err) {
+    console.error("Qiita fetch Error", err);
+
+    return null;
+  }
+};
+
+export const getQiitaArticles = async (): Promise<Article[]> => {
+  const json = await fetchQiitaJson();
+  const articles = json.map((article: QiitaArticle) => {
+    return {
+      title: article.title,
+      link: article.url,
+      updated: article.updated_at,
+    };
+  });
+
+  return articles;
+};
+```
+
+fetchQiitaJson関数でfetchした後にjsonに直してます.\
+getQiitaArticles関数でjsonから必要なデータを取得です.
+
+僕はそもそも2つしか記事かいてない()ですが, 実行結果はこんなです.\
+!['タイトル'](https://i.gyazo.com/79c9da647fe31b0d1b5ab6bdfbf1e816.png)

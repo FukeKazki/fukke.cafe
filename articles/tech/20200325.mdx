@@ -1,0 +1,43 @@
+---
+title: 'Next.js × now がやばい'
+date: 2020-03-25
+tags: ['web', 'react', 'next.js']
+---
+
+## はじめに
+
+Next.jsとnowを使うとデプロイ速度が異常でした..
+
+> Next.jsとは (Qiita) https://qiita.com/nkzawa/items/1e0e93efd13fb982c8c0
+
+> Zeit Nowとは (Qiita) https://qiita.com/aggre/items/f0cb9f8b8e8c54768e50
+
+## 作成とデプロイ
+
+### プロジェクトの作成
+
+```bash
+$ yarn create next-app
+```
+
+### nowの導入 デプロイ
+
+```bash
+$ npm i -g now
+$ now login
+$ now
+```
+
+これだけです。。えぇ。。こんだけです。。
+
+デプロイ時の各種設定はnowのcliが色々聞いてくれます.
+
+ダッシュボードも見やすい！
+
+!['タイトル'](https://i.gyazo.com/1cbc07dafc7bcee9a9d3ab93fcfc613a.png)
+
+## おわりに
+
+Next.jsでSSRすることで個人開発で引っかかりがちなCORS対策にもなります.(ぼくはこのためにSSRしました..\
+nowでのデプロイもめっちゃ早くて最高です.\
+Reactでの開発がもっと捗ります！

@@ -1,0 +1,80 @@
+---
+title: 'Callback時代の関数をPromise化する'
+date: 2020-06-19
+tags: ['typescript', 'javascript', 'nodejs']
+---
+
+## Callback時代の関数たち
+
+node.jsの標準モジュールにはcallback時代の関数が多数存在します。
+
+例えば `fs.writeFile()`
+
+> https://nodejs.org/api/fs.html#fs_fs_writefile_file_data_options_callback
+
+この関数は第3引数にcallback関数を取ります。
+
+```javascript
+fs.writeFile("path", data, (err) => {
+  if (err) throw err;
+});
+```
+
+ぱっと見は、全然使いやすそうに見えるのですが
+
+例えば
+
+```javascript
+fs.copyFile(, , err => {
+    fs.chmod(, , err => {
+        fs.readdir(, , (err, file) => {
+            ...
+        })
+    })
+})
+```
+
+このように結果を使ってさらに処理したい場合、
+
+どんどんネストが深くなっていきとても見にくくなります。
+
+これを `Callback Hell`と言うそうです。
+
+この問題を解決するために、Promiseを使用します。
+
+Promiseはcallbackに変わる非同期処理です。
+
+## Promise化する
+
+Promiseを返す関数を作成します。
+
+Promiseには正しく解決したことを表す`resolve`と問題が起きたことを表す`reject`があります。
+
+よって、callback関数で`err`が存在した場合は`reject` それ以外の場合に`resolve`を返すように実装します。
+
+```typescript
+import * as fs from "fs";
+const writeFileAsync = (file: string, data: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(file, data, (err) => err ? reject(err) : resolve());
+  });
+};
+```
+
+Promiseを返す関数が実装できればこの関数を await するように使うことで非同期の実行を待つことが出来ます。
+
+またtry-catchでrejectの補足も行いましょう。
+
+```typescript
+const main = async () => {
+  try {
+    await writeFileAsync(file, data);
+  } catch (error) { // rejectの補足
+    console.error(error);
+  }
+};
+```
+
+## 参考文献
+
+> https://techblog.yahoo.co.jp/javascript/nodejs/callback-to-promise/

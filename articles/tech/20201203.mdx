@@ -1,0 +1,50 @@
+---
+title: 'Dockerを使って軽率にJupyter環境を作る'
+date: 2020-12-03
+tags: ['docker', 'jupyter']
+---
+
+# ディレクトリの作成
+
+jupyter関連のファイルを入れておくディレクトリを作成します。
+
+```zsh
+$ mkdir jupyter
+```
+
+# docker-compose.ymlの作成
+
+```yml
+version: "3.8"
+
+services:
+	jupyter:
+    	image: jupyter/scipy-notebook
+        container_name: jupyter
+        volumes:
+            - ./jupyter:/home/jovyan/work
+        ports:
+            -   "12000:8888"
+        command: start-notebook.sh --NotebookApp.token=''
+```
+
+- version: docker-composeの記法のバージョン設定
+- services: ここにコンテナの設定を書いていく
+- jupyter: jupyterの設定
+- image: 使用するイメージ
+- Container_name: 参照用のコンテナ名
+- volumes: ローカルディレクトリとコンテナ内ディレクトリの紐付け
+- Ports: ローカルポートとコンテナ内のポートの紐付け
+- command: 起動時に実行するコマンド
+
+# 実行
+
+```zsh
+$ docker-compose up -d jupyter
+```
+
+# 結果
+
+`localhost:12000`にjupyter環境が立ち上がります。
+
+![img](https://i.gyazo.com/d2112f8d907ca1901527d6db12029ad7.png)

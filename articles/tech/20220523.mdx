@@ -1,0 +1,64 @@
+---
+title: 'ビルドツールを知る'
+date: 2022-05-23
+tags: []
+---
+
+# 用語の整理
+
+## バンドラ (bundler)
+
+コードの圧縮ツールをバンドラといいます。 複数ファイルを1つのファイルに圧縮します。
+
+- webpack
+- rollup
+- esbuild
+- snowpack
+- parcel
+
+## トランスパイラ (transpiler)
+
+コードの変換ツールをトランスパイラといいます。 変換はトランスパイルです。 トランスパイラは`TypeScript`から`JavaScript`への変換や、
+`JavaScript`の最新バージョンから旧バージョンへ変換する。
+
+- tsc
+- babel
+- swc
+
+## ミニファ (minifier)
+
+- terser
+- uglifyjs
+- babel-minify
+
+## バンドラの設定にトランスパイラの設定を書くことが多い
+
+- webpack
+  - ts-loader
+  - babel-loader
+  - css-loader
+  - html-loader
+- esbuild
+  - esbuild-plugin-sass
+
+> 参考
+>
+> https://github.com/esbuild/community-plugins
+
+## バンドラーとトランスパイル両方やってくれるツールもある
+
+- Vite (内部でrollup)
+
+## どれがいいの
+
+共通で型チェックは`tsc`を使う。
+
+サーバーの開発環境は`esbuild`がおすすめ。
+
+本番環境は`rollup`&`terser`がおすすめ。
+
+フロントは`vite`がおすすめ。
+
+## メモ
+
+webpackは内部でterserを使用。

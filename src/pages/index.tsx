@@ -14,7 +14,7 @@ export default function IndexPage() {
         <Navigation />
       </nav>
       <main>
-        <SideMenu/>
+        <SideMenu />
       </main>
     </Fragment>
   );

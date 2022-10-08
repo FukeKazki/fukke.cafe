@@ -1,0 +1,155 @@
+---
+title: 'ReactNative StopWatch作るの結構むずい'
+date: 2020-04-22
+tags: ['javascript', 'reactnative', 'react']
+---
+
+!['タイトル'](https://i.gyazo.com/8c0906fa9acdf160223326490a98992c.gif)
+
+## はじめに
+
+ストップウォッチ作るコードってラップ機能付きだとあまりないし, React Hooksってなるとほんとに見つからないよね
+
+## コード
+
+```typescript
+const [now, setNow] = useState(0);
+const [start, setStart] = useState(0);
+const [intervalId, setIntervalId] = useState<number>();
+const [laps, setLaps] = useState<number[]>([]);
+
+useEffect(() => {
+  // component will unmount
+  return () => clearInterval(intervalId);
+}, []);
+
+const handleStart = () => {
+  const id = setInterval(() => {
+    setNow(new Date().getTime());
+  }, 100);
+  setIntervalId(id);
+  setStart(new Date().getTime());
+  setLaps([0]);
+};
+
+const handleStop = () => {
+  clearInterval(intervalId);
+  const [firstLap, ...other] = laps;
+  setLaps([firstLap + now - start, ...other]);
+  setStart(0);
+  setNow(0);
+};
+
+const handleResume = () => {
+  setStart(new Date().getTime());
+  setNow(new Date().getTime());
+  const id = setInterval(() => {
+    setNow(new Date().getTime());
+  }, 100);
+  setIntervalId(id);
+};
+
+const handleLap = () => {
+  const [firstLap, ...other] = laps;
+  setLaps([0, firstLap + now - start, ...other]);
+  setStart(new Date().getTime());
+  setNow(new Date().getTime());
+};
+
+const handleReset = () => {
+  setLaps([]);
+  setStart(0);
+  setNow(0);
+};
+```
+
+## 解説
+
+必要なstateは
+
+- now: 今の時刻
+- state: タイマーを開始した時刻
+- laps: ラップを格納する配列
+- intervalId: タイマーのId
+
+handleStart関数内のsetIntervalでタイマーを開始し, 返り値のidをセットしてラップを0にします.
+
+handleStop関数内のclearIntervalでタイマーを停止し, ラップは firstLap + now - start にします.\
+firstLapはラップの最初の値, now - start が経過時間です.
+
+handleResume関数は 停止 -> 再開 の時の関数です.
+
+handleRap関数はラップ時の関数で, タイマーは動かしたまま, lapに記録します.
+
+handleResetで全てをリセットします.
+
+最後にuseEffectのcleanup関数でタイマーをクリアーします.
+
+## 表示部分
+
+```typescript
+const Timer = ({ interval, style }: any) => {
+  const pad = (n: number) => n < 10 ? "0" + n : n;
+  const duration = moment.duration(interval);
+  const centimes = Math.floor(duration.milliseconds() / 10);
+  return (
+    <View style={styles.timerContainer}>
+      {duration.minutes() < 0
+        ? (
+          <React.Fragment>
+            <Text style={style}>00</Text>
+            <Text style={style}>00</Text>
+            <Text style={style}>00</Text>
+          </React.Fragment>
+        )
+        : (
+          <React.Fragment>
+            <Text style={style}>{pad(duration.minutes())}</Text>
+            <Text style={style}>{pad(duration.seconds())}</Text>
+            <Text style={style}>{pad(centimes)}</Text>
+          </React.Fragment>
+        )}
+    </View>
+  );
+};
+
+return (
+  <React.Fragment>
+    <Timer
+      interval={laps.reduce((prev, curr) => prev + curr, 0) + now - start}
+      style={styles.timer}
+    />
+    {laps.length === 0 && (
+      <TouchableOpacity onPress={handleStart}>
+        <Text>START</Text>
+      </TouchableOpacity>
+    )}
+    {start > 0 && (
+      <React.Fragment>
+        <TouchableOpacity onPress={handleStop}>
+          <Text>STOP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleLap}>
+          <Text>LAP</Text>
+        </TouchableOpacity>
+      </React.Fragment>
+    )}
+    {laps.length > 0 && start === 0 && (
+      <React.Fragment>
+        <TouchableOpacity onPress={handleReset}>
+          <Text>RESET</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleResume}>
+          <Text>RESUME</Text>
+        </TouchableOpacity>
+      </React.Fragment>
+    )}
+    {laps.map((lap, i) => <Text key={i}>{lap}</Text>)}
+  </React.Fragment>
+);
+```
+
+## 解説
+
+合計値は `laps.reduce((prev, curr) => prev + curr, 0) + now - start` で求められます.\
+あとは大体いい感じにです..

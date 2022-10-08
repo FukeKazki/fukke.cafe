@@ -1,0 +1,54 @@
+---
+title: 'JavaScript 配列内のオブジェクトの更新ってどうする？'
+date: 2020-04-21
+tags: ['javascript']
+---
+
+## どうするもこうするもそんなに方法なかったわ
+
+```typescript
+const persons = [
+    {name: 'fukke', age: 18},
+    {name: 'momoko', age: 20},
+]
+
+// momokoの年齢を21歳にする
+// まずindex番号を検索
+const index = persons.(person => person.name === 'momoko')
+// 更新する
+persons[index].age++
+```
+
+おっけいですね.\
+でもなんか更新部分があまりすきじゃないんだよねぇ..\
+なんとか一つの式出かけないかなぁ
+
+## 色々試す
+
+```typescript
+persons.find((person) => person.name === "momoko").age++;
+```
+
+これの返り値で新しい配列返してくれたら完璧なんだけどなぁ\
+これじゃ更新された後のageが返ってくるんですよねぇ
+
+## 無理やり配列を返すようにする
+
+```typescript
+const updatedPersons = persons.map((person) => {
+  if (person.name === "momoko") {
+    return {
+      name: person.name,
+      age: person.age++,
+    };
+  }
+  return person;
+});
+```
+
+個人的にはこの感じが一番好きだけど, mapで展開するからO(N)かかるのがなぁって思ってる.\
+find, findIndexが多分O(logN)ぐらい(要出典)だろうからね..
+
+## おわりに
+
+おすすめの更新方法あったら教えてください

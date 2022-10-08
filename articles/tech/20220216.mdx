@@ -1,0 +1,258 @@
+---
+title: 'SQLコマンドとかMySQLの操作'
+date: 2022-02-16
+tags: []
+---
+
+# MySQLの操作
+
+ログイン
+
+```bash
+sudo mysql -u root -p
+```
+
+データベースの確認
+
+```bash
+show databases;
+```
+
+データベースの作成
+
+```sql
+CREATE DATABASE fruits;
+```
+
+使用するデータベースの洗濯
+
+```bash
+use fruits;
+```
+
+テーブルの確認
+
+```bash
+show tables;
+```
+
+テーブルの作成
+
+```sql
+create table teams(fruit VARCHAR(10), grp VARCHAR(1));
+```
+
+データ型
+
+- INT 整数型 125
+- FLOAT 浮動小数点数型 13.234
+- VARCHAR 可変長文字列 'test'
+- DATE 日付 '2019-11-11'
+
+属性の修正
+
+```sql
+ALTER TABLE テーブル名 CHANGE 旧属性名 親属性名 新データ型;
+ALTER TABLE テーブル名 MODIFY 属性名 新データ型;
+ALTER TABLE テーブル名 ADD 属性名　データ型;
+ALTER TABLE テーブル名 ADD 属性名 データ型 AFTER 属性名;
+ALTER TABLE テーブル名 DROP 属性名;
+```
+
+テーブルにタプルを挿入
+
+```sql
+INSERT INTO teams VALUES('banana', 'A');
+```
+
+タプルの確認
+
+```sql
+SELECT * FROM teams;
+```
+
+タプルの削除
+
+```sql
+DELETE FROM teams WHERE fruit='banana';
+```
+
+タプルの更新
+
+```sql
+UPDATE teams SET fruit='melon' WHERE fruit='banana';
+```
+
+終了時
+
+```bash
+quit;
+```
+
+データーの抽出
+
+```sql
+SELECT fruit from teams;
+SELECT fruit,grp from teams;
+```
+
+演算
+
+```sql
+SELECT CONCAT(fruit,grp) from teams;
+```
+
+条件の付与
+
+```sql
+SELECT * from teams WHERE fruit='banana';
+```
+
+含まれてる文字 %は任意の文字列
+
+```sql
+... WHERE fruit LIKE "%m%";
+```
+
+_は任意の一文字
+
+```sql
+... WHERE fruit LIKE "_a_a_a";
+```
+
+OR演算
+
+```sql
+... WHERE 〇〇 OR 〇〇;
+... WHERE 〇〇 AND 〇〇;
+```
+
+結果の結合
+
+```sql
+SELECT 〇〇 UNITON SELECT 〇〇;
+```
+
+rootにパスワードを設定
+
+```sql
+ALTER USER 'root'@'localhost' identified WITH mysql_native_password BY 'r00t@ROOT';
+```
+
+ユーザーの作成
+
+```sql
+CREATE USER www identified by 'www@WWW123';
+```
+
+権限を与える
+
+```sql
+GRANT ALL ON fruits.* TO www;
+```
+
+# ip
+
+`sudo vi /etc/netplan/00-installer-config.yaml`
+
+```yaml
+network:
+    ethernets:
+        enp0s3:
+            dhcp4: true
+        enp0s8:
+            dhcp4: true
+    version: 2
+```
+
+```bash
+sudo netplan apply
+ip addr
+```
+
+# apache
+
+```bash
+sudo apt update
+sudo apt install apache2
+sudo apt install -y php7.4 libapache2-mod-php7.4
+```
+
+# php
+
+```php
+<?php
+    phpinfo();
+?>
+```
+
+dbtest.php
+
+```php
+<?php
+try {
+    $dbh = new PDO(
+        'mysql:host=localhost;dbname=fruits',
+        'www',
+        'www@WWW123'
+    );
+    $res = $dbh->query('SELECT * FROM teams');
+    foreach($res as $team) {
+        echo $team, "<BR>";
+    }
+    $res = null;
+    $dbh = null;
+} catch (PDOException $e) {
+    print $e->getMessage();
+}
+?>
+```
+
+login.php
+
+```php
+<?php
+if (!isset($_POST['user']) or !isset($_POST['newpw'])) {
+    print("Please input username and password");
+} else {
+    $dbname = 'website';
+    $dbhost = 'localhost';
+    $dbuser = 'www';
+    $dbpass = 'www@WWW123';
+    $dsn = "mysql:dbname=${dbname};host=${dbhost};";
+    $dbh = new PDO($dsn, $dbuser, $dbpass);
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+    $sql = "select * from users where USER='$user' AND PASS='$pass'";
+    $hit_user = $dbh->query($sql);
+    if ($hit_user->rowCount() == 0) {
+        print('login failed');
+        include("login.html");
+    } else {
+        $userinfo = $hit_user->fetch(PDO:FETCH_NUM);
+        print("<div>Logged in as $userinfo[0]</div>");
+        include("oldpw.html");
+    }
+}
+?>
+```
+
+chgpw.php
+
+```php
+<?php
+    if (isset($_POST['user']) and isset($_POST['newpw'])) {
+        $dbname = 'website';
+        $dbhost = 'localhost';
+        $dbuser = 'www';
+        $dbpass = 'www@WWW123';
+        $dsn = "mysql:dbname=${dbname};host=${dbhost};";
+        $dbh = new PDO($dsn, $dbuser, $dbpass);
+        $user = $_POST['user'];
+        $pass = $_POST['newpw'];
+        $sql = "UPDATE users SET PASS='$pass' WHERE USER '$user'";
+        $dbh->query($sql);
+    }
+    header('Location: ./login.html');
+>
+```

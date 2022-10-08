@@ -1,0 +1,95 @@
+---
+title: 'Angular Routerの手引き書'
+date: 2022-07-25
+tags: []
+---
+
+## 導入
+
+```bash
+yarn add @angular/router
+```
+
+```typescript
+import { RouterModule } from '@angular/router' # Angular Router
+```
+
+## 前提
+
+```typescript
+import { ActivatedRoute, Router } from "@angular/router";
+
+export class Component {
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+  ) {}
+}
+```
+
+## 画面遷移
+
+JavaScriptから遷移する方法。
+
+```typescript
+this.router.navigate(["/path", id]); // /path/:id
+// URLだけ書き換える
+this.router.navigate(["/path"], { replaceUrl: true });
+```
+
+HTMLから遷移する方法。
+
+```pug
+div([routerLink]="['/path']") // /path
+div([routerLink]="['/path', id]") // /path/:id
+```
+
+## ルーティングの設定
+
+表示させる箇所を決める。
+
+```pug
+router-outlet
+```
+
+URLを設定する。
+
+```typescript
+const routes: Routes = [{
+  path: 'path/:id',
+  component: OyaComponent,
+  children: [{
+    path: '',
+      component: KoComponent
+    }]
+}]
+
+@NgModule({
+  imports: [
+    RouterModule.forChild(routes),
+```
+
+## URLを扱う
+
+```typescript
+// パラメーターの初期値
+this.route.snapshot.paramMap.get("id");
+```
+
+## URLを生成する
+
+UrlTreeを作成。
+
+```typescript
+this.router.createUrlTree(["path/path", id], {
+  queryParams: {
+    page: 1,
+  },
+});
+```
+
+UrlTreeから文字列への変換。
+
+```typescript
+this.router.serializeUrl(this.router.createUrlTree([]));
+```

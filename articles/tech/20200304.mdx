@@ -1,0 +1,93 @@
+---
+title: useRefの使い方がわからん
+date: 2020-03-04
+tags: ['react', 'web', 'javascript']
+---
+
+## はじめに
+
+useRefについての考察です.
+
+## いままで
+
+簡単なフォームを例として作成します.\
+このときは入力される文字列をstateとして持ち, onChangeメソッドで常時 set することで実装します.\
+この場合, 入力の変更があるたびにrenderされます.
+
+```typescript
+const App: React.FC = () => {
+  const [textInput, setTextInput] = useState<string>("");
+
+  const handleChange = (value: string): void => {
+    setTextInput(value);
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTextInput("");
+  };
+
+  console.log("render!!!!!");
+
+  return (
+    <React.Fragment>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={textInput}
+          onChange={(e) => handleChange(e.target.value)}
+        />
+        <input type="submit" />
+      </form>
+    </React.Fragment>
+  );
+};
+```
+
+![通常](https://gyazo.com/4d98d9937cfda55b099165d73dcd3287.gif)
+
+## useRefを使う
+
+useRefを使うと上記のような 無駄な? renderを抑えることができます.
+
+```typescript
+const App: React.FC = () => {
+  const textInputRef = useRef({} as HTMLInputElement);
+
+  const handleSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(textInputRef.current.value);
+    textInputRef.current.value = "";
+  };
+
+  console.log("render!!!!!");
+
+  return (
+    <React.Fragment>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          ref={textInputRef}
+        />
+        <input type="submit" />
+      </form>
+    </React.Fragment>
+  );
+};
+```
+
+![useRefを使う](https://gyazo.com/8d5fc6e0896eb975b12b45c368d33c41.gif)
+
+## 疑問点
+
+1. useRefを使う場合, 都度バリテーションの関数を実行とかができなくなる?
+2. 調べてもこんな使い方出てこないんだけど使い方として間違ってるの?
+
+## 追記
+
+チャレキャラのメンターさんに回答をもらいました.
+
+> useRefは任意の要素を `.focus()`するときなど, 主にDOMの参照に使用する.\
+> useStateとの違いは再描画されず、変更が即反映されるところである.\
+> よって, バリテーションの実行や結果の反映等, 再描画する必要がある場合は`useState`の方が妥当である.
+
+ということで`useRef`を入力要素の反映に使うのはあまりよろしくないということでした.
