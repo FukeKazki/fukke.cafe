@@ -18,7 +18,7 @@ export const ArticleTemplate = ({ data, children }: PageProps<Queries.ArticlePag
         <div css={styles.sideMenu}>
           <SideMenu />
         </div>
-        <div>
+        <div css={styles.body}>
           <MDXProvider>
             {children}
           </MDXProvider>

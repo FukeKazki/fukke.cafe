@@ -7,3 +7,7 @@ export const main = css`
 export const sideMenu = css`
   width: 228px;
 `;
+
+export const body = css`
+  padding: 20px 24px;
+`;
