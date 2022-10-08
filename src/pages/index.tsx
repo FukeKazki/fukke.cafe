@@ -1,4 +1,3 @@
-import * as React from "react"
 import type { HeadFC } from "gatsby"
 
 export default function IndexPage() {
