@@ -1,13 +1,13 @@
-import { HeadFC } from "gatsby"
+import { HeadFC } from 'gatsby';
 
 const NotFoundPage = () => {
   return (
     <main>
       <p>404</p>
     </main>
-  )
-}
+  );
+};
 
-export default NotFoundPage
+export default NotFoundPage;
 
-export const Head: HeadFC = () => <title>Not found</title>
+export const Head: HeadFC = () => <title>Not found</title>;
