@@ -1,13 +1,30 @@
 import { css } from '@emotion/react';
 
-export const main = css`
-  display: flex;
+export const title = css`
+  font-size: 48px;
+  font-weight: bold;
+  color: var(--dark-gray-1);
 `;
 
-export const sideMenu = css`
-  width: 228px;
+export const description = css`
+  margin-top: 10px;
+  font-size: 16px;
+  color: var(--dark-gray-2);
 `;
 
-export const body = css`
-  padding: 20px 24px;
+export const list = css`
+  margin-top: 20px;
+  display: grid;
+  gap: 10px;
+`;
+
+export const article = css`
+  border: 1px solid var(--light-gray-1);
+  border-radius: 8px;
+  padding: 20px;
+  color: var(--dark-gray-1);
+`;
+
+export const container = css`
+  padding: 24px;
 `;

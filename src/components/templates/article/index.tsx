@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { DetailLayout } from '../../layouts/Detail';
 import * as styles from './styles';
 
-const convertString = (v: string | null | undefined): string => {
+export const convertString = (v: string | null | undefined): string => {
   if (!v) return '';
   return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`;
 }
@@ -18,7 +18,12 @@ export const ArticleTemplate = ({
     <DetailLayout>
       <div css={styles.contents}>
         <div css={styles.body}>
-          <h1 css={styles.title}>{mdx?.frontmatter?.title}</h1>
+          {mdx?.fields?.category === 'daily' && (
+            <h1 css={styles.title}>{convertString(mdx.fields.name)}の日報</h1>
+          )}
+          {mdx?.fields?.category === 'tech' && (
+            <h1 css={styles.title}>{mdx?.frontmatter?.title}</h1>
+          )}
           <MDXProvider
             components={{
               h2: props => <h2 {...props} css={styles.mdx.h2} />,
