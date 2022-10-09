@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.3"],\
             ["gatsby-plugin-emotion", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:7.24.0"],\
             ["gatsby-plugin-mdx", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.3.0"],\
+            ["gatsby-remark-autolink-headers", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:5.24.0"],\
             ["gatsby-remark-prismjs", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:6.24.0"],\
             ["gatsby-source-filesystem", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -10976,6 +10977,41 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["gatsby-remark-autolink-headers", [\
+        ["npm:5.24.0", {\
+          "packageLocation": "./.yarn/cache/gatsby-remark-autolink-headers-npm-5.24.0-b32f49afe6-3d2c4a745c.zip/node_modules/gatsby-remark-autolink-headers/",\
+          "packageDependencies": [\
+            ["gatsby-remark-autolink-headers", "npm:5.24.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:5.24.0", {\
+          "packageLocation": "./.yarn/__virtual__/gatsby-remark-autolink-headers-virtual-b5b62817b9/0/cache/gatsby-remark-autolink-headers-npm-5.24.0-b32f49afe6-3d2c4a745c.zip/node_modules/gatsby-remark-autolink-headers/",\
+          "packageDependencies": [\
+            ["gatsby-remark-autolink-headers", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:5.24.0"],\
+            ["@babel/runtime", "npm:7.19.0"],\
+            ["@types/gatsby", null],\
+            ["@types/react", "npm:18.0.21"],\
+            ["@types/react-dom", "npm:18.0.6"],\
+            ["gatsby", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.3"],\
+            ["github-slugger", "npm:1.4.0"],\
+            ["lodash", "npm:4.17.21"],\
+            ["mdast-util-to-string", "npm:2.0.0"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:18.2.0"],\
+            ["unist-util-visit", "npm:2.0.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/gatsby",\
+            "@types/react-dom",\
+            "@types/react",\
+            "gatsby",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["gatsby-remark-prismjs", [\
         ["npm:6.24.0", {\
           "packageLocation": "./.yarn/cache/gatsby-remark-prismjs-npm-6.24.0-9d70246d4d-6f814f4dd9.zip/node_modules/gatsby-remark-prismjs/",\
@@ -13569,6 +13605,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mdast-util-to-string", [\
+        ["npm:2.0.0", {\
+          "packageLocation": "./.yarn/cache/mdast-util-to-string-npm-2.0.0-3a5d9c4970-0b2113ada1.zip/node_modules/mdast-util-to-string/",\
+          "packageDependencies": [\
+            ["mdast-util-to-string", "npm:2.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:3.1.0", {\
           "packageLocation": "./.yarn/cache/mdast-util-to-string-npm-3.1.0-d888f00663-f42ddd4e22.zip/node_modules/mdast-util-to-string/",\
           "packageDependencies": [\
@@ -16309,6 +16352,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.3"],\
             ["gatsby-plugin-emotion", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:7.24.0"],\
             ["gatsby-plugin-mdx", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.3.0"],\
+            ["gatsby-remark-autolink-headers", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:5.24.0"],\
             ["gatsby-remark-prismjs", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:6.24.0"],\
             ["gatsby-source-filesystem", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.0"],\
             ["prettier", "npm:2.7.1"],\

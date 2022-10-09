@@ -13,6 +13,15 @@ const config: GatsbyConfig = {
     resolve: 'gatsby-plugin-mdx',
     options: {
       gatsbyRemarkPlugins: [
+        {
+          resolve: 'gatsby-remark-autolink-headers',
+          options: {
+            offsetY: `100`,
+            icon: false,
+            className: `custom-class`,
+            maintainCase: false,
+          }
+        },
         'gatsby-remark-prismjs'
       ]
     }

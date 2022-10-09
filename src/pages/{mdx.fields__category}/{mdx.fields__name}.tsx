@@ -19,6 +19,7 @@ export const query = graphql`
         date
       }
       body
+      tableOfContents
     }
   }
 `;

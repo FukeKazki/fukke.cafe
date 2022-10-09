@@ -1,5 +1,5 @@
-import { TechTemplate } from "../components/templates/tech";
+import { TechTemplate } from '../components/templates/tech';
 
 export default function TechPage() {
-  return <TechTemplate/>
+  return <TechTemplate />;
 }

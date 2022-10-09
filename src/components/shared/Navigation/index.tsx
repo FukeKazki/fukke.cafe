@@ -8,7 +8,12 @@ export const Navigation = () => {
       <div css={styles.navigation}>
         <ul css={styles.list}>
           <li css={styles.item}>
-            <Link partiallyActive to='/tech' css={styles.link} activeStyle={{ 'fontWeight': 'bold', color: 'var(--dark-gray-1)' }}>
+            <Link
+              partiallyActive
+              to='/tech'
+              css={styles.link}
+              activeStyle={{ fontWeight: 'bold', color: 'var(--dark-gray-1)' }}
+            >
               <p>技術ブログ</p>
             </Link>
           </li>
@@ -16,7 +21,12 @@ export const Navigation = () => {
             <p>ブログ</p>
           </li> */}
           <li css={styles.item}>
-            <Link partiallyActive to='/daily' css={styles.link} activeStyle={{ 'fontWeight': 'bold', color: 'var(--dark-gray-1)' }}>
+            <Link
+              partiallyActive
+              to='/daily'
+              css={styles.link}
+              activeStyle={{ fontWeight: 'bold', color: 'var(--dark-gray-1)' }}
+            >
               <p>日報</p>
             </Link>
           </li>

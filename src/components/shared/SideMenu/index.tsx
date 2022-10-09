@@ -22,7 +22,7 @@ export const SideMenu = () => {
                 ))}
               </ul>
             </li>
-          )
+          );
         })}
       </ul>
       <footer css={styles.footer}>

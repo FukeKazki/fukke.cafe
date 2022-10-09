@@ -1,19 +1,19 @@
-import { Fragment, ReactNode } from "react"
-import { Header } from "../../shared/Header"
-import { Navigation } from "../../shared/Navigation"
-import { SideMenu } from "../../shared/SideMenu"
-import { TopBar } from "../../shared/TopBar"
-import * as styles from './styles'
+import { ComponentPropsWithRef, Fragment, ReactNode } from 'react';
+import { Header } from '../../shared/Header';
+import { Navigation } from '../../shared/Navigation';
+import { SideMenu } from '../../shared/SideMenu';
+import { TopBar } from '../../shared/TopBar';
+import * as styles from './styles';
 
-type Props = {
-  children: ReactNode
+interface Props extends ComponentPropsWithRef<'div'> {
+  children: ReactNode;
 }
 
-export const DetailLayout = ({ children }: Props) => {
+export const DetailLayout = ({ children, ...props }: Props) => {
   return (
     <Fragment>
       <header>
-        <TopBar/>
+        <TopBar />
         <Header />
         <nav css={styles.nav}>
           <Navigation />
@@ -23,10 +23,8 @@ export const DetailLayout = ({ children }: Props) => {
         <div css={styles.sideMenu}>
           <SideMenu />
         </div>
-        <div css={styles.body}>
-          {children}
-        </div>
+        <div>{children}</div>
       </main>
     </Fragment>
-  )
-}
+  );
+};

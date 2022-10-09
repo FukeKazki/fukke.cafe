@@ -25,5 +25,5 @@ export const useTaggedArticles = () => {
     }
   `);
 
-  return allMdx.group
+  return allMdx.group;
 };

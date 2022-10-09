@@ -11,8 +11,7 @@ export const list = css`
   list-style: none;
 `;
 
-export const item = css`
-`;
+export const item = css``;
 
 export const link = css`
   color: var(--dark-gray-2);

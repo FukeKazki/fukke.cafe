@@ -8,9 +8,7 @@ export const sideMenu = css`
   width: 228px;
 `;
 
-export const body = css`
-  padding: 20px 24px;
-`;
+export const body = css``;
 
 export const nav = css`
   position: sticky;
