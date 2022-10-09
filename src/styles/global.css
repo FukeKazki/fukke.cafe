@@ -1,3 +1,22 @@
 li {
   list-style: none;
 }
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+:root {
+  --white: #ffffff;
+  --light-gray-1: #f4f5f5;
+  --light-gray-2: #d5d8d7;
+  --primary: #68ceb1;
+  --dark-gray-1: #1f3731;
+  --dark-gray-2: #52605c;
+  --dark-gray-3: #788783;
+  --dark-gray-4: #e2e4e3;
+}

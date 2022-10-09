@@ -12,6 +12,8 @@ export const list = css`
 `;
 
 export const item = css`
-  font-weight: bold;
-  font-size: 16px;
+`;
+
+export const link = css`
+  color: var(--dark-gray-2);
 `;

@@ -8,21 +8,21 @@ export const Navigation = () => {
       <div css={styles.navigation}>
         <ul css={styles.list}>
           <li css={styles.item}>
-            <Link to='/tech'>
-              <p>技術</p>
+            <Link partiallyActive to='/tech' css={styles.link} activeStyle={{ 'fontWeight': 'bold', color: 'var(--dark-gray-1)' }}>
+              <p>技術ブログ</p>
             </Link>
           </li>
-          <li css={styles.item}>
+          {/* <li css={styles.item}>
             <p>ブログ</p>
-          </li>
+          </li> */}
           <li css={styles.item}>
-            <Link to='/daily'>
-              <p>日記</p>
+            <Link partiallyActive to='/daily' css={styles.link} activeStyle={{ 'fontWeight': 'bold', color: 'var(--dark-gray-1)' }}>
+              <p>日報</p>
             </Link>
           </li>
-          <li css={styles.item}>
+          {/* <li css={styles.item}>
             <p>ポートフォリオ</p>
-          </li>
+          </li> */}
         </ul>
       </div>
     </Fragment>

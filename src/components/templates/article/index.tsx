@@ -1,10 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { PageProps } from 'gatsby';
-import { Fragment } from 'react';
-import { Header } from '../../shared/Header';
-import { Navigation } from '../../shared/Navigation';
-import { SideMenu } from '../../shared/SideMenu';
-import * as styles from './styles';
+import { DetailLayout } from '../../layouts/Detail';
 
 export const ArticleTemplate = ({
   data,
@@ -12,21 +8,9 @@ export const ArticleTemplate = ({
 }: PageProps<Queries.ArticlePageQuery>) => {
   const { mdx } = data;
   return (
-    <Fragment>
-      <header>
-        <Header />
-        <nav css={styles.nav}>
-          <Navigation />
-        </nav>
-      </header>
-      <main css={styles.main}>
-        <div css={styles.sideMenu}>
-          <SideMenu />
-        </div>
-        <div css={styles.body}>
-          <MDXProvider>{children}</MDXProvider>
-        </div>
-      </main>
-    </Fragment>
+    <DetailLayout>
+      <h1>{mdx?.frontmatter?.title}</h1>
+      <MDXProvider>{children}</MDXProvider>
+    </DetailLayout>
   );
 };
