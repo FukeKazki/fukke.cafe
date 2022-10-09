@@ -1,10 +1,10 @@
-import { graphql, PageProps } from "gatsby"
-import { ArticleTemplate } from "../../components/templates/article"
+import { graphql, PageProps } from 'gatsby';
+import { ArticleTemplate } from '../../components/templates/article';
 
-export default function ArticlePage({ ...props }: PageProps<Queries.ArticlePageQuery>) {
-  return (
-    <ArticleTemplate {...props} />
-  )
+export default function ArticlePage({
+  ...props
+}: PageProps<Queries.ArticlePageQuery>) {
+  return <ArticleTemplate {...props} />;
 }
 
 export const query = graphql`
@@ -20,4 +20,4 @@ export const query = graphql`
       body
     }
   }
-`
+`;

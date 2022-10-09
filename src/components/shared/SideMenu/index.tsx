@@ -8,9 +8,7 @@ export const SideMenu = () => {
     <div css={styles.sideMenu}>
       <ul>
         {titles.map((title, index) => {
-          return (
-            <li key={`${title}-${index}`}>{ title }</li>
-          )
+          return <li key={`${title}-${index}`}>{title}</li>;
         })}
       </ul>
     </div>
