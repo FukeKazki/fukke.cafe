@@ -6,8 +6,18 @@ export const useArticles = () => {
       allMdx {
         edges {
           node {
+            body
+            excerpt
             frontmatter {
               title
+              tags
+              date
+            }
+            id
+            tableOfContents
+            fields {
+              category
+              name
             }
           }
         }
@@ -15,5 +25,5 @@ export const useArticles = () => {
     }
   `);
 
-  return allMdx.edges.map(({ node }) => node.frontmatter?.title);
+  return allMdx.edges.map(({ node }) => node);
 };

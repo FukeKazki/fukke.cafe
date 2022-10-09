@@ -39,8 +39,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.3"],\
             ["gatsby-plugin-emotion", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:7.24.0"],\
             ["gatsby-plugin-mdx", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.3.0"],\
+            ["gatsby-remark-prismjs", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:6.24.0"],\
             ["gatsby-source-filesystem", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.0"],\
             ["prettier", "npm:2.7.1"],\
+            ["prismjs", "npm:1.29.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:18.2.0"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
@@ -10974,6 +10976,35 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["gatsby-remark-prismjs", [\
+        ["npm:6.24.0", {\
+          "packageLocation": "./.yarn/cache/gatsby-remark-prismjs-npm-6.24.0-9d70246d4d-6f814f4dd9.zip/node_modules/gatsby-remark-prismjs/",\
+          "packageDependencies": [\
+            ["gatsby-remark-prismjs", "npm:6.24.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:6.24.0", {\
+          "packageLocation": "./.yarn/__virtual__/gatsby-remark-prismjs-virtual-806a883fac/0/cache/gatsby-remark-prismjs-npm-6.24.0-9d70246d4d-6f814f4dd9.zip/node_modules/gatsby-remark-prismjs/",\
+          "packageDependencies": [\
+            ["gatsby-remark-prismjs", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:6.24.0"],\
+            ["@babel/runtime", "npm:7.19.0"],\
+            ["@types/gatsby", null],\
+            ["@types/prismjs", null],\
+            ["gatsby", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.3"],\
+            ["parse-numeric-range", "npm:1.3.0"],\
+            ["prismjs", "npm:1.29.0"],\
+            ["unist-util-visit", "npm:2.0.3"]\
+          ],\
+          "packagePeers": [\
+            "@types/gatsby",\
+            "@types/prismjs",\
+            "gatsby",\
+            "prismjs"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["gatsby-script", [\
         ["npm:1.9.0", {\
           "packageLocation": "./.yarn/cache/gatsby-script-npm-1.9.0-c3710a311f-b1332076a2.zip/node_modules/gatsby-script/",\
@@ -15114,6 +15145,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["parse-numeric-range", [\
+        ["npm:1.3.0", {\
+          "packageLocation": "./.yarn/cache/parse-numeric-range-npm-1.3.0-71baf377a4-289ca126d5.zip/node_modules/parse-numeric-range/",\
+          "packageDependencies": [\
+            ["parse-numeric-range", "npm:1.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["parse-path", [\
         ["npm:7.0.0", {\
           "packageLocation": "./.yarn/cache/parse-path-npm-7.0.0-ceda41e594-244b46523a.zip/node_modules/parse-path/",\
@@ -16235,6 +16275,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["prismjs", [\
+        ["npm:1.29.0", {\
+          "packageLocation": "./.yarn/cache/prismjs-npm-1.29.0-6faa5b04b8-007a8869d4.zip/node_modules/prismjs/",\
+          "packageDependencies": [\
+            ["prismjs", "npm:1.29.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["process-nextick-args", [\
         ["npm:2.0.1", {\
           "packageLocation": "./.yarn/cache/process-nextick-args-npm-2.0.1-b8d7971609-1d38588e52.zip/node_modules/process-nextick-args/",\
@@ -16260,8 +16309,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.3"],\
             ["gatsby-plugin-emotion", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:7.24.0"],\
             ["gatsby-plugin-mdx", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.3.0"],\
+            ["gatsby-remark-prismjs", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:6.24.0"],\
             ["gatsby-source-filesystem", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:4.24.0"],\
             ["prettier", "npm:2.7.1"],\
+            ["prismjs", "npm:1.29.0"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:6e3a1f48a86f9bef7b45da74c8ed177660fe7e43a1093111338f0a0e396f967accbf45b9ef3f976a18648146b489f5322f52a3b5ba5a79d82c0bcd8b3dbba054#npm:18.2.0"],\
             ["typescript", "patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=701156"]\
