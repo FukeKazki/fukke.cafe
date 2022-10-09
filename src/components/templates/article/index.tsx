@@ -15,7 +15,9 @@ export const ArticleTemplate = ({
     <Fragment>
       <header>
         <Header />
-        <Navigation />
+        <nav css={styles.nav}>
+          <Navigation />
+        </nav>
       </header>
       <main css={styles.main}>
         <div css={styles.sideMenu}>

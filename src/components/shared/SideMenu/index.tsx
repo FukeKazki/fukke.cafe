@@ -25,6 +25,9 @@ export const SideMenu = () => {
           )
         })}
       </ul>
+      <footer css={styles.footer}>
+        <p>created by @fukke0906</p>
+      </footer>
     </div>
   );
 };

@@ -11,3 +11,8 @@ export const sideMenu = css`
 export const body = css`
   padding: 20px 24px;
 `;
+
+export const nav = css`
+  position: sticky;
+  top: 30px;
+`;
