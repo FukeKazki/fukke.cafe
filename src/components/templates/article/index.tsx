@@ -4,6 +4,11 @@ import { Fragment } from 'react';
 import { DetailLayout } from '../../layouts/Detail';
 import * as styles from './styles';
 
+const convertString = (v: string | null | undefined): string => {
+  if (!v) return '';
+  return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`;
+}
+
 export const ArticleTemplate = ({
   data,
   children
@@ -25,24 +30,28 @@ export const ArticleTemplate = ({
         </div>
 
         <div css={styles.sub}>
-          {(mdx?.tableOfContents?.items as [
-            { title: string; url: string }
-          ]) && (
-            <Fragment>
-              <p css={styles.mokuji}>目次</p>
-              <ul css={styles.toc}>
-                {(
-                  mdx?.tableOfContents?.items as [
-                    { title: string; url: string }
-                  ]
-                ).map((item, index) => (
-                  <li key={`${item.title}-${index}`}>
-                    <Link to={item.url}>{item.title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </Fragment>
-          )}
+          <div css={styles.subContainer}>
+            <p css={styles.publishDate}>公開日 {convertString(mdx?.fields?.name)}</p>
+
+            {(mdx?.tableOfContents?.items as [
+              { title: string; url: string }
+            ]) && (
+              <Fragment>
+                <p css={styles.mokuji}>目次</p>
+                <ul css={styles.toc}>
+                  {(
+                    mdx?.tableOfContents?.items as [
+                      { title: string; url: string }
+                    ]
+                  ).map((item, index) => (
+                    <li key={`${item.title}-${index}`}>
+                      <Link to={item.url}>{item.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </Fragment>
+            )}
+          </div>
         </div>
       </div>
     </DetailLayout>

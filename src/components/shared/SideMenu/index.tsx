@@ -7,27 +7,26 @@ export const SideMenu = () => {
 
   return (
     <div css={styles.sideMenu}>
-      <ul css={styles.tagList}>
-        {nodes.map((node, index) => {
-          return (
-            <li key={`${node.fieldValue}-${index}`}>
-              <p css={styles.tagTitle}>{node.fieldValue}</p>
-              <ul>
-                {node.nodes.map(v => (
-                  <li key={v.id}>
-                    <Link to={`/${v.fields?.category}/${v.fields?.name}`}>
-                      <p css={styles.articleTitle}>{v.frontmatter?.title}</p>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          );
-        })}
-      </ul>
-      <footer css={styles.footer}>
-        <p>created by @fukke0906</p>
-      </footer>
+      <div css={styles.container}>
+        <ul css={styles.tagList}>
+          {nodes.map((node, index) => {
+            return (
+              <li key={`${node.fieldValue}-${index}`}>
+                <p css={styles.tagTitle}>{node.fieldValue}</p>
+                <ul>
+                  {node.nodes.map(v => (
+                    <li key={v.id}>
+                      <Link to={`/${v.fields?.category}/${v.fields?.name}`}>
+                        <p css={styles.articleTitle}>{v.frontmatter?.title}</p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 };

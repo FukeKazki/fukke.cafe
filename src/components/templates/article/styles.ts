@@ -17,6 +17,11 @@ export const sub = css`
   padding: 24px;
 `;
 
+export const subContainer = css`
+  position: sticky;
+  top: 86px;
+`;
+
 export const title = css`
   font-size: 48px;
   font-weight: bold;
@@ -45,6 +50,11 @@ export const toc = css`
 `;
 
 export const mokuji = css`
+  margin-top: 10px;
   font-size: 14px;
   font-weight: 600;
+`;
+
+export const publishDate = css`
+  font-size: 14px;;
 `;

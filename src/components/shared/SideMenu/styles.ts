@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 
 export const sideMenu = css`
-  width: 228px;
   border-right: 1px solid #f4f4f4;
 `;
 
@@ -22,12 +21,4 @@ export const articleTitle = css`
   font-size: 12px;
 `;
 
-export const footer = css`
-  height: 62px;
-  background-color: #1f1f1f;
-  color: #ffffff;
-  display: flex;
-  place-items: center;
-  place-content: center;
-  font-size: 10px;
-`;
+export const container = css``;

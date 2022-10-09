@@ -8,4 +8,5 @@ export const header = css`
 export const title = css`
   font-size: 24px;
   font-weight: bold;
+  color: var(--dark-gray-1);
 `;

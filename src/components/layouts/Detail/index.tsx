@@ -15,15 +15,20 @@ export const DetailLayout = ({ children, ...props }: Props) => {
       <header>
         <TopBar />
         <Header />
-        <nav css={styles.nav}>
-          <Navigation />
-        </nav>
       </header>
+      <nav css={styles.nav}>
+        <Navigation />
+      </nav>
       <main css={styles.main}>
         <div css={styles.sideMenu}>
-          <SideMenu />
+          <div css={styles.scroll}>
+            <SideMenu />
+            <footer css={styles.footer}>
+              <p>created by @fukke0906</p>
+            </footer>
+          </div>
         </div>
-        <div>{children}</div>
+        <div css={styles.contents}>{children}</div>
       </main>
     </Fragment>
   );
