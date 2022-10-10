@@ -14,12 +14,14 @@
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write src/**/*.{tsx,ts,css}"
+    "format": "prettier --write src/**/*.{tsx,ts,css}",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mdx-js/react": "^2.1.4",
+    "firebase-tools": "^11.14.1",
     "gatsby": "^4.24.3",
     "gatsby-plugin-emotion": "^7.24.0",
     "gatsby-plugin-mdx": "^4.3.0",
