@@ -7,7 +7,7 @@ import * as styles from './styles';
 export const convertString = (v: string | null | undefined): string => {
   if (!v) return '';
   return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`;
-}
+};
 
 export const ArticleTemplate = ({
   data,
@@ -36,7 +36,9 @@ export const ArticleTemplate = ({
 
         <div css={styles.sub}>
           <div css={styles.subContainer}>
-            <p css={styles.publishDate}>公開日 {convertString(mdx?.fields?.name)}</p>
+            <p css={styles.publishDate}>
+              公開日 {convertString(mdx?.fields?.name)}
+            </p>
 
             {(mdx?.tableOfContents?.items as [
               { title: string; url: string }

@@ -3,7 +3,10 @@ import { graphql, useStaticQuery } from 'gatsby';
 export const useTechArticles = () => {
   const { allMdx } = useStaticQuery<Queries.UseTechArticlesQuery>(graphql`
     query UseTechArticles {
-      allMdx(filter: { fields: { category: { eq: "tech" } } }) {
+      allMdx(
+        filter: { fields: { category: { eq: "tech" } } }
+        sort: { fields: fields___name, order: DESC }
+      ) {
         edges {
           node {
             body

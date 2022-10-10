@@ -56,5 +56,5 @@ export const mokuji = css`
 `;
 
 export const publishDate = css`
-  font-size: 14px;;
+  font-size: 14px; ;
 `;

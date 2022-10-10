@@ -3,7 +3,10 @@ import { graphql, useStaticQuery } from 'gatsby';
 export const useDailyArticles = () => {
   const { allMdx } = useStaticQuery<Queries.UseDailyArticlesQuery>(graphql`
     query UseDailyArticles {
-      allMdx(filter: { fields: { category: { eq: "daily" } } }) {
+      allMdx(
+        filter: { fields: { category: { eq: "daily" } } }
+        sort: { fields: fields___name, order: DESC }
+      ) {
         edges {
           node {
             body

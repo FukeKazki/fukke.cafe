@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 export const main = css`
   display: grid;
-  grid-template: "sideMenu contents" 1fr / 228px 1fr;
+  grid-template: 'sideMenu contents' 1fr / 228px 1fr;
 `;
 
 export const sideMenu = css`

@@ -12,19 +12,6 @@ export const description = css`
   color: var(--dark-gray-2);
 `;
 
-export const list = css`
-  margin-top: 20px;
-  display: grid;
-  gap: 10px;
-`;
-
-export const article = css`
-  border: 1px solid var(--light-gray-1);
-  border-radius: 8px;
-  padding: 20px;
-  color: var(--dark-gray-1);
-`;
-
 export const container = css`
   padding: 24px;
 `;

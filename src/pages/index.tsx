@@ -1,23 +1,8 @@
 import type { HeadFC } from 'gatsby';
-import { Fragment } from 'react';
-import { Header } from '../components/shared/Header';
-import { Navigation } from '../components/shared/Navigation';
-import { SideMenu } from '../components/shared/SideMenu';
+import { IndexTemplate } from '../components/templates/Index';
 
 export default function IndexPage() {
-  return (
-    <Fragment>
-      <header>
-        <Header />
-      </header>
-      <nav>
-        <Navigation />
-      </nav>
-      <main>
-        <SideMenu />
-      </main>
-    </Fragment>
-  );
+  return <IndexTemplate />;
 }
 
 export const Head: HeadFC = () => <title>プログラミング日記</title>;
