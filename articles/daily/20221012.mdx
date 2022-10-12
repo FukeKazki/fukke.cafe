@@ -1,0 +1,25 @@
+---
+title: ''
+date: 2022-10-12
+tags: []
+---
+
+# 読んだ記事
+- [Step CI](https://stepci.com/)
+- [プログラムで作ろうオリジナルフォント IchigoJam dot font by opentype.js](https://fukuno.jig.jp/3730)
+- [RTMP ストリーミングについて解説します \[ Wowza Blog 翻訳 \] | DPSJ](https://www.dpsj.co.jp/tech-articles/wowza-blog-rtmp)
+- [ライブ配信ってどうやってやってるの？ 最小構成でライブ配信を体験する](https://zenn.dev/gakin/articles/live-streaming-demo)
+- [エッジで動的にOG画像を生成できる@vercel/ogを触ってみた](https://zenn.dev/monicle/articles/f02e4a12da960b)
+
+# やったこと
+- git worktreeについて調べる
+- StepCI使ってみた APIのテストに良さそう
+- 配信視聴周りの仕事
+
+# わかったこと
+S3はPUTの回数に応じてお金が掛かるので注意する。  
+バーチャル配信の中にもLive2dのようなものやアニメーションGIFを使った配信がある。  
+ユーザーが退会したらデータベースから削除する。  
+RTMPをライブストリーミングにつかうときはWowzaなどのメディアサーバーを使って各クライアントに最適なプロトコル(HLS, Low Latency HLS, WebRTC)などに変換する。  
+WebRTCは1対多のブロードキャスト用に設計されてないのでカスタムする必要がある。  
+
