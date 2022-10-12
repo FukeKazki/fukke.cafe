@@ -25,9 +25,15 @@ export const ArticleTemplate = ({
             <h1 css={styles.title}>{mdx?.frontmatter?.title}</h1>
           )}
           <MDXProvider
+            css={styles.text}
             components={{
+              h1: props => <h2 {...props} css={styles.mdx.h1} />,
               h2: props => <h2 {...props} css={styles.mdx.h2} />,
-              p: props => <div {...props} css={styles.mdx.p} />
+              h3: props => <h2 {...props} css={styles.mdx.h3} />,
+              p: props => <div {...props} css={styles.mdx.p} />,
+              ul: props => <ul {...props} css={styles.mdx.ul} />,
+              li: props => <li {...props} css={styles.mdx.li} />,
+              a: props => <a {...props} css={styles.mdx.a} target="__blank" />
             }}
           >
             {children}

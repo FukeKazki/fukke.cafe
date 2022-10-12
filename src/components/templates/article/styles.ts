@@ -28,8 +28,24 @@ export const title = css`
   color: var(--dark-gray-1);
 `;
 
+export const text = css`
+  color: var(--dark-gray-1);
+`;
+
 export const mdx = {
+  h1: css`
+    margin-top: 24px;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--dark-gray-1);
+  `,
   h2: css`
+    margin-top: 24px;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--dark-gray-1);
+  `,
+  h3: css`
     margin-top: 24px;
     font-size: 32px;
     font-weight: 500;
@@ -39,6 +55,15 @@ export const mdx = {
     margin-top: 16px;
     font-size: 16px;
     color: var(--dark-gray-2);
+  `,
+  ul: css`
+    padding-left: 20px;
+  `,
+  li: css`
+    list-style: circle;
+  `,
+  a: css`
+    text-decoration: underline;
   `
 };
 
