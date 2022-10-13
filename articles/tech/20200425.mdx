@@ -2,6 +2,7 @@
 title: 'DL初挑戦 pytorchを使ってSTL10の学習させてみたけどむずすぎた'
 date: 2020-04-25
 tags: ['DL', 'pytorch', 'python']
+category: 'サーバー'
 ---
 
 ## はじめに
@@ -179,7 +180,7 @@ for data in test_loader:
     outputs = net(images)
     # 一番確率が高いの
     _, predicted = torch.max(outputs.data, 1)
-    
+
     c = (predicted == labels).squeeze()
     for i in range(10):
         label = labels[i]
