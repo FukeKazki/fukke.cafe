@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 
 export const sideMenu = css`
   border-right: 1px solid #f4f4f4;
+  padding-bottom: 62px;
 `;
 
 export const tagList = css`
@@ -22,3 +23,9 @@ export const articleTitle = css`
 `;
 
 export const container = css``;
+
+export const link = css`
+  :hover {
+    opacity: 0.8;
+  }
+`;

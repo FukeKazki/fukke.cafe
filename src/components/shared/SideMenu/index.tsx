@@ -20,7 +20,7 @@ export const SideMenu = () => {
                 <ul>
                   {node.nodes.map(v => (
                     <li key={v.id}>
-                      <Link to={`/${v.fields?.category}/${v.fields?.name}`}>
+                      <Link to={`/${v.fields?.category}/${v.fields?.name}`} css={styles.link} activeStyle={{ fontWeight: 'bold' }}>
                         <p css={styles.articleTitle}>{v.frontmatter?.title}</p>
                       </Link>
                     </li>

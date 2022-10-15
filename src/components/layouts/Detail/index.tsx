@@ -10,6 +10,7 @@ interface Props extends ComponentPropsWithRef<'div'> {
 }
 
 export const DetailLayout = ({ children, ...props }: Props) => {
+
   return (
     <Fragment>
       <header>
@@ -24,7 +25,7 @@ export const DetailLayout = ({ children, ...props }: Props) => {
           <div css={styles.scroll}>
             <SideMenu />
             <footer css={styles.footer}>
-              <p>created by @fukke0906</p>
+              <p>created by <a href="https://twitter.com/fukke0906" target="__blank">@fukke0906</a></p>
             </footer>
           </div>
         </div>

@@ -30,7 +30,8 @@ export const scroll = css`
 `;
 
 export const footer = css`
-  position: sticky;
+  position: fixed;
+  width: 228px;
   left: 0;
   bottom: 0;
   height: 62px;
