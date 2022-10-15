@@ -3,6 +3,7 @@ import { Link, PageProps } from 'gatsby';
 import { Fragment } from 'react';
 import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
 import { DetailLayout } from '../../layouts/Detail';
+import { TwitterIcon } from '../../shared/icons/TwitterIcon';
 import * as styles from './styles';
 
 export const convertString = (v: string | null | undefined): string => {
@@ -43,6 +44,12 @@ export const ArticleTemplate = ({
           >
             {children}
           </MDXProvider>
+          {/* シェア */}
+          <div css={styles.share}>
+            <a href={`http://twitter.com/share?url=${window.location.href}&text=${document.title}`} target="__blank">
+              <span css={styles.twitter}><TwitterIcon/>ツイート</span>
+            </a>
+          </div>
           {/* 下部 */}
           <div css={styles.recommend}>
             <h3 css={styles.recommendTitle}>その他の記事</h3>

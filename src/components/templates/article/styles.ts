@@ -115,3 +115,25 @@ export const footer = css`
   display: grid;
   place-items: center;
 `;
+
+export const share = css`
+  margin-top: 40px;
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
+export const twitter = css`
+  border: 1px solid var(--light-gray-1);
+  border-radius: 4px;
+  padding: 8px;
+  display: inline-flex;
+  font-size: 12px;
+  color: var(--dark-gray-3);
+  align-items: center;
+  svg {
+    fill: var(--dark-gray-3);
+    margin-right: 4px;
+    width: 24px;
+    height: 24px;
+  }
+`;
