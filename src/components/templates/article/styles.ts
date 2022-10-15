@@ -104,6 +104,10 @@ export const recommendArticle = css`
   border: 1px solid var(--light-gray-1);
   padding: 10px;
   border-radius: 8px;
+  color: var(--dark-gray-1);
+  :hover {
+    opacity: 0.8;
+  }
 `;
 
 export const footer = css`
