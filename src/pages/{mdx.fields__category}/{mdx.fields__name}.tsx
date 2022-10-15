@@ -1,5 +1,5 @@
 import { graphql, HeadProps, PageProps } from 'gatsby';
-import { ArticleTemplate } from '../../components/templates/article';
+import { ArticleTemplate, convertString } from '../../components/templates/article';
 
 export default function ArticlePage({
   ...props
@@ -7,23 +7,24 @@ export default function ArticlePage({
   return <ArticleTemplate {...props} />;
 }
 
-export const Head = (props: HeadProps<Queries.ArticlePageQuery>) => {
+export const Head = ({ params, ...props }: HeadProps<Queries.ArticlePageQuery>) => {
+  const title = params.fields__category === 'tech' ? props.data.mdx?.frontmatter?.title : `${convertString(props.data.mdx?.fields?.name)}の日報`
   return (
   <>
-    <title>{props.data.mdx?.frontmatter?.title}</title>
+    <title>{title}</title>
 		<html lang='ja' />
     <meta name='description' content={props.data.mdx?.excerpt ?? ''} />
 		<link rel='canonical' href={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		{/* <meta name='image' content={seo.image} /> */}
 		<meta property='og:url' content={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		<meta property='og:type' content='website' />
-		<meta property='og:title' content={props.data.mdx?.frontmatter?.title ?? ''} />
+		<meta property='og:title' content={title ?? ''} />
 		<meta property="og:site_name" content='プログラミング日記' />
 		<meta property='og:description' content={props.data.mdx?.excerpt ?? ''} />
 		{/* <meta property='og:image' content={seo.image} /> */}
 		<meta property='twitter:site' content='@fukke0906' />
 		<meta property='twitter:card' content='summary_large_image' />
-		<meta property='twitter:title' content={props.data.mdx?.frontmatter?.title ?? ''} />
+		<meta property='twitter:title' content={title ?? ''} />
 		<meta property='twitter:description' content={props.data.mdx?.excerpt ?? ''} />
   </>
 )};
