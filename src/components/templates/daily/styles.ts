@@ -1,9 +1,13 @@
 import { css } from '@emotion/react';
+import { breakpoints } from '../../../styles/breakpoint';
 
 export const title = css`
-  font-size: 48px;
+  font-size: 24px;
   font-weight: bold;
   color: var(--dark-gray-1);
+  @media (min-width: ${breakpoints.lg}px) {
+    font-size: 48px;
+  }
 `;
 
 export const description = css`
@@ -15,6 +19,7 @@ export const description = css`
 export const list = css`
   margin-top: 20px;
   display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 10px;
 `;
 
@@ -22,6 +27,7 @@ export const article = css`
   border: 1px solid var(--light-gray-1);
   border-radius: 8px;
   padding: 20px;
+  word-break: break-all;
   color: var(--dark-gray-1);
   :hover {
     opacity: 0.8;
