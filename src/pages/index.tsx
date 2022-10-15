@@ -1,4 +1,4 @@
-import type { HeadFC } from 'gatsby';
+import { graphql, HeadProps } from 'gatsby';
 import { Fragment } from 'react';
 import { IndexTemplate } from '../components/templates/Index';
 
@@ -6,14 +6,14 @@ export default function IndexPage() {
   return <IndexTemplate />;
 }
 
-export const Head: HeadFC = () => (
+export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
   <Fragment>
     <title>プログラミング日記</title>
 		<html lang='ja' />
     <meta name='description' content='技術ブログや日報を書きます。' />
-		<link rel='canonical' href={window.location.href} />
+		<link rel='canonical' href={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		{/* <meta name='image' content={seo.image} /> */}
-		<meta property='og:url' content={window.location.href} />
+		<meta property='og:url' content={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		<meta property='og:type' content='website' />
     <meta property='og:title' content='技術ブログや日報を書きます。' />
 		<meta property="og:site_name" content='プログラミング日記' />
@@ -25,3 +25,13 @@ export const Head: HeadFC = () => (
 		<meta property='twitter:description' content='技術ブログや日報を書きます。' />
   </Fragment>
 );
+
+export const query = graphql`
+  query IndexPage {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
+  }
+`

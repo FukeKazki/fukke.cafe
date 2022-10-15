@@ -13,9 +13,9 @@ export const Head = (props: HeadProps<Queries.ArticlePageQuery>) => {
     <title>{props.data.mdx?.frontmatter?.title}</title>
 		<html lang='ja' />
     <meta name='description' content={props.data.mdx?.excerpt ?? ''} />
-		<link rel='canonical' href={window.location.href} />
+		<link rel='canonical' href={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		{/* <meta name='image' content={seo.image} /> */}
-		<meta property='og:url' content={window.location.href} />
+		<meta property='og:url' content={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		<meta property='og:type' content='website' />
 		<meta property='og:title' content={props.data.mdx?.frontmatter?.title ?? ''} />
 		<meta property="og:site_name" content='プログラミング日記' />
@@ -30,6 +30,11 @@ export const Head = (props: HeadProps<Queries.ArticlePageQuery>) => {
 
 export const query = graphql`
   query ArticlePage($id: String) {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     mdx(id: { eq: $id }) {
       id
       fields {
