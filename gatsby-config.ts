@@ -2,7 +2,7 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `Programming Nikki`,
+    title: `@fukke0906のプログラミング日記`,
     siteUrl: `https://fukke-programming-nikki.web.app`
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.

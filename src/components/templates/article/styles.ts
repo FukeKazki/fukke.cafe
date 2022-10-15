@@ -130,6 +130,14 @@ export const twitter = css`
   font-size: 12px;
   color: var(--dark-gray-3);
   align-items: center;
+  transition: all 500ms;
+  :hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    svg {
+      fill: var(--primary);
+    }
+  }
   svg {
     fill: var(--dark-gray-3);
     margin-right: 4px;

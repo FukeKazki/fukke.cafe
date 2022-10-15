@@ -12,6 +12,12 @@ export const tagList = css`
 `;
 
 export const tagTitle = css`
+  position: sticky;
+  top: 0;
+  padding: 8px 0;
+  background-color: var(--white);
+  line-height: 16px;
+  color: var(--dark-gray-1);
   font-size: 16px;
   font-weight: 500;
   border-bottom: 1px solid #f4f4f4;
@@ -20,6 +26,7 @@ export const tagTitle = css`
 export const articleTitle = css`
   margin-top: 5px;
   font-size: 12px;
+  color: var(--dark-gray-1);
 `;
 
 export const container = css``;

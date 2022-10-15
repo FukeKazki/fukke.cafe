@@ -23,6 +23,9 @@ export const article = css`
   border-radius: 8px;
   padding: 20px;
   color: var(--dark-gray-1);
+  :hover {
+    opacity: 0.8;
+  }
 `;
 
 export const container = css`
