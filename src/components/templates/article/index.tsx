@@ -13,23 +13,20 @@ export const convertString = (v: string | null | undefined): string => {
 
 export const ArticleTemplate = ({
   data,
-  children
+  children,
+  ...props
 }: PageProps<Queries.ArticlePageQuery>) => {
   const { mdx } = data;
   const recommendArticles = useRecommendArticles({
     category: mdx?.frontmatter?.category ?? 'その他',
     id: mdx?.id ?? ''
   });
+  const title = mdx?.fields?.category === 'tech' ? mdx?.frontmatter?.title : `${convertString(mdx?.fields?.name)}の日報`
   return (
     <DetailLayout>
       <div css={styles.contents}>
         <div css={styles.body}>
-          {mdx?.fields?.category === 'daily' && (
-            <h1 css={styles.title}>{convertString(mdx.fields.name)}の日報</h1>
-          )}
-          {mdx?.fields?.category === 'tech' && (
-            <h1 css={styles.title}>{mdx?.frontmatter?.title}</h1>
-          )}
+          <h1 css={styles.title}>{title}</h1>
           <MDXProvider
             css={styles.text}
             components={{
@@ -46,7 +43,7 @@ export const ArticleTemplate = ({
           </MDXProvider>
           {/* シェア */}
           <div css={styles.share}>
-            <a href={`http://twitter.com/share?url=${window.location.href}&text=${document.title}`} target="__blank">
+            <a href={`http://twitter.com/share?url=${props.location.href}&text=${title}`} target="__blank">
               <span css={styles.twitter}><TwitterIcon/>ツイート</span>
             </a>
           </div>
