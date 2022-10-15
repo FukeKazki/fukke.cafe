@@ -1,6 +1,7 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Link, PageProps } from 'gatsby';
 import { Fragment } from 'react';
+import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
 import { DetailLayout } from '../../layouts/Detail';
 import * as styles from './styles';
 
@@ -14,6 +15,10 @@ export const ArticleTemplate = ({
   children
 }: PageProps<Queries.ArticlePageQuery>) => {
   const { mdx } = data;
+  const recommendArticles = useRecommendArticles({
+    category: mdx?.frontmatter?.category ?? 'その他',
+    id: mdx?.id ?? ''
+  });
   return (
     <DetailLayout>
       <div css={styles.contents}>
@@ -38,6 +43,22 @@ export const ArticleTemplate = ({
           >
             {children}
           </MDXProvider>
+          {/* 下部 */}
+          <div css={styles.recommend}>
+            <h3 css={styles.recommendTitle}>その他の記事</h3>
+            <ul css={styles.recommendList}>
+              {recommendArticles.map(article => (
+                <li key={article.id}>
+                  <Link to={`/tech/${article.fields?.name}`}>
+                    <div css={styles.recommendArticle}>
+                      <p>{convertString(article.fields?.name)}</p>
+                      <p>{article.frontmatter?.title}</p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div css={styles.sub}>

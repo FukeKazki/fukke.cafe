@@ -83,3 +83,25 @@ export const mokuji = css`
 export const publishDate = css`
   font-size: 14px; ;
 `;
+
+export const recommend = css`
+  margin-top: 48px;
+`;
+
+export const recommendTitle = css`
+  font-size: 24px;
+  color: var(--dark-gray-1);
+`;
+
+export const recommendList = css`
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+`;
+
+export const recommendArticle = css`
+  border: 1px solid var(--light-gray-1);
+  padding: 10px;
+  border-radius: 8px;
+`;

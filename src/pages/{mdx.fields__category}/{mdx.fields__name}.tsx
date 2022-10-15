@@ -10,6 +10,7 @@ export default function ArticlePage({
 export const query = graphql`
   query ArticlePage($id: String) {
     mdx(id: { eq: $id }) {
+      id
       fields {
         name
         category
@@ -17,6 +18,7 @@ export const query = graphql`
       frontmatter {
         title
         date
+        category
       }
       body
       tableOfContents
