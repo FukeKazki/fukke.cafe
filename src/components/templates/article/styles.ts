@@ -1,8 +1,11 @@
 import { css } from '@emotion/react';
+import { breakpoints } from '../../../styles/breakpoint';
 
 export const contents = css`
-  display: grid;
-  grid-template: 'body sub' 1fr / minmax(calc(100vw - 460px), 1fr) 232px;
+  @media (min-width: ${breakpoints.lg}px) {
+    display: grid;
+    grid-template: 'body sub' 1fr / minmax(calc(100vw - 460px), 1fr) 232px;
+  }
 `;
 
 export const body = css`
@@ -12,6 +15,10 @@ export const body = css`
 `;
 
 export const sub = css`
+  @media (min-width: ${breakpoints.lg}px) {
+    display: block;
+  }
+  display: none;
   border-left: 1px solid var(--light-gray-1);
   grid-area: sub;
   padding: 24px;
@@ -23,7 +30,10 @@ export const subContainer = css`
 `;
 
 export const title = css`
-  font-size: 48px;
+  font-size: 24px;
+  @media (min-width: ${breakpoints.lg}px) {
+    font-size: 48px;
+  }
   font-weight: bold;
   color: var(--dark-gray-1);
 `;
@@ -96,7 +106,9 @@ export const recommendTitle = css`
 export const recommendList = css`
   margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  @media (min-width: ${breakpoints.lg}px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   gap: 20px;
 `;
 

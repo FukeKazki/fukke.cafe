@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { breakpoints } from '../../../styles/breakpoint';
 
 export const header = css`
   display: flex;
@@ -6,7 +7,10 @@ export const header = css`
 `;
 
 export const title = css`
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   color: var(--dark-gray-1);
+  @media (min-width: ${breakpoints.lg}px) {
+    font-size: 24px;
+  }
 `;

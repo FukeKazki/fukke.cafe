@@ -1,12 +1,19 @@
 import { css } from '@emotion/react';
+import { breakpoints } from '../../../styles/breakpoint';
 
 export const main = css`
-  display: grid;
-  grid-template: 'sideMenu contents' 1fr / 228px 1fr;
+  @media (min-width: ${breakpoints.lg}) {
+    display: grid;
+    grid-template: 'sideMenu contents' 1fr / 228px 1fr;
+  }
 `;
 
 export const sideMenu = css`
+  display: none;
   grid-area: sideMenu;
+  @media (min-width: ${breakpoints.lg}) {
+    display: block;
+  }
 `;
 
 export const contents = css`
