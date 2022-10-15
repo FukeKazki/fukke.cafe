@@ -105,3 +105,13 @@ export const recommendArticle = css`
   padding: 10px;
   border-radius: 8px;
 `;
+
+export const footer = css`
+  margin-top: 80px;
+  height: 62px;
+  background-color: #1f1f1f;
+  color: var(--white);
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+`;

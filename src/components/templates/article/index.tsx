@@ -88,6 +88,9 @@ export const ArticleTemplate = ({
           </div>
         </div>
       </div>
+      <div css={styles.footer}>
+        <p>Thanks you for reading.</p>
+      </div>
     </DetailLayout>
   );
 };
