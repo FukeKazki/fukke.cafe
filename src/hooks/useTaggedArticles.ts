@@ -4,7 +4,7 @@ export const useTaggedArticles = () => {
   const { allMdx } = useStaticQuery<Queries.UseTaggedArticlesQuery>(graphql`
     query UseTaggedArticles {
       allMdx {
-        group(field: frontmatter___tags) {
+        group(field: frontmatter___category) {
           nodes {
             frontmatter {
               title

@@ -4,12 +4,16 @@ import * as styles from './styles';
 
 export const SideMenu = () => {
   const nodes = useTaggedArticles();
+  const others = nodes[0];
+  const webfront = nodes[1];
+  const server = nodes[2];
+  const res = [webfront, server, others]
 
   return (
     <div css={styles.sideMenu}>
       <div css={styles.container}>
         <ul css={styles.tagList}>
-          {nodes.map((node, index) => {
+          {res.map((node, index) => {
             return (
               <li key={`${node.fieldValue}-${index}`}>
                 <p css={styles.tagTitle}>{node.fieldValue}</p>
