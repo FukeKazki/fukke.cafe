@@ -1,4 +1,4 @@
-import { graphql, PageProps } from 'gatsby';
+import { graphql, HeadProps, PageProps } from 'gatsby';
 import { ArticleTemplate } from '../../components/templates/article';
 
 export default function ArticlePage({
@@ -6,6 +6,27 @@ export default function ArticlePage({
 }: PageProps<Queries.ArticlePageQuery>) {
   return <ArticleTemplate {...props} />;
 }
+
+export const Head = (props: HeadProps<Queries.ArticlePageQuery>) => {
+  return (
+  <>
+    <title>{props.data.mdx?.frontmatter?.title}</title>
+		<html lang='ja' />
+    <meta name='description' content={props.data.mdx?.excerpt ?? ''} />
+		<link rel='canonical' href={window.location.href} />
+		{/* <meta name='image' content={seo.image} /> */}
+		<meta property='og:url' content={window.location.href} />
+		<meta property='og:type' content='website' />
+		<meta property='og:title' content={props.data.mdx?.frontmatter?.title ?? ''} />
+		<meta property="og:site_name" content='プログラミング日記' />
+		<meta property='og:description' content={props.data.mdx?.excerpt ?? ''} />
+		{/* <meta property='og:image' content={seo.image} /> */}
+		<meta property='twitter:site' content='@fukke0906' />
+		<meta property='twitter:card' content='summary_large_image' />
+		<meta property='twitter:title' content={props.data.mdx?.frontmatter?.title ?? ''} />
+		<meta property='twitter:description' content={props.data.mdx?.excerpt ?? ''} />
+  </>
+)};
 
 export const query = graphql`
   query ArticlePage($id: String) {
@@ -15,6 +36,7 @@ export const query = graphql`
         name
         category
       }
+      excerpt
       frontmatter {
         title
         date
