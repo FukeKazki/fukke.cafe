@@ -15,13 +15,13 @@ export const Head = ({ params, ...props }: HeadProps<Queries.ArticlePageQuery>) 
 		<html lang='ja' />
     <meta name='description' content={props.data.mdx?.excerpt ?? ''} />
 		<link rel='canonical' href={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
-		{/* <meta name='image' content={seo.image} /> */}
+		<meta name='image' content={`https://fukke-blog-og-image.vercel.app/${title}`} />
 		<meta property='og:url' content={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`} />
 		<meta property='og:type' content='website' />
 		<meta property='og:title' content={title ?? ''} />
 		<meta property="og:site_name" content='プログラミング日記' />
 		<meta property='og:description' content={props.data.mdx?.excerpt ?? ''} />
-		{/* <meta property='og:image' content={seo.image} /> */}
+		<meta property='og:image' content={`https://fukke-blog-og-image.vercel.app/${title}`} />
 		<meta property='twitter:site' content='@fukke0906' />
 		<meta property='twitter:card' content='summary_large_image' />
 		<meta property='twitter:title' content={title ?? ''} />
