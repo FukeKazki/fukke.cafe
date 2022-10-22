@@ -22,14 +22,14 @@ export const DetailLayout = ({ children, ...props }: Props) => {
   }, [])
 
   return (
-    <Fragment>
+    <div className="halloween">
       <header>
         <TopBar />
         <Header />
       </header>
-      <nav css={styles.nav}>
+      {/* <nav css={styles.nav}>
         <Navigation />
-      </nav>
+      </nav> */}
       <main css={styles.main}>
         <div css={styles.sideMenu}>
           <div css={styles.scroll} onScroll={onScroll} ref={scrollMenu}>
@@ -41,6 +41,6 @@ export const DetailLayout = ({ children, ...props }: Props) => {
         </div>
         <div css={styles.contents}>{children}</div>
       </main>
-    </Fragment>
+    </div>
   );
 };

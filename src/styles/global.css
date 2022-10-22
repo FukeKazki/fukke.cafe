@@ -23,3 +23,8 @@ img {
   --dark-gray-3: #788783;
   --dark-gray-4: #e2e4e3;
 }
+
+.halloween {
+  --primary: #DF4E26;
+  --gradient: linear-gradient(102.56deg, #9E4128 6.25%, #DF4E26 105.21%);
+}
