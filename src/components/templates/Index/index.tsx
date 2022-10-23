@@ -1,7 +1,7 @@
 import { DetailLayout } from '../../layouts/Detail';
 import * as styles from './styles';
 import {
-  GatsbyImage, getImage
+  GatsbyImage, getImage, ImageDataLike
 } from 'gatsby-plugin-image';
 import { useTechArticles } from '../../../hooks/useTechArticles';
 import { Link } from 'gatsby';
@@ -9,7 +9,7 @@ import { useWebfrontendArticles } from '../../../hooks/useWebfrontendArticles';
 
 export const IndexTemplate = () => {
   const [top, ...articles] = useTechArticles()
-  const topImage = getImage(top.thumbnail)
+  const topImage = getImage(top.thumbnail?.childImageSharp?.gatsbyImageData ?? null)
 
   const webfrontArticles = useWebfrontendArticles()
 
@@ -27,7 +27,7 @@ export const IndexTemplate = () => {
           <h3>ウェブフロント</h3>
           <ul>
             {webfrontArticles.slice(0, 5).map(article => {
-              const image = getImage(article.thumbnail)
+              const image = getImage(article.thumbnail?.childImageSharp?.gatsbyImageData ?? null)
               return (
                 <li key={article.id}>
                   {image && <GatsbyImage objectFit='cover' css={styles.topArticle} image={image} alt='ui'/>}
