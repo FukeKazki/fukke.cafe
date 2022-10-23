@@ -37,7 +37,11 @@ const config: GatsbyConfig = {
       "name": "tech",
       "path": "./articles/tech/"
     }
-  }]
+  },
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`
+  ]
 };
 
 export default config;
