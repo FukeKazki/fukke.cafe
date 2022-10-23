@@ -22,13 +22,9 @@ export const useWebfrontendArticles = () => {
               category
               name
             }
-            image {
+            thumbnail {
               childImageSharp {
-                gatsbyImageData(
-                  width: 360
-                  placeholder: BLURRED
-                  formats: [AUTO, WEBP, AVIF]
-                )
+                gatsbyImageData(width: 360)
               }
             }
           }

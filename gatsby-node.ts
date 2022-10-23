@@ -11,6 +11,16 @@ const hasThumbnail = (node: any): node is NodeWithThumbnail => {
   return node?.frontmatter?.thumbnail
 }
 
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type Mdx implements Node {
+      thumbnail: File @link(from: "fields.localFile")
+    }
+  `)
+}
+
 export const onCreateNode: GatsbyNode["onCreateNode"]  = async ({ node, actions, getNode, createNodeId, getCache }) => {
   const { createNodeField, createNode } = actions
   if (node.internal.type === `Mdx`) {
@@ -39,13 +49,17 @@ export const onCreateNode: GatsbyNode["onCreateNode"]  = async ({ node, actions,
       const thumbnail = node.frontmatter.thumbnail
       const fileNode = await createRemoteFileNode({
         url: thumbnail,
-        parentNodeId: parent.id,
+        parentNodeId: node.id,
         createNode,
         createNodeId,
         getCache
       })
       if (fileNode) {
-        node.image___NODE = fileNode.id
+        createNodeField({
+          node,
+          name: 'localFile',
+          value: fileNode.id
+        })
       }
     }
   }

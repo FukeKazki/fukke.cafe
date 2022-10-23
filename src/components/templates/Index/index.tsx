@@ -9,7 +9,7 @@ import { useWebfrontendArticles } from '../../../hooks/useWebfrontendArticles';
 
 export const IndexTemplate = () => {
   const [top, ...articles] = useTechArticles()
-  const topImage = getImage(top.image)
+  const topImage = getImage(top.thumbnail)
 
   const webfrontArticles = useWebfrontendArticles()
 
@@ -26,11 +26,15 @@ export const IndexTemplate = () => {
         <section>
           <h3>ウェブフロント</h3>
           <ul>
-            {webfrontArticles.map(article => (
-              <li key={article.id}>
-                <p>{article.frontmatter?.title}</p>
-              </li>
-            ))}
+            {webfrontArticles.slice(0, 5).map(article => {
+              const image = getImage(article.thumbnail)
+              return (
+                <li key={article.id}>
+                  {image && <GatsbyImage objectFit='cover' css={styles.topArticle} image={image} alt='ui'/>}
+                  <p>{article.frontmatter?.title}</p>
+                </li>
+              )
+            })}
           </ul>
         </section>
       </div>
