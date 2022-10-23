@@ -1,6 +1,16 @@
 import type { GatsbyNode } from "gatsby";
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 
+type NodeWithThumbnail = {
+  frontmatter: {
+    thumbnail: string
+  }
+}
+
+const hasThumbnail = (node: any): node is NodeWithThumbnail => {
+  return node?.frontmatter?.thumbnail
+}
+
 export const onCreateNode: GatsbyNode["onCreateNode"]  = async ({ node, actions, getNode, createNodeId, getCache }) => {
   const { createNodeField, createNode } = actions
   if (node.internal.type === `Mdx`) {
@@ -25,8 +35,8 @@ export const onCreateNode: GatsbyNode["onCreateNode"]  = async ({ node, actions,
     })
 
     // frontmatterで指定されているURLから画像ノードを生成する
-    const thumbnail = node?.frontmatter?.thumbnail as string
-    if (thumbnail) {
+    if (hasThumbnail(node)) {
+      const thumbnail = node.frontmatter.thumbnail
       const fileNode = await createRemoteFileNode({
         url: thumbnail,
         parentNodeId: parent.id,
@@ -34,7 +44,6 @@ export const onCreateNode: GatsbyNode["onCreateNode"]  = async ({ node, actions,
         createNodeId,
         getCache
       })
-
       if (fileNode) {
         node.image___NODE = fileNode.id
       }

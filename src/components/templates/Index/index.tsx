@@ -4,21 +4,35 @@ import {
   GatsbyImage, getImage
 } from 'gatsby-plugin-image';
 import { useTechArticles } from '../../../hooks/useTechArticles';
+import { Link } from 'gatsby';
+import { useWebfrontendArticles } from '../../../hooks/useWebfrontendArticles';
 
 export const IndexTemplate = () => {
-  const article = useTechArticles()
-  const top = article[0]
-  console.log(top)
+  const [top, ...articles] = useTechArticles()
+  const topImage = getImage(top.image)
 
-  const image = getImage(top.image)
+  const webfrontArticles = useWebfrontendArticles()
+
   return (
     <DetailLayout>
       <div css={styles.container}>
-        <h1 css={styles.title}>@fukke0906のプログラミング日記</h1>
-        <div css={styles.description}>
-          <p>技術ブログや日報を書きます。</p>
+        <div>
+          {topImage && (
+            <Link to={`/tech/${top.fields?.name}`}>
+              <GatsbyImage objectFit='cover' css={styles.topArticle} image={topImage} alt="あはあは"/>
+            </Link>
+          )}
         </div>
-        <GatsbyImage image={image} alt="あはあは"/>
+        <section>
+          <h3>ウェブフロント</h3>
+          <ul>
+            {webfrontArticles.map(article => (
+              <li key={article.id}>
+                <p>{article.frontmatter?.title}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </DetailLayout>
   );
