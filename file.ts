@@ -2,7 +2,7 @@
 import { format } from "https://deno.land/std@0.140.0/datetime/mod.ts";
 import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
 
-const type = parse(Deno.args).type ?? 'source';
+const type = parse(Deno.args).type ?? 'tech';
 const now = new Date();
 const path = `./articles/${type}/${format(now, "yyyyMMdd")}.mdx`;
 const template = `---
@@ -31,7 +31,7 @@ try {
   } else {
       await Deno.writeTextFile(path, template);
   }
- 
+
   console.log("ファイルを作成しました", path);
 } catch (err) {
   console.error("ファイルの作成に失敗しました。", err);
