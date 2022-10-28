@@ -1,0 +1,95 @@
+---
+title: 'Playwrightのメモ'
+date: 2022-10-28
+tags: ['e2e', 'playwright']
+category: 'ウェブフロント'
+---
+
+## 全体の設定
+`playwright.config.ts`に記述する。
+
+## Chromeの起動オプション
+
+```typescript
+use: {
+  launchOptions: {
+    args: [
+      "--use-fake-ui-for-media-stream",
+      "--use-file-for-fake-audio-capture",
+      "--use-fake-device-for-media-stream",
+      "--use-file-for-fake-video-capture=./qr.y4m", // 任意のフェイク映像を流す
+    ]
+  },
+}
+```
+
+スクリプトからの起動も可能。
+
+```typescript
+const browser = await chromium.launch({
+  args: [],
+})
+```
+
+## ローカルストレージ、Cokkieの設定
+
+```typescript
+use: {
+  storageState: {
+    cookies: [],
+    origins: [{
+      origin: '', // URLを設定
+      localStorage: [{
+        name: 'category',
+        value: 'food'
+      }]
+    }]
+  }
+}
+```
+
+スクリプトからの設定も可能。
+
+```typescript
+const page = await browser.newPage({
+  storageState: STORAGE_STATE
+})
+```
+
+## 要素があったときは特定の処理をする
+
+「閉じる」ボタンが存在したときはクリックする。
+
+```typescript
+// isVisibleはあまり待機してくれないので待つ
+await page.waitForTimeout(1000)
+if (await page.locator('button', { hasText: '閉じる' }).isVisible()) {
+  await subPage.locator('button', { hasText: '閉じる' }).click()
+}
+```
+
+ボタンが押せなかったときはチェックボックスをクリックする。
+
+```typescript
+await page.waitForTimeout(1000)
+if (await page.locator('button', { hasText: '投稿する' }).isDisabled()) {
+  await page.locator('check-box .checkbox').click()
+}
+```
+
+## フォームに入力する
+
+```typescript
+await page.locator('input[type=text]').fill(user)
+await page.locator('input[type=password]').fill(password)
+await page.locator('button').click()
+```
+
+## n個目の要素
+
+```typescript
+await page.locator('dialog :nth-match(input, 2)').fill('2001')
+await page.locator('dialog :nth-match(input, 3)').fill('09')
+await page.locator('dialog :nth-match(input, 4)').fill('06')
+```
+

@@ -27,3 +27,8 @@ tags: []
 # フレームレートを調整
 
 - `-r 30`
+
+# 映像を中央に埋め込む
+`ffmpeg -i yakiniku.mp4 -i qr.mp4 -filter_complex "overlay=x=(W-w)/2:y=(H-h)/2" merge.mp4`
+
+
