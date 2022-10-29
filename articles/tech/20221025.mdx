@@ -1,0 +1,34 @@
+---
+title: AppleScriptとRaycastの組み合わせで優勝する
+date: 2022-10-25
+tags: []
+---
+
+## 初めに
+RaycastのショートカットとAppleScriptを使ってChromeのURLをマークダウン形式で取得するスクリプトを作成します。
+
+![Raycastの画面](/images/test.png)
+
+## AppleScript
+
+```
+#!/usr/bin/osascript
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title markdown-url
+# @raycast.mode silent
+
+# Optional parameters:
+# @raycast.icon 🤖
+
+tell application "Google Chrome" to set currentTabUrl to URL of active tab of window 1
+tell application "Google Chrome" to set currentTabTitle to title of active tab of window 1
+
+set link to "[" & currentTabTitle & "]" & "(" & currentTabUrl & ")"
+
+set the clipboard to link
+
+log link
+```
+

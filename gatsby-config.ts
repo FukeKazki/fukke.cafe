@@ -9,35 +9,51 @@ const config: GatsbyConfig = {
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: ["gatsby-plugin-emotion", {
-    resolve: 'gatsby-plugin-mdx',
-    options: {
-      gatsbyRemarkPlugins: [
-        {
-          resolve: 'gatsby-remark-autolink-headers',
-          options: {
-            offsetY: `100`,
-            icon: false,
-            className: `custom-class`,
-            maintainCase: false,
+  plugins: [
+    "gatsby-plugin-emotion",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-autolink-headers',
+            options: {
+              offsetY: `100`,
+              icon: false,
+              className: `custom-class`,
+              maintainCase: false,
+            }
+          },
+          'gatsby-remark-prismjs',
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 1000
+            }
           }
-        },
-        'gatsby-remark-prismjs'
-      ]
+        ]
+      }
+    }, {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "daily",
+        "path": "./articles/daily/"
+      }
+    }, {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "tech",
+        "path": "./articles/tech/"
+      }
+    }, {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: './images/'
+      }
     }
-  }, {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "daily",
-      "path": "./articles/daily/"
-    }
-  }, {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "tech",
-      "path": "./articles/tech/"
-    }
-  }]
+  ]
 };
 
 export default config;
