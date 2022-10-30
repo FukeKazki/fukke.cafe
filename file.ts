@@ -17,7 +17,7 @@ date: ${format(now, "yyyy-MM-dd")}
 tags: []
 ---
 
-# 読んだ記事
+# Reading
 
 # やったこと
 
@@ -27,9 +27,9 @@ tags: []
 
 try {
   if (type === 'daily') {
-      await Deno.writeTextFile(path, dailyTemplate);
+    await Deno.writeTextFile(path, dailyTemplate);
   } else {
-      await Deno.writeTextFile(path, template);
+    await Deno.writeTextFile(path, template);
   }
 
   console.log("ファイルを作成しました", path);
