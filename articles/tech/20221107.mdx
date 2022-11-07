@@ -1,0 +1,15 @@
+---
+title: 'Angular Testのメモ'
+date: 2022-11-07
+tags: []
+---
+
+# DOM操作したいとき
+`import { DOCUMENT } from '@angular/common'`でモックできる
+
+# 同じモックを何回も作りたくない
+RoutetTestingModuleのようにモックモジュールを作成してimportすることで解決できる
+
+# 画面遷移のテストをしたい
+RouterTestingModuleを使う
+
