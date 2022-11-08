@@ -21,7 +21,7 @@ export const ArticleTemplate = ({
     category: mdx?.frontmatter?.category ?? 'その他',
     id: mdx?.id ?? ''
   });
-  const title = mdx?.fields?.category === 'tech' ? mdx?.frontmatter?.title : `${convertString(mdx?.fields?.name)}の日報`
+  const title = mdx?.fields?.category === 'tech' ? mdx?.frontmatter?.title : mdx?.fields?.category === 'daily' ? `${convertString(mdx?.fields?.name)}の日報` : mdx?.fields?.name
   return (
     <DetailLayout>
       <div css={styles.contents}>
