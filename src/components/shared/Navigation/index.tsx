@@ -30,9 +30,16 @@ export const Navigation = () => {
               <p>日報</p>
             </Link>
           </li>
-          {/* <li css={styles.item}>
-            <p>ポートフォリオ</p>
-          </li> */}
+          <li css={styles.item}>
+            <Link
+              partiallyActive
+              to='/other/plan'
+              css={styles.link}
+              activeStyle={{ fontWeight: 'bold', color: 'var(--dark-gray-1)' }}
+            >
+              <p>目標</p>
+            </Link>
+          </li>
         </ul>
       </div>
     </Fragment>

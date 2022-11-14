@@ -50,6 +50,12 @@ const config: GatsbyConfig = {
     }, {
       resolve: 'gatsby-source-filesystem',
       options: {
+        "name": "other",
+        "path": "./articles/other/"
+      }
+    }, {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         path: './images/'
       }
     }
