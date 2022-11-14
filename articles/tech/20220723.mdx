@@ -96,4 +96,16 @@ this.router.serializeUrl(this.router.createUrlTree([]));
 ```
 
 ## マッチングを工夫する
-UrlMatcherを作成  
+UrlMatcherを作成
+
+## コンポーネントの再利用を制御
+`Router.routeReuseStrategy.shouldReuseRoute = () => false`にする。
+
+注意、この処理が1回でも走るとその後再利用されなくなるのでもとに戻す。
+
+[Angular - BaseRouteReuseStrategy](https://angular.io/api/router/BaseRouteReuseStrategy#shouldReuseRoute)
+
+## 同じ画面に遷移したときに画面リロードするように
+RouterConfigOptionsを`onSameUrlNavigation: 'reload'`にする。
+
+[Angular - RouterConfigOptions](https://angular.io/api/router/RouterConfigOptions#onSameUrlNavigation)
