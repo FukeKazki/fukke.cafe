@@ -1,0 +1,21 @@
+---
+title: 'limaつかってみた'
+date: 2022-12-22
+tags: []
+---
+
+## インストール
+`brew install lima`
+
+## VMの作成
+`limactl start default`
+
+ここでどのテンプレートから作るか聞かれる。今回はubuntu-ltsにした。
+
+## VMにはいる
+`limactl shell ubuntu-lts`
+
+nginxいれたりしました。
+## メモ
+勝手にポートフォワーディングしてました。
+vmの80番にnginxを立てると、ホストからlocalhostで接続できました。
