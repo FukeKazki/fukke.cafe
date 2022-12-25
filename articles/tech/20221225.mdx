@@ -1,0 +1,37 @@
+---
+title: 'WebSocketメモ'
+date: 2022-12-25
+tags: []
+---
+
+## client
+クライアントは標準のWebSocket使うのがいい。
+
+```
+const socket = new WebSocket('ws://localhost:8080');
+// 接続が開いたときのイベント
+socket.addEventListener('open', function (event) {
+  socket.send('Hello Server!');
+});
+```
+
+## servier
+expressでやる場合は`express-ws`を使うと楽。
+
+```
+import express from "express";
+import expressWs from "express-ws";
+
+const { app, getWss } = expressWs(express());
+
+app.ws("/", (ws, res) => {
+  ws.on("message", msg => {
+    getWss().clients.forEach(sock => {
+      sock.send(msg)
+    })
+  })
+})
+```
+
+## socket.io
+socket.ioを使うならサーバーもフロントもsocket.ioにした方がいい、エンドポイントをよしなにいじるせいで片方が違うとつらい。
