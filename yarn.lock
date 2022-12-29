@@ -8789,6 +8789,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fukke.cafe@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "fukke.cafe@workspace:."
+  dependencies:
+    "@emotion/react": ^11.10.4
+    "@emotion/styled": ^11.10.4
+    "@mdx-js/react": ^2.1.4
+    "@types/node": ^17.0.45
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
+    eslint-config-prettier: ^8.5.0
+    eslint-config-react-app: ^7.0.1
+    firebase-tools: ^11.14.1
+    gatsby: ^4.24.3
+    gatsby-plugin-emotion: ^7.24.0
+    gatsby-plugin-mdx: ^4.3.0
+    gatsby-plugin-sharp: ^4.24.0
+    gatsby-remark-autolink-headers: ^5.24.0
+    gatsby-remark-images: ^6.24.0
+    gatsby-remark-prismjs: ^6.24.0
+    gatsby-source-filesystem: ^4.24.0
+    gatsby-transformer-sharp: ^4.24.0
+    prettier: ^2.7.1
+    prismjs: ^1.29.0
+    react: ^18.1.0
+    react-dom: ^18.1.0
+    typescript: ^4.8.3
+  languageName: unknown
+  linkType: soft
+
 "function-bind@npm:^1.1.1":
   version: 1.1.1
   resolution: "function-bind@npm:1.1.1"
@@ -14757,36 +14787,6 @@ __metadata:
   checksum: 1d38588e520dab7cea67cbbe2efdd86a10cc7a074c09657635e34f035277b59fbb57d09d8638346bf7090f8e8ebc070c96fa5fd183b777fff4f5edff5e9466cf
   languageName: node
   linkType: hard
-
-"programming-nikki@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "programming-nikki@workspace:."
-  dependencies:
-    "@emotion/react": ^11.10.4
-    "@emotion/styled": ^11.10.4
-    "@mdx-js/react": ^2.1.4
-    "@types/node": ^17.0.45
-    "@types/react": ^18.0.21
-    "@types/react-dom": ^18.0.6
-    eslint-config-prettier: ^8.5.0
-    eslint-config-react-app: ^7.0.1
-    firebase-tools: ^11.14.1
-    gatsby: ^4.24.3
-    gatsby-plugin-emotion: ^7.24.0
-    gatsby-plugin-mdx: ^4.3.0
-    gatsby-plugin-sharp: ^4.24.0
-    gatsby-remark-autolink-headers: ^5.24.0
-    gatsby-remark-images: ^6.24.0
-    gatsby-remark-prismjs: ^6.24.0
-    gatsby-source-filesystem: ^4.24.0
-    gatsby-transformer-sharp: ^4.24.0
-    prettier: ^2.7.1
-    prismjs: ^1.29.0
-    react: ^18.1.0
-    react-dom: ^18.1.0
-    typescript: ^4.8.3
-  languageName: unknown
-  linkType: soft
 
 "progress@npm:^2.0.0, progress@npm:^2.0.3":
   version: 2.0.3
