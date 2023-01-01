@@ -28,3 +28,29 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FUKKE_PROGRAMMING_NIKKI }}'
           channelId: live
           projectId: fukke-programming-nikki
+
+  success_notification:
+    needs: build_and_preview
+    name: Slack Notification Success
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_TITLE: Deploy Success
+        SLACK_COLOR: good
+
+  failed_notification:
+    needs: build_and_preview
+    name: Slack Notification Success
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_TITLE: Deploy Failure
+        SLACK_COLOR: danger
