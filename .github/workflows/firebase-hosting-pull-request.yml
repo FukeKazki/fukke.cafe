@@ -34,7 +34,7 @@ jobs:
 
   success_notification:
     needs: build_and_preview
-    name: Slack Notification
+    name: Slack Notification Success
     runs-on: ubuntu-latest
     if: success()
     steps:
@@ -47,7 +47,7 @@ jobs:
 
   failed_notification:
     needs: build_and_preview
-    name: Slack Notification
+    name: Slack Notification Success
     runs-on: ubuntu-latest
     if: failure()
     steps:
