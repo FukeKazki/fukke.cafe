@@ -30,7 +30,7 @@ jobs:
           projectId: fukke-programming-nikki
 
   success_notification:
-    needs: build_and_preview
+    needs: build_and_deploy
     name: Slack Notification Success
     runs-on: ubuntu-latest
     if: success()
@@ -43,7 +43,7 @@ jobs:
         SLACK_COLOR: good
 
   failed_notification:
-    needs: build_and_preview
+    needs: build_and_deploy
     name: Slack Notification Success
     runs-on: ubuntu-latest
     if: failure()
