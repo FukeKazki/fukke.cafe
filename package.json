@@ -15,7 +15,8 @@
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write src/**/*.{tsx,ts,css}",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "prepare": "git config --local core.hooksPath .githooks"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -42,6 +43,7 @@
     "@types/react-dom": "^18.0.10",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
+    "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
     "typescript": "^4.9.4"
   },

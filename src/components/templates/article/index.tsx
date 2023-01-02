@@ -21,7 +21,12 @@ export const ArticleTemplate = ({
     category: mdx?.frontmatter?.category ?? 'その他',
     id: mdx?.id ?? ''
   });
-  const title = mdx?.fields?.category === 'tech' ? mdx?.frontmatter?.title : mdx?.fields?.category === 'daily' ? `${convertString(mdx?.fields?.name)}の日報` : mdx?.fields?.name
+  const title =
+    mdx?.fields?.category === 'tech'
+      ? mdx?.frontmatter?.title
+      : mdx?.fields?.category === 'daily'
+      ? `${convertString(mdx?.fields?.name)}の日報`
+      : mdx?.fields?.name;
   return (
     <DetailLayout>
       <div css={styles.contents}>
@@ -36,15 +41,21 @@ export const ArticleTemplate = ({
               p: props => <div {...props} css={styles.mdx.p} />,
               ul: props => <ul {...props} css={styles.mdx.ul} />,
               li: props => <li {...props} css={styles.mdx.li} />,
-              a: props => <a {...props} css={styles.mdx.a} target="__blank" />
+              a: props => <a {...props} css={styles.mdx.a} target='__blank' />
             }}
           >
             {children}
           </MDXProvider>
           {/* シェア */}
           <div css={styles.share}>
-            <a href={`http://twitter.com/share?url=${props.location.href}&text=${title}`} target="__blank">
-              <span css={styles.twitter}><TwitterIcon/>ツイート</span>
+            <a
+              href={`http://twitter.com/share?url=${props.location.href}&text=${title}`}
+              target='__blank'
+            >
+              <span css={styles.twitter}>
+                <TwitterIcon />
+                ツイート
+              </span>
             </a>
           </div>
           {/* 下部 */}

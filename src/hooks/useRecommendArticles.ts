@@ -1,9 +1,9 @@
 import { useTaggedArticles } from './useTaggedArticles';
 
 type Props = {
-  category: 'ウェブフロント' | 'サーバー' | 'その他' | string
-  id: string
-}
+  category: 'ウェブフロント' | 'サーバー' | 'その他' | string;
+  id: string;
+};
 
 // 同じカテゴリの記事を6件取得する
 export const useRecommendArticles = ({ category, id }: Props) => {
@@ -17,5 +17,7 @@ export const useRecommendArticles = ({ category, id }: Props) => {
   const recommendArticles = filterdArticles.nodes.filter(v => v.id !== id);
 
   // ランダムに6件取得
-  return recommendArticles.sort(() => Math.random() - Math.random()).slice(0, 6);
+  return recommendArticles
+    .sort(() => Math.random() - Math.random())
+    .slice(0, 6);
 };
