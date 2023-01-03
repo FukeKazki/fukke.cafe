@@ -23,7 +23,7 @@ tags: []
 ## Playwrightを使ったVRT
 実装にはPlaywrightを用います。Playwrightはe2eテストフレームワークですがtoMatchSnapshotメソッドを使ってVRTができます。
 
-```index.spec.ts
+```ts:title=index.spec.ts
 const url = process.env.URL
 
 test('', async (page) => {
@@ -50,7 +50,7 @@ VRTを導入しても動作が安定しなければ開発者から嫌がられ�
 例えばページ内にランダムな値が表示される可能性がある場合は確率で差分が出てしまいます。
 そのような箇所は
 
-```
+```ts
 await page.screenshot({
   masks: [page.locator('div.random-area')]
 })
@@ -62,7 +62,7 @@ await page.screenshot({
 
 APIからリアルタイムなデータをGETする場合は通信をモックしてあげましょう。
 
-```
+```ts
 page.route('**/api/timeline', () => ({
   timeline: [{}, {}, {}]
 }))
@@ -70,7 +70,7 @@ page.route('**/api/timeline', () => ({
 
 マスクできないような要素がでてきた場合はテスト環境内でJavaScriptを実行する手段もあります。
 
-```
+```ts
 await page.evaluate(() => {
   document.querySelector('').style.diplay = 'none'
 }).catch(() => {})

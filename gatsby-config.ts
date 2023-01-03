@@ -10,10 +10,10 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
-    "gatsby-plugin-emotion",
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
-    "gatsby-plugin-sitemap",
+    'gatsby-plugin-emotion',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
@@ -24,9 +24,10 @@ const config: GatsbyConfig = {
               offsetY: `100`,
               icon: false,
               className: `custom-class`,
-              maintainCase: false,
+              maintainCase: false
             }
           },
+          'gatsby-remark-prismjs-title',
           'gatsby-remark-prismjs',
           {
             resolve: 'gatsby-remark-images',
@@ -36,25 +37,29 @@ const config: GatsbyConfig = {
           }
         ]
       }
-    }, {
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
-        "name": "daily",
-        "path": "./articles/daily/"
+        name: 'daily',
+        path: './articles/daily/'
       }
-    }, {
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
-        "name": "tech",
-        "path": "./articles/tech/"
+        name: 'tech',
+        path: './articles/tech/'
       }
-    }, {
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
-        "name": "other",
-        "path": "./articles/other/"
+        name: 'other',
+        path: './articles/other/'
       }
-    }, {
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: './images/'
