@@ -45,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-remark-autolink-headers", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:6.3.1"],\
             ["gatsby-remark-images", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:7.3.1"],\
             ["gatsby-remark-prismjs", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:7.3.0"],\
+            ["gatsby-remark-prismjs-title", "npm:1.0.0"],\
             ["gatsby-source-filesystem", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:5.3.1"],\
             ["gatsby-transformer-sharp", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:5.3.1"],\
             ["lint-staged", "npm:13.1.0"],\
@@ -11824,6 +11825,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gatsby-remark-autolink-headers", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:6.3.1"],\
             ["gatsby-remark-images", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:7.3.1"],\
             ["gatsby-remark-prismjs", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:7.3.0"],\
+            ["gatsby-remark-prismjs-title", "npm:1.0.0"],\
             ["gatsby-source-filesystem", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:5.3.1"],\
             ["gatsby-transformer-sharp", "virtual:d80fc19d944e4172a21a4acb44ef8c3ed9919e0d51dfa490aae9ba52e1355a3896498d61ae61b857ea61c1994702461b554865f413a9b7d94beada7ffb0116cb#npm:5.3.1"],\
             ["lint-staged", "npm:13.1.0"],\
@@ -12655,6 +12657,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/prismjs",\
             "gatsby",\
             "prismjs"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["gatsby-remark-prismjs-title", [\
+        ["npm:1.0.0", {\
+          "packageLocation": "./.yarn/cache/gatsby-remark-prismjs-title-npm-1.0.0-3ec4d4f95e-739895239f.zip/node_modules/gatsby-remark-prismjs-title/",\
+          "packageDependencies": [\
+            ["gatsby-remark-prismjs-title", "npm:1.0.0"],\
+            ["unist-util-visit", "npm:1.4.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14119,7 +14131,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mute-stream", "npm:0.0.8"],\
             ["ora", "npm:5.4.1"],\
             ["run-async", "npm:2.4.1"],\
-            ["rxjs", "npm:7.5.7"],\
+            ["rxjs", "npm:7.8.0"],\
             ["string-width", "npm:4.2.3"],\
             ["strip-ansi", "npm:6.0.1"],\
             ["through", "npm:2.3.8"],\
@@ -20547,14 +20559,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:7.5.7", {\
-          "packageLocation": "./.yarn/cache/rxjs-npm-7.5.7-602d5c56e4-edabcdb73b.zip/node_modules/rxjs/",\
-          "packageDependencies": [\
-            ["rxjs", "npm:7.5.7"],\
-            ["tslib", "npm:2.4.0"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:7.8.0", {\
           "packageLocation": "./.yarn/cache/rxjs-npm-7.8.0-722f1c7172-61b4d4fd32.zip/node_modules/rxjs/",\
           "packageDependencies": [\
@@ -22543,6 +22547,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["unist-util-is", [\
+        ["npm:3.0.0", {\
+          "packageLocation": "./.yarn/cache/unist-util-is-npm-3.0.0-1816040586-d24a5dd80c.zip/node_modules/unist-util-is/",\
+          "packageDependencies": [\
+            ["unist-util-is", "npm:3.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:4.1.0", {\
           "packageLocation": "./.yarn/cache/unist-util-is-npm-4.1.0-16bbd97383-726484cd2a.zip/node_modules/unist-util-is/",\
           "packageDependencies": [\
@@ -22621,6 +22632,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["unist-util-visit", [\
+        ["npm:1.4.1", {\
+          "packageLocation": "./.yarn/cache/unist-util-visit-npm-1.4.1-fdb79796c9-e9395205b6.zip/node_modules/unist-util-visit/",\
+          "packageDependencies": [\
+            ["unist-util-visit", "npm:1.4.1"],\
+            ["unist-util-visit-parents", "npm:2.1.2"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:2.0.3", {\
           "packageLocation": "./.yarn/cache/unist-util-visit-npm-2.0.3-e3d6dbea25-1fe19d500e.zip/node_modules/unist-util-visit/",\
           "packageDependencies": [\
@@ -22653,6 +22672,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["unist-util-visit-parents", [\
+        ["npm:2.1.2", {\
+          "packageLocation": "./.yarn/cache/unist-util-visit-parents-npm-2.1.2-154aede9d7-048edbb590.zip/node_modules/unist-util-visit-parents/",\
+          "packageDependencies": [\
+            ["unist-util-visit-parents", "npm:2.1.2"],\
+            ["unist-util-is", "npm:3.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:3.1.1", {\
           "packageLocation": "./.yarn/cache/unist-util-visit-parents-npm-3.1.1-a4bb258148-1170e397df.zip/node_modules/unist-util-visit-parents/",\
           "packageDependencies": [\

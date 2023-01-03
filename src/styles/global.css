@@ -23,3 +23,18 @@ img {
   --dark-gray-3: #788783;
   --dark-gray-4: #e2e4e3;
 }
+
+.gatsby-code-title {
+  margin-top: 10px;
+}
+
+.gatsby-code-title span {
+  background-color: #f5f2f0;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+.gatsby-highlight * {
+  margin: 0 !important;
+}
