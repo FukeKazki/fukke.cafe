@@ -8,7 +8,7 @@ export default function IndexPage() {
 
 export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
   <Fragment>
-    <title>@fukke0906のプログラミング日記</title>
+    <title>fukke.cafe</title>
     <html lang='ja' />
     <meta name='description' content='技術ブログや日報を書きます。' />
     <link

@@ -8,7 +8,7 @@ export default function TechPage() {
 
 export const Head = (props: HeadProps<Queries.TechPageQuery>) => (
   <Fragment>
-    <title>@fukke0906のプログラミング日記</title>
+    <title>fukke.cafe</title>
     <html lang='ja' />
     <meta name='description' content='技術ブログや日報を書きます。' />
     <link
