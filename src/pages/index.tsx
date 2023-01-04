@@ -17,7 +17,7 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
     />
     <meta
       name='image'
-      content={`https://fukke-blog-og-image.vercel.app/@fukke0906のプログラミング日記`}
+      content={`https://fukke-blog-og-image.vercel.app/fuke.cafe`}
     />
     <meta
       property='og:url'
@@ -25,15 +25,15 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
     />
     <meta property='og:type' content='website' />
     <meta property='og:title' content='技術ブログや日報を書きます。' />
-    <meta property='og:site_name' content='@fukke0906のプログラミング日記' />
+    <meta property='og:site_name' content='fukke.cafe' />
     <meta property='og:description' content='技術ブログや日報を書きます。' />
     <meta
       property='og:image'
-      content={`https://fukke-blog-og-image.vercel.app/@fukke0906のプログラミング日記`}
+      content={`https://fukke-blog-og-image.vercel.app/fukke.cafe`}
     />
     <meta property='twitter:site' content='@fukke0906' />
     <meta property='twitter:card' content='summary_large_image' />
-    <meta property='twitter:title' content='@fukke0906のプログラミング日記' />
+    <meta property='twitter:title' content='fukke.cafe' />
     <meta
       property='twitter:description'
       content='技術ブログや日報を書きます。'

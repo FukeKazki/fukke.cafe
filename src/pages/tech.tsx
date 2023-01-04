@@ -25,7 +25,7 @@ export const Head = (props: HeadProps<Queries.TechPageQuery>) => (
     />
     <meta property='og:type' content='website' />
     <meta property='og:title' content='技術ブログや日報を書きます。' />
-    <meta property='og:site_name' content='@fukke0906のプログラミング日記' />
+    <meta property='og:site_name' content='fukke.cafe' />
     <meta property='og:description' content='技術ブログや日報を書きます。' />
     <meta
       property='og:image'
@@ -33,7 +33,7 @@ export const Head = (props: HeadProps<Queries.TechPageQuery>) => (
     />
     <meta property='twitter:site' content='@fukke0906' />
     <meta property='twitter:card' content='summary_large_image' />
-    <meta property='twitter:title' content='@fukke0906のプログラミング日記' />
+    <meta property='twitter:title' content='fukke.cafe' />
     <meta
       property='twitter:description'
       content='技術ブログや日報を書きます。'
