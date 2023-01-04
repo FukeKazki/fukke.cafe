@@ -1,4 +1,4 @@
-import type { GatsbyConfig } from "gatsby";
+import type { GatsbyConfig } from 'gatsby';
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -57,6 +57,13 @@ const config: GatsbyConfig = {
       options: {
         name: 'other',
         path: './articles/other/'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'blog',
+        path: './articles/blog/'
       }
     },
     {

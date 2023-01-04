@@ -1,9 +1,9 @@
 import { Link } from 'gatsby';
-import { useTaggedArticles } from '../../../hooks/useTaggedArticles';
+import { useCategoriesArticles } from '../../../hooks/useCategoriesArticles';
 import * as styles from './styles';
 
 export const SideMenu = () => {
-  const nodes = useTaggedArticles();
+  const nodes = useCategoriesArticles();
   const others = nodes[0];
   const webfront = nodes[1];
   const server = nodes[2];
@@ -13,20 +13,29 @@ export const SideMenu = () => {
     <div css={styles.sideMenu}>
       <div css={styles.container}>
         <ul css={styles.tagList}>
-          {res.map((node, index) => {
+          {res.map((category, index) => {
             return (
-              <li key={`${node.fieldValue}-${index}`}>
-                <p css={styles.tagTitle}>{node.fieldValue}</p>
+              <li key={`${category.fieldValue}-${index}`}>
+                <p css={styles.tagTitle}>{category.fieldValue}</p>
                 <ul>
-                  {node.nodes.map(v => (
-                    <li key={v.id}>
-                      <Link
-                        to={`/${v.fields?.category}/${v.fields?.name}`}
-                        css={styles.link}
-                        activeStyle={{ fontWeight: 'bold' }}
-                      >
-                        <p css={styles.articleTitle}>{v.frontmatter?.title}</p>
-                      </Link>
+                  {category.group.map((group, index) => (
+                    <li key={`${group.fieldValue}-${index}`}>
+                      {group.fieldValue}
+                      <ul>
+                        {group.edges.map(({ node }) => (
+                          <li key={node.id}>
+                            <Link
+                              to={`/${node.fields?.category}/${node.fields?.name}`}
+                              css={styles.link}
+                              activeStyle={{ fontWeight: 'bold' }}
+                            >
+                              <p css={styles.articleTitle}>
+                                {node.frontmatter?.title}
+                              </p>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     </li>
                   ))}
                 </ul>
