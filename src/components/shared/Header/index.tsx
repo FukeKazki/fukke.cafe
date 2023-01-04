@@ -7,7 +7,7 @@ export const Header = () => {
     <Fragment>
       <div css={styles.header}>
         <Link to='/'>
-          <h3 css={styles.title}>@fukke0906のプログラミング日記</h3>
+          <h3 css={styles.title}>fukke.cafe</h3>
         </Link>
       </div>
     </Fragment>
