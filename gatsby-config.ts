@@ -69,6 +69,13 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'category',
+        path: './articles/category/'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         path: './images/'
       }
     }
