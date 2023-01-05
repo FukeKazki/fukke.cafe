@@ -20,7 +20,13 @@ export const SideMenu = () => {
                 <ul>
                   {category.group.map((group, index) => (
                     <li key={`${group.fieldValue}-${index}`}>
-                      {group.fieldValue}
+                      <Link
+                        to={`/category/${group.fieldValue}`}
+                        css={styles.link}
+                        activeStyle={{ fontWeight: 'bold' }}
+                      >
+                        {group.fieldValue}
+                      </Link>
                       <ul>
                         {group.edges.map(({ node }) => (
                           <li key={node.id}>
