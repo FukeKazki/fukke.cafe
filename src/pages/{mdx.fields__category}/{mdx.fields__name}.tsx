@@ -14,10 +14,20 @@ export const Head = ({
   params,
   ...props
 }: HeadProps<Queries.ArticlePageQuery>) => {
-  const title =
-    params.fields__category === 'tech'
-      ? props.data.mdx?.frontmatter?.title
-      : `${convertString(props.data.mdx?.fields?.name)}の日報`;
+  // タイトルを決める
+  let title = '';
+  switch (params.fields__category) {
+    case 'tech':
+      title = props.data.mdx?.frontmatter?.title ?? '';
+      break;
+    case 'daily':
+      title = `${convertString(props.data.mdx?.fields?.name)}の日報`;
+      break;
+    default:
+      title = props.data.mdx?.fields?.name ?? '';
+      break;
+  }
+
   return (
     <>
       <title>{title}</title>
