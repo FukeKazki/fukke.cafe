@@ -1,7 +1,35 @@
 # どんな言語
 スクリプト言語。CGIで動くサーバーサイドの言語。
+文字を扱うのが得意。
 
 # 基本文法
 ```perl:title=標準入力
 my $input = <STDIN>;
 ```
+
+```perl:title=出力
+print 'Hello world';
+```
+
+```perl:title=数値
+12345          # 整数
+12_345         # 整数(アンダーバーは無視されます)
+123.45         # 小数
+1.23E45        # 指数
+0x12345        # 16進数
+012345         # 8進数
+```
+
+```perl:title=文字列
+"abc" # 中で変数展開できる
+'abc'
+```
+
+```perl:title=配列
+my @array = (1, 2);
+```
+
+
+# 参考文献
+- https://www.tohoho-web.com/wwwperl1.htm#AboutPerl
+- https://ja.wikipedia.org/wiki/Perl
