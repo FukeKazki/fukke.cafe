@@ -1,0 +1,60 @@
+---
+title: 'Gatsby Slice APIをTypeScriptで'
+date: 2023-01-07
+tags: ['gatsby']
+category: 'ウェブフロント'
+subCategory: 'gatsby'
+---
+
+## Slice APIとは
+Gatsby v5で追加されたページ生成を高速化するためのAPIです。
+ページごとの共通コンポーネントをSliceしてビルドを高速します。
+
+## HeaderをSliceする
+例として今日つコンポーネントのHeaderをSliceします。
+
+HeaderComponentを以下に示します。
+
+Slice APIはコンポーネントが`export default`してある前提です。注意しましょう。
+
+```tsx:src/components/shared/Header/index.tsx
+const Header = () => {
+  return (
+    <Fragment>
+      <div css={styles.header}>
+        <Link to='/'>
+          <h3 css={styles.title}>fukke.cafe</h3>
+        </Link>
+      </div>
+    </Fragment>
+  );
+};
+
+export default Header;
+```
+
+gatsby-nodeでSliceします。
+`createSlice`メソッドにidとコンポーネントのパスを渡します。
+
+```typescript:gatsby-node.ts
+import type { GatsbyNode } from 'gatsby';
+import { resolve } from 'path';
+
+export const createPages: GatsbyNode['createPages'] = ({ actions }) => {
+  const { createSlice } = actions;
+  createSlice({
+    id: 'header', // ここのidがaliasになる
+    component: resolve('src/components/shared/Header/index.tsx')
+  });
+};
+```
+
+Sliceしたコンポーネントは`<Slice/>`で使えます。
+
+```tsx:src/components/layouts/Detail/index.tsx
+import { Slice } from 'gatsby';
+
+  <header>
+    <Slice alias='header' />
+  </header>
+```
