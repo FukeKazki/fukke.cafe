@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import { Fragment } from 'react';
 import * as styles from './style';
 
-export const Header = () => {
+const Header = () => {
   return (
     <Fragment>
       <div css={styles.header}>
@@ -13,3 +13,5 @@ export const Header = () => {
     </Fragment>
   );
 };
+
+export default Header;

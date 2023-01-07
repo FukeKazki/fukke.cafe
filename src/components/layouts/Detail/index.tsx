@@ -1,3 +1,4 @@
+import { Slice } from 'gatsby';
 import {
   ComponentPropsWithRef,
   Fragment,
@@ -6,7 +7,6 @@ import {
   useEffect,
   useRef
 } from 'react';
-import { Header } from '../../shared/Header';
 import { Navigation } from '../../shared/Navigation';
 import { SideMenu } from '../../shared/SideMenu';
 import { TopBar } from '../../shared/TopBar';
@@ -35,7 +35,7 @@ export const DetailLayout = ({ children, ...props }: Props) => {
     <Fragment>
       <header>
         <TopBar />
-        <Header />
+        <Slice alias='header' />
       </header>
       <nav css={styles.nav}>
         <Navigation />
