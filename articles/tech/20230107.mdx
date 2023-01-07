@@ -17,7 +17,7 @@ HeaderComponentを以下に示します。
 
 Slice APIはコンポーネントが`export default`してある前提です。注意しましょう。
 
-```tsx:src/components/shared/Header/index.tsx
+```tsx:title=src/components/shared/Header/index.tsx
 const Header = () => {
   return (
     <Fragment>
@@ -36,7 +36,7 @@ export default Header;
 gatsby-nodeでSliceします。
 `createSlice`メソッドにidとコンポーネントのパスを渡します。
 
-```typescript:gatsby-node.ts
+```typescript:title=gatsby-node.ts
 import type { GatsbyNode } from 'gatsby';
 import { resolve } from 'path';
 
@@ -51,7 +51,7 @@ export const createPages: GatsbyNode['createPages'] = ({ actions }) => {
 
 Sliceしたコンポーネントは`<Slice/>`で使えます。
 
-```tsx:src/components/layouts/Detail/index.tsx
+```tsx:title=src/components/layouts/Detail/index.tsx
 import { Slice } from 'gatsby';
 
   <header>
