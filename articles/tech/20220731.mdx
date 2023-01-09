@@ -24,7 +24,7 @@ subCategory: 'wasm'
 
 例えばWebAssemblyアセンブリ言語で足し算をする関数を書いてみます。
 
-```assembly
+```
 get_local 0
 i32.const 1
 i32.add
@@ -75,7 +75,7 @@ zig init-exe
 
 `src/main.zig`を編集します。
 
-```zig main.zig
+```zig:title=main.zig
 const std = @import("std");
 
 pub fn main() anyerror!void {
@@ -95,7 +95,7 @@ zig run src/main.zig
 
 `src/main.zig`を編集します。
 
-```zig main.zig
+```zig:title=main.zig
 export fn add(a: i32, b: i32) i32 {
   return a + b;
 }
@@ -115,7 +115,7 @@ zig build-lib src/main.zig -target wasm32-freestanding-musl -dynamic -O ReleaseS
 
 `index.html`を作成。
 
-```html index.html
+```html:title=index.html
 <!DOCTYPE html>
 <html lang="ja">
 <head>

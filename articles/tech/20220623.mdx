@@ -47,7 +47,7 @@ yarn add @ngrx/effects
 
 ## 1. actionを定義
 
-```ts counter.actions.ts
+```ts:title=counter.actions.ts
 import { createAction, props } from '@ngrx/store';
 
 export const increment = createAction('[Counter Component] increment');
@@ -59,7 +59,7 @@ export const reset = createAction('[Counter Component] decrement', props<{m: num
 
 ## 2. reducerを定義
 
-```ts counter.reducer.ts
+```ts:title=counter.reducer.ts
 import { createReducer, on, Action } from '@ngrx/store';
 import { decrement, increment, reset } from './counter.actions';
 
@@ -86,7 +86,7 @@ export const counterReducer = (state: State, action: Action) =>
 
 ## 3. selectorを定義
 
-```ts counter.selector.ts
+```ts:title=counter.selector.ts
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { featureName, State } from './counter.reducer';
 
@@ -100,7 +100,7 @@ export const selectCount = createSelector(
 
 ## 4. effectsを定義
 
-```ts counter.effect.ts
+```ts:title=counter.effect.ts
 import { Injectable } from '@angular/core';
 import { Actions } from '@ngrx/effects';
 import { createEffect, ofType } from '@ngrx/effects';
@@ -124,7 +124,7 @@ export class CounterEffects {
 
 ## 5. モジュールに登録
 
-```ts counter.module.ts
+```ts:title=counter.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -150,7 +150,7 @@ export class AppModule {}
 
 ## 6. コンポーネントから呼ぶ
 
-```ts counter.component.ts
+```ts:title=counter.component.ts
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { State } from './counter.reducer';
@@ -181,7 +181,7 @@ export class AppComponent {
 
 ## 7. HTMLから呼ぶ
 
-```html counter.component.html
+```html:title=counter.component.html
 <div>
   <button (click)="increment()">+</button>
   <button (click)="decrement()">-</button>
