@@ -1,0 +1,62 @@
+テンソルの作成
+```typescript
+import * as tf from "@tensorflow/tfjs"
+
+const hoge = tf.tensor([1, 2, 3])
+// これも一緒
+const hoge2 = tf.tensor1d([1, 2, 3])
+// tf.tensor6dまである
+// 肩も決めれる
+// 'float31', 'int32', 'bool', 'complex64', 'string'
+tf.tensor([1.1, 2.2], null, 'float32')
+
+hoge.size // 長さ
+hoge.rank // 階数
+hoge.dtype // データ型
+```
+
+```typescript
+// メモリ内のテンソル
+tf.memory().numTensors
+tf.memory().numBytes
+
+// 自動クリーンアップ
+tf.tidy(() => {
+  // 何もしないとクリーンアップされる
+  const hoge = tf.tensor([1, 2])
+  const hoge2 = tf.tensor([1, 2])
+  const hoge3 = tf.tensor([1, 2])
+
+  // キープしたのでクリーンアップされない
+  tf.keep(hoge2)
+  // リターンしたのでクリーンアップされない
+  return hoge3
+})
+// 明示的に破棄
+hoge3.dispose()
+```
+
+```typescript
+// 値を取り出す
+// 1次元のFloat32Arrayになる
+console.log(tensor.dataSync())
+// 配列
+console.log(tensor.arraySync())
+```
+
+```typescript
+// 行列の掛け算
+const mat1 = [
+  [91, 82, 43],
+  [32, 453, 2],
+  [12, 2, 53]
+]
+
+const mat2 = [
+  [12, 32, 4],
+  [8, 34, 5],
+  [13, 53, 53]
+]
+
+tf.matMul(mat1, mat2).print()
+```

@@ -1,0 +1,48 @@
+---
+title: 'Tensorflowjsで連立方程式を解く'
+date: 2023-01-11
+tags: []
+category: 'ウェブフロント'
+subCategory: 'tensorflowjs'
+---
+
+x + y = 2, x + 3y = 4の連立一次方程式の解は、
+
+```typescript
+import * as tf from "@tensorflow/tfjs";
+import * as math from "mathjs";
+
+const C = [
+  [1, 1],
+  [1, 3]
+]
+
+const D = [
+  [2],
+  [4]
+]
+
+tf.matMul(math.inv(C), D).print()
+```
+
+同様に
+x + y + z = 6, x + 2y + 2z = 11, 2x + 3y - 4z = 3の連立一次方程式の解は、
+
+```typescript
+const E = [
+  [1, 1, 1],
+  [1, 2, 2],
+  [2, 3, -4]
+]
+
+const F = [
+  [6],
+  [11],
+  [3]
+]
+
+tf.matMul(math.inv(E), F).print()
+```
+
+tensorflowjsには逆行列を求めるメソッドがなかったので自作するか今回はmathjsを使っている。
+本家tensorflowにはあるのになんでないんだろう🤔
