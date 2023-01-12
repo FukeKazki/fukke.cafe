@@ -1,0 +1,68 @@
+---
+title: 'AudioWorkletとAudioWorkletProcessorを使って音声のビジュアライゼーション'
+date: 2023-01-12
+tags: []
+category: 'ウェブフロント'
+subCategory: 'javascript'
+---
+
+AudioAPI関連の処理は基本的にメインスレッド外で行われます。(重要)
+なのでカスタムしたProcessorをつくるときはProcessorからメインスレッドに通知する仕組みが必要です。
+そのためにport.postMessageがあります。
+
+カスタムプロセッサーには音声処理を書きます。副作用を起こさない場合はそのままreturn trueで良きです。
+
+プロセッサーはaddModule関数で読み込むので別ファイルに切り出す必要があります。
+
+```js:title=processor.js
+class RMSVisualizeProcessor extends AudioWorkletProcessor {
+  constructor () {
+    super()
+  }
+  process (inputs, outputs, parameters) {
+    const input = inputs[0]
+
+    if (input.length > 0) {
+      const samples = input[0]
+      let sum = 0.0
+      for (let i = 0; i < samples.length; ++i) sum += samples[i] * samples[i]
+      const rms = Math.sqrt(sum / samples.length)
+
+      this.port.postMessage({ volume: rms }) // メッセージの送信
+    }
+
+    return true
+  }
+}
+
+registerProcessor('rms-visualize-processor', RMSVisualizeProcessor)
+```
+
+
+audioSource(ローカルストリーム) → audioGain(音量調整) → rmsVisualizer(ビジュアライズ) → audioDistination(出力)
+
+でつないでいく。
+
+```js
+const context = new AudioContext()
+
+const audioSource = context.createMediaStreamSource(localStream)
+
+const audioGain = context.createGain()
+const audioDestination = context.createMediaStreamDestination()
+
+// 自作のプロセッサーを読み込む
+await context.audioWorklet.addModule('/assets/processor.js').catch(() => {})
+// 自作プロセッサーからノードを作成する
+const rmsVisualizer = new AudioWorkletNode(context, 'rms-visualize-processor')
+
+// プロセッサーからメッセージを受け取ったときにするメインスレッドの処理
+rmsVisualizer.port.onmessage = (event) => {
+  // ここでビジュアライゼーションする処理をかく
+  console.log(event.data.volume)
+}
+// ノードをつなげる
+audioSource.connect(audioGain)
+audioGain.connect(rmsVisualizer)
+rmsVisualizer.connect(audioDestination)
+```
