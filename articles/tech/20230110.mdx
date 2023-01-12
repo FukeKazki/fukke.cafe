@@ -1,0 +1,39 @@
+---
+title: 'Gatsby mdxにkatexを導入'
+date: 2023-01-11
+tags: []
+category: 'ウェブフロント'
+subCategory: 'gatsby'
+---
+
+Lift($L$) can be determined by Lift Coefficient ($C_L$) like the following
+equation.
+
+$$
+L = \frac{1}{2} \rho v^2 S C_L
+$$
+
+```tex
+$$
+L = \frac{1}{2} \rho v^2 S C_L
+$$
+```
+
+
+## パッケージのインストール
+`yarn add katex gatsby-remark-katex`
+
+バージョン一覧
+
+```json:title=package.json
+"gatsby": "^5.3.3",
+"gatsby-plugin-mdx": "^5.3.1",
+"gatsby-remark-katex": "7.4.0",
+"katex": "^0.16.4",
+```
+
+## cssの設定
+
+```typescript:title=gatsby-browser.ts
+import 'katex/dist/katex.min.css';
+```

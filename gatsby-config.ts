@@ -34,7 +34,8 @@ const config: GatsbyConfig = {
             options: {
               maxWidth: 1000
             }
-          }
+          },
+          'gatsby-remark-katex'
         ]
       }
     },
