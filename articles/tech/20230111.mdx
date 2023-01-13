@@ -6,7 +6,53 @@ category: 'ウェブフロント'
 subCategory: 'tensorflowjs'
 ---
 
-x + y = 2, x + 3y = 4の連立一次方程式の解は、
+$$
+\begin{cases}
+x + y = 2 \\
+x + 3y = 4
+\end{cases}
+$$
+
+の解は、
+
+以下の行列を解くと得られます。
+
+$$
+\begin{pmatrix}
+1 & 1 \\
+1 & 3
+\end{pmatrix}
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+2 \\
+4
+\end{pmatrix}
+$$
+
+両辺に逆行列をかけて
+
+$$
+\begin{pmatrix}
+x \\
+y
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 1 \\
+1 & 3
+\end{pmatrix}
+^{-1}
+\begin{pmatrix}
+2 \\
+4
+\end{pmatrix}
+$$
+
+これを解けば求めれます。
 
 ```typescript
 import * as tf from "@tensorflow/tfjs";
@@ -26,7 +72,16 @@ tf.matMul(math.inv(C), D).print()
 ```
 
 同様に
-x + y + z = 6, x + 2y + 2z = 11, 2x + 3y - 4z = 3の連立一次方程式の解は、
+
+$$
+\begin{cases}
+x + y + z = 6 \\
+x + 2y + 2z = 11 \\
+2x + 3y - 4z = 3
+\end{cases}
+$$
+
+の解は、
 
 ```typescript
 const E = [
