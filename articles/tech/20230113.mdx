@@ -1,0 +1,80 @@
+---
+title: 'Gatsby mdxにReactコンポーネントを配置する'
+date: 2023-01-13
+tags: []
+category: 'ウェブフロント'
+subCategory: 'gatsby'
+---
+
+カウンターを作りました！↓
+
+<CounterButton />
+
+
+# 普通にコンポーネントを作ります
+
+任意の場所にコンポーネントを作成します。
+mdx内で使うコンポーネントなのでPropsとかは気にせず全マシマシで作りました。
+
+```jsx:title=CounterButton/index.tsx
+import { css } from '@emotion/react';
+import { ComponentPropsWithRef, useState } from 'react';
+
+type Props = ComponentPropsWithRef<'button'>;
+
+const style = css`
+  border: 1px solid currentColor;
+  color: blue;
+  padding: 8px 4px;
+  min-width: 200px;
+  border-radius: 16px;
+  font-weight: bold;
+
+  :hover {
+    color: white;
+    background-color: blue;
+    border-color: currentColor;
+  }
+`;
+
+export const CounterButton = ({ ...props }: Props) => {
+  const [count, setCount] = useState(0);
+
+  const increment = () => {
+    setCount(prev => prev + 1);
+  };
+
+  return (
+    <button {...props} onClick={increment} css={style}>
+      {count}
+    </button>
+  );
+};
+```
+
+# MDXProviderにコンポーネントを渡す
+
+MDXProviderに渡すとつかえるようになります。
+mdxファイルで直接インポートもできますが僕の環境ではうまくいかなかったです。(多分pathの問題)
+
+```jsx
+import { CounterButton } from '../../exsamples/CounterButton';
+// mdx内で使いたいコンポーネントを入れる
+const shortcodes = { CounterButton };
+
+// componentsに渡す
+<MDXProvider
+  css={styles.text}
+  components={{
+    ...shortcodes
+  }}
+>
+```
+
+# mdxで使用
+
+```markdown
+カウンターを作りました！↓
+
+<CounterButton />
+```
