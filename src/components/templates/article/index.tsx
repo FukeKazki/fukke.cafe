@@ -5,6 +5,10 @@ import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
 import { DetailLayout } from '../../layouts/Detail';
 import { TwitterIcon } from '../../shared/icons/TwitterIcon';
 import * as styles from './styles';
+import { CounterButton } from '../../exsamples/CounterButton';
+
+// mdx内で使いたいコンポーネントを入れる
+const shortcodes = { CounterButton };
 
 export const convertString = (v: string | null | undefined): string => {
   if (!v) return '';
@@ -41,7 +45,8 @@ export const ArticleTemplate = ({
               p: props => <div {...props} css={styles.mdx.p} />,
               ul: props => <ul {...props} css={styles.mdx.ul} />,
               li: props => <li {...props} css={styles.mdx.li} />,
-              a: props => <a {...props} css={styles.mdx.a} target='__blank' />
+              a: props => <a {...props} css={styles.mdx.a} target='__blank' />,
+              ...shortcodes
             }}
           >
             {children}
