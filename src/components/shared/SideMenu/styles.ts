@@ -18,6 +18,7 @@ export const tagTitle = css`
   padding: 8px 0;
   line-height: 16px;
   color: var(--dark-gray-1);
+  background-color: var(--light-gray-1);
   font-size: 16px;
   font-weight: 500;
   border-bottom: 1px solid #f4f4f4;
