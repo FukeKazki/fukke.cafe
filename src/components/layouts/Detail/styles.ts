@@ -22,7 +22,6 @@ export const contents = css`
 `;
 
 export const nav = css`
-  position: sticky;
   z-index: 100;
   top: 0;
   left: 0;
