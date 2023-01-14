@@ -6,6 +6,7 @@ import { DetailLayout } from '../../layouts/Detail';
 import { TwitterIcon } from '../../shared/icons/TwitterIcon';
 import * as styles from './styles';
 import { CounterButton } from '../../exsamples/CounterButton';
+import { TableOfContents } from '../../shared/TableOfContents';
 
 // mdx内で使いたいコンポーネントを入れる
 const shortcodes = { CounterButton };
@@ -108,6 +109,14 @@ export const ArticleTemplate = ({
           </div>
         </div>
       </div>
+
+      {(mdx?.tableOfContents?.items as [{ title: string; url: string }]) && (
+        <TableOfContents
+          toc={mdx?.tableOfContents?.items as [{ title: string; url: string }]}
+          css={styles.mobileToc}
+        />
+      )}
+
       <div css={styles.footer}>
         <p>Thanks you for reading.</p>
       </div>

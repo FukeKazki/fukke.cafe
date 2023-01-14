@@ -161,3 +161,13 @@ export const twitter = css`
     height: 24px;
   }
 `;
+
+export const mobileToc = css`
+  @media (min-width: ${breakpoints.lg}px) {
+    display: none;
+  }
+  position: fixed;
+  bottom: 16px;
+  left: 14px;
+  right: 14px;
+`;

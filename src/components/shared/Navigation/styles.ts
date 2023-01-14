@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 export const navigation = css`
   padding: 24px 12px;
   border-bottom: 1px solid #f4f4f4;
+  background-color: var(--light-gray-1);
 `;
 
 export const list = css`

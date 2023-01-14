@@ -24,6 +24,7 @@ export const list = css`
 `;
 
 export const article = css`
+  background-color: var(--white);
   border: 1px solid var(--light-gray-1);
   border-radius: 8px;
   padding: 20px;
