@@ -47,7 +47,7 @@ export const Head = ({
       />
       <meta property='og:type' content='website' />
       <meta property='og:title' content={title ?? ''} />
-      <meta property='og:site_name' content='プログラミング日記' />
+      <meta property='og:site_name' content='fukke.cafe' />
       <meta property='og:description' content={props.data.mdx?.excerpt ?? ''} />
       <meta
         property='og:image'

@@ -10,3 +10,5 @@ src/gatsby-types.d.ts
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+# firebase
+.firebase/
