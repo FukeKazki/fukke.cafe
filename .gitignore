@@ -3,5 +3,10 @@ node_modules/
 public
 src/gatsby-types.d.ts
 # Zero Installs
-.yarn/unplugged
-.yarn/build-state.yml
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
