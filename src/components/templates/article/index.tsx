@@ -1,12 +1,13 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Link, PageProps } from 'gatsby';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
 import { DetailLayout } from '../../layouts/Detail';
 import { TwitterIcon } from '../../shared/icons/TwitterIcon';
 import * as styles from './styles';
 import { CounterButton } from '../../exsamples/CounterButton';
 import { TableOfContents } from '../../shared/TableOfContents';
+import { IntersectionHeader } from './components/IntersectionHeader';
 
 // mdx内で使いたいコンポーネントを入れる
 const shortcodes = { CounterButton };
@@ -32,6 +33,19 @@ export const ArticleTemplate = ({
       : mdx?.fields?.category === 'daily'
       ? `${convertString(mdx?.fields?.name)}の日報`
       : mdx?.fields?.name;
+
+  const toc = mdx?.tableOfContents?.items as [{ title: string; url: string }];
+
+  const [currentContent, setCurrentContent] = useState<string>(
+    toc?.[0]?.title ?? ''
+  );
+
+  const inView = (inView: boolean, props?: string) => {
+    if (inView && props) {
+      setCurrentContent(props);
+    }
+  };
+
   return (
     <DetailLayout>
       <div css={styles.contents}>
@@ -40,8 +54,20 @@ export const ArticleTemplate = ({
           <MDXProvider
             css={styles.text}
             components={{
-              h1: props => <h2 {...props} css={styles.mdx.h1} />,
-              h2: props => <h2 {...props} css={styles.mdx.h2} />,
+              h1: props => (
+                <IntersectionHeader
+                  {...props}
+                  css={styles.mdx.h1}
+                  inViewCallback={inView}
+                />
+              ),
+              h2: props => (
+                <IntersectionHeader
+                  {...props}
+                  css={styles.mdx.h2}
+                  inViewCallback={inView}
+                />
+              ),
               h3: props => <h2 {...props} css={styles.mdx.h3} />,
               p: props => <div {...props} css={styles.mdx.p} />,
               ul: props => <ul {...props} css={styles.mdx.ul} />,
@@ -110,10 +136,14 @@ export const ArticleTemplate = ({
         </div>
       </div>
 
-      {(mdx?.tableOfContents?.items as [{ title: string; url: string }]) && (
+      {toc && (
         <TableOfContents
-          toc={mdx?.tableOfContents?.items as [{ title: string; url: string }]}
+          toc={toc}
           css={styles.mobileToc}
+          current={{
+            title: currentContent,
+            index: toc.findIndex(v => v.title === currentContent)
+          }}
         />
       )}
 

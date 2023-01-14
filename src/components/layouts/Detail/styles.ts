@@ -22,7 +22,6 @@ export const contents = css`
 `;
 
 export const nav = css`
-  position: sticky;
   z-index: 100;
   top: 0;
   left: 0;
@@ -31,9 +30,9 @@ export const nav = css`
 
 export const scroll = css`
   position: sticky;
-  top: 73px;
+  top: 0;
   left: 0;
-  max-height: calc(100vh - 73px);
+  max-height: 100vh;
   overflow-y: scroll;
 `;
 

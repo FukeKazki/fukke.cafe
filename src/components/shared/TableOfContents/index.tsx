@@ -9,12 +9,15 @@ type Props = {
     title: string;
     url: string;
   }[];
+  current: {
+    index: number;
+    title: string;
+  };
 };
 
 const convertIndex = (index: number) => (index + 1).toString().padStart(2, '0');
 
-export const TableOfContents = ({ toc, ...props }: Props) => {
-  const [first] = toc;
+export const TableOfContents = ({ toc, current, ...props }: Props) => {
   const [isOpen, setOpen] = useState(false);
 
   const handleToggle = () => {
@@ -43,15 +46,15 @@ export const TableOfContents = ({ toc, ...props }: Props) => {
         ))}
       </ul>
       {/* ↓ 常に表示する */}
-      <div css={[styles.content, styles.bottom]}>
+      <button css={[styles.content, styles.bottom]} onClick={handleToggle}>
         <p css={styles.text}>
-          <span css={styles.index}>01</span>
-          {first.title}
+          <span css={styles.index}>{convertIndex(current.index)}</span>
+          {current.title}
         </p>
-        <button css={styles.toggle} onClick={handleToggle}>
+        <span css={styles.toggle}>
           {isOpen ? <ToggleDownIcon /> : <ToggleUpIcon />}
-        </button>
-      </div>
+        </span>
+      </button>
     </div>
   );
 };
