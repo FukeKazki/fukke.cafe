@@ -7,7 +7,6 @@ import {
   useEffect,
   useRef
 } from 'react';
-import { Navigation } from '../../shared/Navigation';
 import { SideMenu } from '../../shared/SideMenu';
 import { TopBar } from '../../shared/TopBar';
 import * as styles from './styles';
@@ -37,9 +36,6 @@ export const DetailLayout = ({ children, ...props }: Props) => {
         <TopBar />
         <Slice alias='header' />
       </header>
-      <nav css={styles.nav}>
-        <Navigation />
-      </nav>
       <main css={styles.main}>
         <div css={styles.sideMenu}>
           <div css={styles.scroll} onScroll={onScroll} ref={scrollMenu}>
