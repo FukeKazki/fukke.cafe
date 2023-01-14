@@ -4,6 +4,7 @@ import { breakpoints } from '../../../styles/breakpoint';
 export const header = css`
   display: flex;
   padding: 24px 14px;
+  background-color: var(--light-gray-1);
 `;
 
 export const title = css`

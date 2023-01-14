@@ -18,6 +18,7 @@ export const sideMenu = css`
 
 export const contents = css`
   grid-area: contents;
+  background-color: var(--light-gray-1);
 `;
 
 export const nav = css`
@@ -25,7 +26,7 @@ export const nav = css`
   z-index: 100;
   top: 0;
   left: 0;
-  background-color: var(--white);
+  background-color: var(--light-gray-1);
 `;
 
 export const scroll = css`
