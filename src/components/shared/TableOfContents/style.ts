@@ -6,12 +6,10 @@ export const container = css`
 `;
 
 export const list = css`
-  visibility: hidden;
-  display: grid;
+  display: none;
   gap: 4px;
-  opacity: 0;
-  transition-property: opacity visibility;
-  transition-duration: 0.5s;
+  max-height: calc(100vh - 200px);
+  overflow-y: scroll;
 `;
 
 export const first = css`
@@ -67,6 +65,5 @@ export const toggle = css`
 `;
 
 export const show = css`
-  opacity: 1;
-  visibility: visible;
+  display: grid;
 `;
