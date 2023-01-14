@@ -37,3 +37,14 @@ export const createPages: GatsbyNode['createPages'] = ({ actions }) => {
     component: resolve('src/components/shared/Header/index.tsx')
   });
 };
+
+export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
+  stage,
+  actions
+}) => {
+  if (stage === 'build-javascript') {
+    actions.setWebpackConfig({
+      devtool: false
+    });
+  }
+};
