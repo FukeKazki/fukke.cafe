@@ -1,0 +1,29 @@
+---
+title: 'socket.io v4のメモ'
+date: 2023-01-15
+tags: []
+category: 'ウェブフロント'
+subCategory: 'websocket'
+---
+
+## Room
+
+```typescript
+// ルームへの追加
+await socket.join('ルーム名');
+
+// 所属しているルーム 複数ルームに所属できる
+socket.rooms
+
+// ルームへのブロードキャスト
+// ブロードキャストは自分以外のソケットにメッセージを送れる
+// emit(イベント名, データ)
+io.to(room).emit('hello', 'world')
+```
+
+> https://socket.io/docs/v4/rooms/
+
+## Postman
+Postmanを使ってSocketioの接続確認が可能。
+
+MessageタブからtextデータやJSONデータを送信、Eventsタブで購読するイベントを指定する。
