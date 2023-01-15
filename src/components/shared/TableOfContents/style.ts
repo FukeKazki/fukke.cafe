@@ -1,12 +1,36 @@
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
+
+const open = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const close = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
 
 export const container = css`
   display: grid;
   gap: 24px;
+  [data-reach-disclosure-panel][data-state='open'] {
+    animation: ${open} 0.5s ease;
+  }
+  [data-reach-disclosure-panel][data-state='collapsed'] {
+    animation: ${close} 0.5s ease;
+  }
 `;
 
 export const list = css`
-  display: none;
+  display: grid;
   gap: 4px;
   max-height: calc(100vh - 200px);
   overflow-y: scroll;
@@ -62,8 +86,4 @@ export const toggle = css`
   width: 20px;
   height: 20px;
   border-radius: 100%;
-`;
-
-export const show = css`
-  display: grid;
 `;
