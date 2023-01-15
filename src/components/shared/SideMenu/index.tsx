@@ -2,7 +2,7 @@ import { Link } from 'gatsby';
 import { useCategoriesArticles } from '../../../hooks/useCategoriesArticles';
 import * as styles from './styles';
 
-export const SideMenu = () => {
+const SideMenu = () => {
   const nodes = useCategoriesArticles();
   const others = nodes[0];
   const webfront = nodes[1];
@@ -53,3 +53,5 @@ export const SideMenu = () => {
     </div>
   );
 };
+
+export default SideMenu;

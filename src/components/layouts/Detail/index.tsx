@@ -7,7 +7,6 @@ import {
   useEffect,
   useRef
 } from 'react';
-import { SideMenu } from '../../shared/SideMenu';
 import { TopBar } from '../../shared/TopBar';
 import * as styles from './styles';
 
@@ -39,7 +38,7 @@ export const DetailLayout = ({ children, ...props }: Props) => {
       <main css={styles.main}>
         <div css={styles.sideMenu}>
           <div css={styles.scroll} onScroll={onScroll} ref={scrollMenu}>
-            <SideMenu />
+            <Slice alias='sidemenu' />
             <footer css={styles.footer}>
               <p>
                 created by{' '}

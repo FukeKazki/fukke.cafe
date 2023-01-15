@@ -36,6 +36,10 @@ export const createPages: GatsbyNode['createPages'] = ({ actions }) => {
     id: 'header',
     component: resolve('src/components/shared/Header/index.tsx')
   });
+  createSlice({
+    id: 'sidemenu',
+    component: resolve('src/components/shared/SideMenu/index.tsx')
+  });
 };
 
 export const onCreateWebpackConfig: GatsbyNode['onCreateWebpackConfig'] = ({
