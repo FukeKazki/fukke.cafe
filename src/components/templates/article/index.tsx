@@ -5,7 +5,7 @@ import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
 import { DetailLayout } from '../../layouts/Detail';
 import { TwitterIcon } from '../../shared/icons/TwitterIcon';
 import * as styles from './styles';
-import { CounterButton } from '../../exsamples/CounterButton';
+import { CounterButton } from '../../examples/CounterButton';
 import { TableOfContents } from '../../shared/TableOfContents';
 import { IntersectionHeader } from './components/IntersectionHeader';
 
