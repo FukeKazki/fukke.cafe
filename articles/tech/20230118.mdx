@@ -1,0 +1,105 @@
+---
+title: 'websocketとrxの相性が良い'
+date: 2023-01-18
+tags: []
+category: 'ウェブフロント'
+subCategory: 'angular'
+---
+
+websocketとrxjsについて知っている方は直感でこの二つの相性が良いことがわかると思いますが、
+実際試してみたらめっちゃ良かったという記事です。
+
+# socket.io
+socket.ioはwebsocketを扱うほぼデファクトスタンダードとなっているライブラリです。
+標準のWebSocketの機能に加えてRoomAPIなど便利な機能が組み込まれています。
+
+注意点としてはsocket.ioはエンドポイントをいじったりTLSの通信をごにょごにょしたりと勝手にカスタムするので、
+サーバーもフロントも両方の実装をsocket.ioで行う必要があります。片方だけsocket.ioとかにすると痛い目に遭います。
+
+# ngx-socket-io
+ngx-socket-ioはsocket.ioをAngularで扱うためのライブラリです。
+
+> https://github.com/rodgc/ngx-socket-io
+
+# 組み合わせ
+app.moduleにSocketIoModuleを組み込みます。
+
+```typescript:title=app.module.ts
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = {
+  url: 'http://localhost:3000',
+  options: {}
+}
+
+@NgModule({
+  imports: [
+    SocketIoModule.forRoot(config)
+  ],
+})
+export class AppModule { }
+```
+
+Serviceでは以下のように扱えます。
+emitに関しては普通ですが、注目すべきはイベントを受け取る時です。
+`fromEvent('イベント名')`で受け取れるのですが返り値はObservableになっています。
+この相性がすごく良いです。
+
+websocketを扱った処理では「このイベントを受け取った時にこの処理をする」のようなものが多いですがこれはrxjsで扱うストリームの考え方と同じです。
+React等でこれをやろうとすると結構めんどくさいのですが、Angularにはrxjsがいるので簡単に扱えます。
+
+```typescript:title=room.service.ts
+import { Injectable } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RoomService {
+
+  constructor(
+    private socket: Socket
+  ) {}
+
+  create() {
+    this.socket.emit("create", {
+      userName: 'fukke001'
+    })
+  }
+
+  enter(roomId: string) {
+    this.socket.emit("enter", {
+      userName: "fukke002",
+      roomId
+    })
+  }
+
+  comment() {
+    return this.socket.fromEvent<string>('comment').pipe()
+  }
+}
+```
+
+実際に扱う時は、以下のようにngOnInit等でsubscribeします。
+
+```typescript:title=app.component.ts
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+
+  comments: string[] = []
+
+  constructor(
+    private room: RoomService
+  ) { }
+
+  async ngOnInit() {
+    this.room.comment().subscribe(v => {
+      this.comments.push(v)
+    })
+  }
+}
+```
