@@ -1,0 +1,26 @@
+---
+title: 'TypeScript Challenges'
+date: 2023-01-19
+tags: []
+category: 'ウェブフロント'
+subCategory: 'typescript'
+---
+
+# TypeScript Challengesとは
+TypeScriptを使ってさまざまな型を作る競技です。
+
+> https://github.com/type-challenges/type-challenges/blob/main/README.ja.md
+
+このブログではTypeScript Challengesを日々精進していきます。
+
+# Pick
+Pickの実装です。`K extends keyof T`でKをTのプロパティにしています。
+例えばTが`{a: string; b: string}`のときKは`a | b`になります。
+`[P in K]`でKのUnionの数だけfor文みたいになります。`T[P]`で実際にアクセスしています。
+
+```typescript
+type MyPick<T, K extends keyof T> = {
+  [P in K]: T[P]
+}
+```
+
