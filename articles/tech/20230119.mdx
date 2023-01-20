@@ -24,3 +24,10 @@ type MyPick<T, K extends keyof T> = {
 }
 ```
 
+# Push
+Array.pushをジェネリクスでする実装です。
+スプレッド構文をつかって配列を合体させます。
+
+```typescript
+type Push<T extends any[], U> = [...T, U]
+```
