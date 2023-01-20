@@ -31,3 +31,13 @@ Array.pushをジェネリクスでする実装です。
 ```typescript
 type Push<T extends any[], U> = [...T, U]
 ```
+
+# Omit
+Omitはオブジェクトから任意のプロパティを削除した型です。
+`Exclude`を使ってオブジェクトのプロパティから削除します
+
+```typescript
+type MyOmit<T, K extends keyof T> = {
+  [P in Exclude<keyof T, K>]: T[P]
+}
+```
