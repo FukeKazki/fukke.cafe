@@ -32,6 +32,23 @@ Array.pushをジェネリクスでする実装です。
 type Push<T extends any[], U> = [...T, U]
 ```
 
+# Awaited
+Promiseな型からPromise解決後の型を取り出す。
+`Promise<Promise<A>>`のような型に対応できるように再帰処理にしています。
+また` { then: (onfulfilled: (arg: number) => any) => any }`のようにPromiseなオブジェクトを自作しているものでも
+判断できるようにPromiseLikeという型を使っています。
+
+三項演算子ってどこで改行すると見やすいのかな...
+
+```typescript
+type MyAwaited<T extends PromiseLike<any>> =
+  T extends PromiseLike<infer U> ?
+    U extends PromiseLike<any> ?
+      MyAwaited<U>
+    : U
+  : never;
+```
+
 # Omit
 Omitはオブジェクトから任意のプロパティを削除した型です。
 `Exclude`を使ってオブジェクトのプロパティから削除します
