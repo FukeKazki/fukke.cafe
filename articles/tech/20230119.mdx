@@ -58,3 +58,14 @@ type MyOmit<T, K extends keyof T> = {
   [P in Exclude<keyof T, K>]: T[P]
 }
 ```
+
+## Parameters
+関数の引数をタプル型で返す型を実装します。
+
+`const foo = (arg1: string, arg2: number): void => {}`が来たときに`[string, number]`を返します。
+
+`T extends (...args: [...infer U]) => any`で引数のタプルを取得できます。
+
+```typescript
+type MyParameters<T extends (...args: any[]) => any> = T extends (...args: [...infer U]) => any ? U : never
+```
