@@ -59,7 +59,7 @@ type MyOmit<T, K extends keyof T> = {
 }
 ```
 
-## Parameters
+# Parameters
 関数の引数をタプル型で返す型を実装します。
 
 `const foo = (arg1: string, arg2: number): void => {}`が来たときに`[string, number]`を返します。
@@ -68,4 +68,11 @@ type MyOmit<T, K extends keyof T> = {
 
 ```typescript
 type MyParameters<T extends (...args: any[]) => any> = T extends (...args: [...infer U]) => any ? U : never
+```
+
+# If
+`If<true, 'a', 'b'>`のとき`a`を返すような型を実装します。
+
+```typescript
+type If<C extends boolean, T, F> = C extends true ? T : F
 ```
