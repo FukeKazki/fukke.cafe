@@ -1,0 +1,67 @@
+---
+title: 'NestJSとWebSocket'
+date: 2023-01-23
+tags: []
+category: 'サーバー'
+subCategory: 'nestjs'
+---
+
+# 導入
+NestJSでWebSocketを扱うためには`@nestjs/platform-socket.io`と`@nestjs/websockets`が必要です。
+ついでに`@types/socket.io`も入れておきましょう。
+
+メッセージをブロードキャストするだけの処理は以下のようになります。
+
+```typescript:title=chat.gateway.ts
+@WebSocketGateway()
+export class ChatGateway {
+  @WebSocketServer()
+  server: Server;
+
+  @SubscribeMessage('message')
+  handleMessage(@MessageBody() message): void {
+    this.server.emit('message', message);
+  }
+}
+```
+
+Gatewayの意味があまりわかっていませんが`@WebSocketGateway()`デコレーターが付いているコントローラーがエントリーポイントになります。
+
+corsの許可は`@WebSocketGateway({ cors: true})`のようになります。
+
+`OnGatewayConnection`や`OnGatewayDisconnect`を継承すると`handleConnection`や`handleDisconnect`を型付きで実装できます。
+
+バリテーションはRestAPIと同様にパイプをつかって実装します。
+
+全体像はこんな感じ。
+
+
+```typescript:title=chat.gateway.ts
+export class MessageDto {
+  @IsNotEmpty()
+  message: string;
+}
+
+@WebSocketGateway({ cors: true })
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  private logger = new Logger('ChatGateway');
+
+  @WebSocketServer()
+  server: Server;
+
+  handleConnection() {
+    this.logger.log('connection');
+  }
+
+  handleDisconnect() {
+    this.logger.log('disconnect');
+  }
+
+  @UsePipes(new ValidationPipe())
+  @SubscribeMessage('message')
+  handleMessage(@MessageBody() message: MessageDto): void {
+    this.logger.log(message);
+    this.server.emit('message', message);
+  }
+}
+```
