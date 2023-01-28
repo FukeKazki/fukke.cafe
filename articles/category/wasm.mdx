@@ -1,0 +1,48 @@
+# WebAssemblyレシピ集
+
+## watファイルとは
+WebAssemblyアセンブリ言語が書かれたファイル。
+人間にもよめる。
+
+## wasmファイルとは
+WebAssemblyマシン語が書かれたファイル。
+人間には読みづらい。
+
+
+## 関数をexportする
+構文
+
+```
+(export "JS側の関数名" (func $アセンブリ側の関数名))
+```
+
+例
+
+```assembly
+(export "add" (func $add))
+(func "add" ...)
+```
+
+## JSからwasmの関数を使いたい
+add関数がexportされている場合
+
+```javascript
+WebAssembly.instantiateStreaming(fetch('my.wasm'))
+  .then(obj => {
+    const res = obj.instance.exports.add(2, 4);
+    console.log(res)
+  });
+```
+## watファイルをwasmに変換したい
+アセンブリをマシン語に変換します
+
+```bash
+brew install wabt
+```
+
+```bash
+wat2wasm my.wat -o my.wasm
+```
+
+## 参考文献
+https://developer.mozilla.org/ja/docs/WebAssembly/Understanding_the_text_format#javascript_%E3%81%8B%E3%82%89%E9%96%A2%E6%95%B0%E3%82%92%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%99%E3%82%8B
