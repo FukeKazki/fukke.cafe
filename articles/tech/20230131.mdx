@@ -63,3 +63,46 @@ Identifierは変数名でhoge, initには初期値があり、Literalの10が入
 
 例えばこのASTからWebAssemblyを生成できればJavaScriptからWebAssemblyを生成する自作言語が完成します。
 
+次にJavaScriptで作られた汎用parserのparsimmonを使ってASTを生成してみます。
+
+```typescript:title=parser.ts
+import * as parsimmon from 'parsimmon';
+const flang = parsimmon.createLanguage({
+  Number: () => parsimmon.regexp(/[0-9]+/).map(Number),
+  WhiteSpace: () => parsimmon.optWhitespace,
+  Identifier: () => parsimmon.regexp(/[a-zA-z]+/),
+  Const: () => parsimmon.string("const"),
+  Declaration: (r) =>
+    parsimmon.seq(
+      r.Const,
+      r.WhiteSpace,
+      r.Identifier,
+      r.WhiteSpace,
+      parsimmon.string("="),
+      r.WhiteSpace,
+      r.Number
+    )
+    .map(([_1, _2, identifier, _3, _4, _5, number]) => {
+      return {
+        type: 'ValiableDeclaration',
+        declarations: [
+          {
+            type: "VariableDeclarator",
+            id: {
+              type: "Identifier",
+              name: identifier
+            },
+            init: {
+              type: "Literal",
+              value: number,
+            }
+          }
+        ],
+        kind: "const"
+      }
+    }),
+  parse: (r) => parsimmon.alt(r.Declaration)
+})
+const aa = `const a = 10`
+console.log(JSON.stringify(flang.parse.tryParse(aa), null, 2))
+```
