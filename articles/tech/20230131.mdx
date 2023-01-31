@@ -1,0 +1,65 @@
+---
+title: 'プログラミング言語を作る・その1'
+date: 2023-01-31
+tags: []
+category: 'その他'
+subCategory: 'typescript'
+---
+
+プログラムは
+`高級言語→(parse)→AST(抽象構文木)→(アセンブル)→アセンブラ言語→マシン語`
+のように変換されている。
+
+JavaScriptを題材にASTについて学ぶ。
+
+JavaScriptをASTに変換するプログラムとしてesprimaがある。
+
+実際にesprimaを使って簡単なコードを変換する。
+
+```typescript
+import * as esprisma from 'esprima'
+import dedent from 'dedent-js'
+
+const src = dedent`
+const hoge = 10
+`
+
+const ast = esprisma.parseModule(src)
+
+console.log(JSON.stringify(ast, null, 2))
+```
+
+この結果は以下のようになる。
+
+```json
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "hoge"
+          },
+          "init": {
+            "type": "Literal",
+            "value": 10,
+            "raw": "10"
+          }
+        }
+      ],
+      "kind": "const"
+    }
+  ],
+  "sourceType": "module"
+}
+```
+
+変数宣言を行ったのでtypeはVariableDeclaratorになる。
+Identifierは変数名でhoge, initには初期値があり、Literalの10が入ってる。
+
+例えばこのASTからWebAssemblyを生成できればJavaScriptからWebAssemblyを生成する自作言語が完成します。
+
