@@ -1,0 +1,26 @@
+neovimの設定について
+
+基本はastronvimを使っている
+
+# 隠しファイルを表示したい
+
+```lua:title=neo-tree
+filesystem={
+  filtered_items={
+    visible: true,
+  }
+}
+```
+
+# quick fix
+LSPの機能を使う
+`space l a`
+
+# 保存する
+`space w`
+
+# 閉じる
+`space q`
+
+# コードの差分を一部戻したい
+`space g h`
