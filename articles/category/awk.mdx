@@ -1,8 +1,18 @@
 `.awk`ファイルになる
 
-```token.awk
+```awk:title=token.awk
 {
   if( $1 != "//" )
     print $1,$2,$3
+}
+```
+
+# 直前のコマンドをコピーするスクリプト
+`history | awk -f history.awk | pbcopy`
+
+```awk:title=history.awk
+END {
+  $1=""
+  print $0
 }
 ```
