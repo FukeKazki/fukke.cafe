@@ -1,0 +1,41 @@
+---
+title: 'フォントを作る'
+date: 2023-02-04
+tags: []
+category: 'その他'
+subCategory: 'font'
+---
+
+自作フォントをやっていきます。
+
+## 準備
+fontforgeというアプリケーションを使います。
+mac用は以下のリンクからダウンロードできました。
+
+https://fontforge.org/en-US/downloads/mac-dl/
+
+## 作成
+fontforgeを起動したらダイアログがででくるので新規作成を選択。
+
+[![Image from Gyazo](https://i.gyazo.com/763f802db3b10dc62b0cb873b8f85122.png)](https://gyazo.com/763f802db3b10dc62b0cb873b8f85122)
+
+エンコーディングをunicodeにします。
+[![Image from Gyazo](https://i.gyazo.com/6e2b34b819c32b2fed7e36c641a36371.png)](https://gyazo.com/6e2b34b819c32b2fed7e36c641a36371)
+
+フォントのテーブルが出てくるのでフォントを作りたい文字を選んで右クリック+アウトラインウィンドウを開くを選択。
+
+[![Image from Gyazo](https://i.gyazo.com/cef5577c1638f06964cdcc8bd7e426a1.jpg)](https://gyazo.com/cef5577c1638f06964cdcc8bd7e426a1)
+
+ペンツールを選んで書いてみます。svgファイルやpngファイルのインポートもできるっぽい！
+
+[![Image from Gyazo](https://i.gyazo.com/d4f7d59285f5d38f734218b1162c9cf8.png)](https://gyazo.com/d4f7d59285f5d38f734218b1162c9cf8)
+
+フォントが完成したらファイル>フォントを出力から生成します。
+
+[![Image from Gyazo](https://i.gyazo.com/4e3a76bab0be210becd2f518e55a5059.jpg)](https://gyazo.com/4e3a76bab0be210becd2f518e55a5059)
+
+生成したttfやotfファイルをMacのFontBookで開いてシステムに登録。
+
+vscodeなどでフォントの設定をすると自作フォントを読み込めます！
+
+[![Image from Gyazo](https://i.gyazo.com/6e0817690b2ffc55adc58bdfef785ac0.png)](https://gyazo.com/6e0817690b2ffc55adc58bdfef785ac0)
