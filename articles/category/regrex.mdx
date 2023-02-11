@@ -1,0 +1,15 @@
+# 正規表現
+## JavaScript
+
+```JavaScript
+// yyyymmdd.mdから取り出す
+const dateMatcher = /(?<year>[0-9]{4})(?<month>[0-9]{2})(?<date>[0-9]{2}).md/;
+
+// (URL)を取り出す
+const urlMatcher = /(?<url>https?:\/\/[\w/:%#\$&\?~\.=\+\-]+)/;
+const url = str.match(urlMatcher)?.groups?.url;
+
+// [タイトル]を取り出す
+const titleMatcher = /\[(?<title>.+)\]/;
+const title = str.match(titleMatcher)?.groups?.title;
+```
