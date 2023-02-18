@@ -1,0 +1,69 @@
+# denoメモ
+
+## deno.jsonの書き方
+`deno.jsonc`でもOK
+
+```jsonc
+{
+  "fmt": {
+    "files": {
+      "include": [
+        "src/",
+        "extension/"
+      ]
+    }
+  },
+  "lint": {
+    "files": {
+      "include": [
+        "src/",
+        "extension/"
+      ]
+    }
+  },
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns"
+    ],
+    "types": [
+      "https://unpkg.com/chrome-types@0.1.153/index.d.ts"
+    ]
+  },
+  "imports": {
+    "oak": "https://deno.land/x/oak@v6.5.0/mod.ts",
+    "cors": "https://deno.land/x/cors@v1.2.2/mod.ts",
+    "socket.io": "https://deno.land/x/socket_io@0.2.0/mod.ts",
+    "std/": "https://deno.land/std@0.166.0/"
+  },
+  "tasks": {
+    "dev": "deno run -A src/api.ts",
+    "dev:socket": "deno run -A src/socket/index.ts",
+    "build:extension": "deno bundle ./extension/index.ts ./extension/index.js"
+  }
+}
+```
+
+## コマンドを良い感じに実行するコード
+```typescript
+const useCommand = async (cmd: string[]) => {
+  const p = Deno.run({
+    cmd,
+    stdout: "piped",
+    stderr: "piped",
+  });
+  const [status, stdout, stderror] = await Promise.all([
+    p.status(),
+    p.output(),
+    p.stderrOutput(),
+  ]);
+
+  return {
+    status,
+    stdout: new TextDecoder().decode(stdout),
+    stderror: new TextDecoder().decode(stderror),
+  };
+};
+```
