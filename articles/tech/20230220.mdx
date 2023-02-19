@@ -1,0 +1,43 @@
+---
+title: 'ターミナルの右下に今聞いている曲を表示する'
+date: 2023-02-20
+tags: ['tmux', 'applescript']
+category: 'その他'
+subCategory: 'applescript'
+---
+
+[![Image from Gyazo](https://i.gyazo.com/7cc460c0e59ab3477366609bf6d8f7f8.png)](https://gyazo.com/7cc460c0e59ab3477366609bf6d8f7f8)
+
+Tmuxの右下にブラウザのYoutubeMusicで聞いている曲名を表示します。
+
+Tmuxはstatus-lineをカスタムして独自のテキストを表示できます。
+
+曲名はAppleScriptを使って取得しました。
+AppleScriptは情報が探しづらいのでドキュメントとChatGPTを駆使してプログラムを作成しました。
+
+ブラウザはSidekickを使っているのでSidekickに命令をしてますがChronium系のブラウザの場合は同じプログラムで実行できると思います。
+
+Sidekickのウィンドウから全てのタブを取得してURLが`https://music.youtube.com/`から始まるタブを取得します。
+
+タブのDOMにアクセスして曲名を取得できました。
+
+```applescript:title=youtube-music-title.applescript
+tell application "Sidekick"
+	set allTabs to tabs of windows
+	repeat with currentTab in allTabs
+		repeat with t in currentTab
+			set AHIAHI to URL of t
+			if AHIAHI starts with "https://music.youtube.com/" then
+				set titleText to execute t javascript "document.querySelector('ytmusic-player-bar .title').textContent;"
+				return titleText
+			end if
+		end repeat
+	end repeat
+end tell
+```
+
+最後にTmuxのステータスラインに表示する設定を書きます。
+
+```txt:title=tmux.conf
+set -g status-right ' #($HOME/Develop/github.com/FukeKazki/raycast-scripts/youtube-music-title.applescript)'
+```
