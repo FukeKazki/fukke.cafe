@@ -1,0 +1,24 @@
+---
+title: 'tmuxのプラグインを作るときのメモ'
+date: 2023-02-22
+tags: []
+category: 'その他'
+subCategory: 'tmux'
+---
+
+## tmuxの起動時にサーバーを立てる
+tmuxが終了したらプロセスを止める
+
+```tmux:title=plugin-name.tmux
+#!/usr/bin/env bash
+# 相対パスを計算してる
+SCRIPT_PATH="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P)/src/server.ts"
+
+# tmuxが終了したらプロセスも終了するように run-shellを使う
+# バックグラウンドで実行
+tmux run-shell -b $SCRIPT_PATH
+
+# バックグラウンドで10秒後に実行
+# 0.5秒ごとにcurlする
+tmux run-shell -d 10 -b 'watch -n 0.5 curl localhost:10020/tmux'
+```
