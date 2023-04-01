@@ -1,0 +1,50 @@
+---
+title: 'tmuxとnvimの背景を透過する'
+date: 2023-04-01
+tags: []
+category: 'その他'
+subCategory: 'nvim'
+---
+
+## tmux側
+基本的にtmuxの背景色を指定しなければターミナルと同じになります。
+ならないときはtmuxの色をdefaultにします。
+
+```txt:title=tmux.conf
+set-option -g status-bg default
+set-option -g status-style bg=default
+```
+
+## nvim側
+それぞれのプラグインでhighlightが設定されている場合があるので頑張って探して上書きします。
+
+探す方法は`:highlight`で一覧、`:hi clear group名`で一つづつ削除したりして探しました。
+
+```lua:title=highlights/init.lua
+return {
+  Normal = {
+    ctermbg = 'NONE'
+  },
+  NormalNC = {
+    ctermbg = 'NONE'
+  },
+  NonText = {
+    ctermbg = 'NONE'
+  },
+  LineNr = {
+    ctermbg = 'NONE'
+  },
+  Folded = {
+    ctermbg = 'NONE'
+  },
+  EndOfBuffer = {
+    ctermbg = 'NONE'
+  },
+  NeoTreeNormal = {
+    ctermbg = 'NONE'
+  },
+  NeoTreeNormalNC = {
+    ctermbg = 'NONE'
+  }
+}
+```
