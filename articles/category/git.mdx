@@ -2,3 +2,15 @@
 コード管理システム。プログラマーには必須技術。
 
 tigも便利。
+
+## tigメモ
+cherry-pickする→ shift + Cでできる
+
+カスタムしたいとき
+.tigrcか.gitconfigにかく
+```
+bind main    R !git rebase -i %(commit)
+bind diff    R !git rebase -i %(commit)
+# main view内で!でreset --hardする。?は確認
+bind main ! ?git reset --hard %(commit)
+```

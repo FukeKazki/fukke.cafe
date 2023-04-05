@@ -171,6 +171,39 @@ element.addEventListener("input", async (event) => {
 
 !['タイトル'](https://i.gyazo.com/3d87bafc609f4796060a872b82712ec5.jpg)
 
-## 感想
+## formDataでアップロード
+こんな感じ
+```
+const form = new FormData()
+form.append('name', name)
+images.forEach(image => {
+  if (image.file) form.append(image.key, image.file)
+})
+```
 
-業務コードだったらこのぐらい保守しなきゃですね
+## base64でアップロード
+先頭部分の不要な文字列を削除する
+```
+fileData = v.replace(/^data:\w+\/\w+;base64,/, '')
+```
+
+
+## TypeScriptでかくなら
+```
+private readFileAsDataURL (file: Blob): Promise<string | ArrayBuffer> {
+  const reader = new FileReader()
+
+  return new Promise((resolve, reject) => {
+    reader.onerror = () => {
+      reader.abort()
+      reject(new DOMException('Problem parsing input file.'))
+    }
+
+    reader.onload = () => {
+      resolve(reader.result)
+    }
+
+    reader.readAsDataURL(file)
+  })
+}
+```
