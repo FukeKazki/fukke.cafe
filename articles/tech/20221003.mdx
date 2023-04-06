@@ -32,4 +32,5 @@ tags: []
 # 映像を中央に埋め込む
 `ffmpeg -i yakiniku.mp4 -i qr.mp4 -filter_complex "overlay=x=(W-w)/2:y=(H-h)/2" merge.mp4`
 
-
+# 回転
+`ffmpeg -y -loop 1 -i input.png -vf "rotate=2*PI*t/1" -t 1 -pix_fmt yuv420p output.gif`
