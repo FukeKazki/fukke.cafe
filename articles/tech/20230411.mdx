@@ -1,0 +1,98 @@
+---
+title: 'hlsjsを最速で手元で動かしてみる'
+date: 2023-04-11
+tags: []
+category: 'ウェブフロント'
+subCategory: 'hls'
+---
+
+HLSとはHTTP Live StreamingというApple社が開発している通信プロトコルです。
+今回はHLSを使ってストリーミングデータを受信し扱うためのhls.jsについて紹介します。
+
+# 必要なもの
+- ffmpeg
+- npm or yarn
+
+# Vite環境の作成
+[Vite](https://ja.vitejs.dev/)は高速なフロントエンドツールです。
+詳細は省きますが簡単にTypescript環境が準備できます。
+任意のディレクトリで以下のコマンドを実行してください。
+
+```zsh
+yarn create vite --template vanilla-ts
+```
+
+# hls.jsの導入
+[hls.js](https://github.com/video-dev/hls.js/)の登場です。
+プロジェクト内で以下のコマンドを実行してください。
+
+```zsh
+yarn add hls.js
+```
+
+# ストリーミングするコードを書く
+src/main.tsの中身を以下に書き換えます。
+
+```main.ts
+import Hls from "hls.js";
+
+if (Hls.isSupported()) {
+  const video = document.querySelector<HTMLVideoElement>('#video')!;
+  const hls = new Hls();
+ 
+  hls.loadSource(
+    '/output.m3u8'
+  );
+  hls.attachMedia(video);
+  hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+}
+```
+
+つづいてプロジェクト直下にあるindex.htmlにvideoタグを配置します。
+
+```index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <video id="video"></video>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+```
+
+# ストリームの生成
+ストリームの生成には任意の動画が必要になります。
+今回は[NHKの公式アーカイブ](https://www.nhk.or.jp/archives/creative/material/)から動画を拝借します。
+今回は[焼き肉の動画](https://www2.nhk.or.jp/archives/creative/material/view.cgi?m=D0002160659_00000)を用いました。
+
+動画のダウンロードが終わったら、プロジェクト直下にpublicフォルダを作成してください。
+```zsh
+mkdir public
+```
+
+publicフォルダ中に動画ファイル(.mp4)を移動してください。
+
+
+publicに移動し、ffmpegを使ってセグメントファイル・インデックスファイルを生成します。
+
+```zsh
+cd public
+ffmpeg -i yakiniku.mp4 output.m3u8
+```
+
+# 動作確認
+開発サーバーを立ち上げます。
+
+```zsh
+yarn dev
+```
+
+`localhost:3000`が起動します。
+
+再生されました！！
