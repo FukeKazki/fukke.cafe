@@ -1,0 +1,36 @@
+---
+title: 'GitHub ActionsとPlaywrightのセットアップ'
+date: 2023-05-17
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+# 流れ
+
+```yaml:title=e2e.yml
+- name: Install dependencies
+  run: npm ci
+
+- name: Set up dummy aws-exports
+  run: cp aws-exports.ci.js ./src/aws-exports.js
+
+- name: Build
+  run: npm run build
+
+- name: Install Playwright Browsers
+  run: npx playwright install --with-deps
+
+- name: Run Playwright tests
+  run: npx playwright test
+```
+
+# CI のイメージについて
+
+`runs-on: ubuntu-latest`で良い。
+chromium もセットになったイメージなどもあるが、`playwright cli`でブラウザはあとからインストールするのが推奨されているみたい。
+
+# GitHub 特有のレポーター
+
+テストに失敗したとき、その箇所をファイルで教えてくれる。github 特有
+`reporter: process.env.CI ? 'github' : 'list',`
