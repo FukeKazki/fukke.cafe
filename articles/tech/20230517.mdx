@@ -12,9 +12,6 @@ subCategory: ''
 - name: Install dependencies
   run: npm ci
 
-- name: Set up dummy aws-exports
-  run: cp aws-exports.ci.js ./src/aws-exports.js
-
 - name: Build
   run: npm run build
 
@@ -34,3 +31,24 @@ chromium もセットになったイメージなどもあるが、`playwright cl
 
 テストに失敗したとき、その箇所をファイルで教えてくれる。github 特有
 `reporter: process.env.CI ? 'github' : 'list',`
+
+# GitHub Actions の env まわり
+
+settings > environments を作成
+
+yml 側で environment を指定して、
+`process.env.AAA`するときに
+
+```yaml:title=e2e.yml
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: e2e
+
+    steps:
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          AWS_PROJECT_REGION: ${{ secrets.AWS_API }}
+          AWS_APPSYNC_GRAPHQL_ENDPOINT: ${{ secrets.AWS_API_KEY }}
+```
