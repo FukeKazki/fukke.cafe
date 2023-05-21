@@ -1,0 +1,21 @@
+---
+title: 'CloudFlare Pagesを使う'
+date: 2023-05-21
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+# どうする？
+
+GitHub にリポジトリをアップして Cloudflare Pages から接続するか、wrangler cli をつかって直接デプロイする。
+
+# Node.js のバージョン
+
+`NODE_VERSION`環境変数を追加するか、`.node_versions`等のファイルを追加する。
+後者が良さそう。package.json の engines で指定もできるかも。
+
+# pnpm を使う
+
+build スクリプトに`npm install -g pnpm && pnpm i --no-frozen-lockfile && pnpm run build`
+を使う。
