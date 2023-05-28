@@ -1,0 +1,175 @@
+---
+title: 'かっこいいターミナルはプログラマーのロマン フォントの作り方編'
+date: 2023-05-23
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+# フォントは何を使ってますか？
+
+FiraCodeNerd Font,白源
+
+# Nerd Font とは
+
+開発者のためにいい感じのフォントを集めたやつ。
+[![Image from Gyazo](https://i.gyazo.com/5af50bef5fc81ff8b765be607ba3d3eb.jpg)](https://gyazo.com/5af50bef5fc81ff8b765be607ba3d3eb)
+
+# Font は自由にカスタムしていいの?
+
+# Unicode
+
+文字コードの業界規格。
+
+ただの業界規格ですが、国際規格のhttps://ja.wikipedia.org/wiki/ISO/IEC_10646と同じになるように協調してつくっている。
+
+> ISO 国際標準化機構
+
+# UTF-まるまる
+
+文字コードの符号化方法についての規格
+むずかしい。
+
+8bit ごとなのか、16bit ごとなのか。
+
+# 日本語の範囲
+
+` \u3040 - \u30ff`
+
+[![Image from Gyazo](https://i.gyazo.com/5a43eb2dd03ba8cd516078e372ff6172.png)](https://gyazo.com/5a43eb2dd03ba8cd516078e372ff6172)
+
+## 全角文字の範囲
+
+`\uff00 - \uffef`
+
+日本語の範囲はターミナルで日本語を表示するときに重要になってくる。
+日本語は英語二文字分のスペースを取るので。考慮しないと日本語と英語がまざったときに変な表示になったりする。
+
+> deno-cliffy を修正した例
+> https://github.com/c4spar/deno-cliffy/pull/541
+
+# フォントを自由に追加できる範囲
+
+`U+F0000–U+10FFFF`
+https://ja.wikipedia.org/wiki/%E7%A7%81%E7%94%A8%E9%9D%A2
+[![Image from Gyazo](https://i.gyazo.com/0420562c260c09371ed79d2f307734c8.png)](https://gyazo.com/0420562c260c09371ed79d2f307734c8)
+
+## 例
+
+FiraCode Nerd Font
+[![Image from Gyazo](https://i.gyazo.com/c20f484b83e4f6903f14e804a62f658c.jpg)](https://gyazo.com/c20f484b83e4f6903f14e804a62f658c)
+
+# FontForge を使った自作フォント
+
+## 準備
+
+fontforge というアプリケーションを使います。
+mac 用は以下のリンクからダウンロードできました。
+
+https://fontforge.org/en-US/downloads/mac-dl/
+
+## 作成
+
+fontforge を起動したらダイアログがででくるので新規作成を選択。
+
+[![Image from Gyazo](https://i.gyazo.com/763f802db3b10dc62b0cb873b8f85122.png)](https://gyazo.com/763f802db3b10dc62b0cb873b8f85122)
+
+エンコーディングを unicode にします。
+[![Image from Gyazo](https://i.gyazo.com/6e2b34b819c32b2fed7e36c641a36371.png)](https://gyazo.com/6e2b34b819c32b2fed7e36c641a36371)
+
+フォントのテーブルが出てくるのでフォントを作りたい文字を選んで右クリック+アウトラインウィンドウを開くを選択。
+
+[![Image from Gyazo](https://i.gyazo.com/cef5577c1638f06964cdcc8bd7e426a1.jpg)](https://gyazo.com/cef5577c1638f06964cdcc8bd7e426a1)
+
+ペンツールを選んで書いてみます。svg ファイルや png ファイルのインポートもできるっぽい！
+
+[![Image from Gyazo](https://i.gyazo.com/d4f7d59285f5d38f734218b1162c9cf8.png)](https://gyazo.com/d4f7d59285f5d38f734218b1162c9cf8)
+
+フォントが完成したらファイル>フォントを出力から生成します。
+
+[![Image from Gyazo](https://i.gyazo.com/4e3a76bab0be210becd2f518e55a5059.jpg)](https://gyazo.com/4e3a76bab0be210becd2f518e55a5059)
+
+生成した ttf や otf ファイルを Mac の FontBook で開いてシステムに登録。
+
+vscode などでフォントの設定をすると自作フォントを読み込めます！
+
+[![Image from Gyazo](https://i.gyazo.com/6e0817690b2ffc55adc58bdfef785ac0.png)](https://gyazo.com/6e0817690b2ffc55adc58bdfef785ac0)
+
+# ちょってぃをターミナルに表示したい！
+
+## svg を使う例
+
+unicode を選択 → 0f0000 に移動 → アウトラインウインドウを表示 → 取り込み → svg → ok
+[![Image from Gyazo](https://i.gyazo.com/03a5298df11e2df999e8a7f7c1258898.png)](https://gyazo.com/03a5298df11e2df999e8a7f7c1258898)
+
+エレメント情報からフォント名を決める
+[![Image from Gyazo](https://i.gyazo.com/a13e2816423764de89c362c14bab0bdd.png)](https://gyazo.com/a13e2816423764de89c362c14bab0bdd)
+
+ファイル > フォントを出力 > ttf で生成
+[![Image from Gyazo](https://i.gyazo.com/a8cfba7673af44b8f2e7faa3c9d7c74c.png)](https://gyazo.com/a8cfba7673af44b8f2e7faa3c9d7c74c)
+
+Mac の場合、フォントブックによみこむ
+[![Image from Gyazo](https://i.gyazo.com/d622cf17888e716991d8b9df5fd16f41.png)](https://gyazo.com/d622cf17888e716991d8b9df5fd16f41)
+
+VSCode に Font を設定
+
+[![Image from Gyazo](https://i.gyazo.com/8386c46f0d4551179009a71e9ea486aa.png)](https://gyazo.com/8386c46f0d4551179009a71e9ea486aa)
+
+FontBook からドラッグドロップで表示する
+
+[![Image from Gyazo](https://i.gyazo.com/4861e032795809185deb7434db2b9f8c.png)](https://gyazo.com/4861e032795809185deb7434db2b9f8c)
+
+# おわりに
+
+[![Image from Gyazo](https://i.gyazo.com/56604144c0bb40efc4439b50ea7507ad.png)](https://gyazo.com/56604144c0bb40efc4439b50ea7507ad)
+よいフォントライフをおすごしください！
+
+序章：ターミナルとフォントの重要性
+ターミナルとは
+プログラマーとターミナルの関係
+フォントの重要性
+
+        みなさんターミナルは何つかってますか？
+        フォントは何つかってますか？
+
+    章1：選択肢を知る - プログラミングに適したフォント
+        プログラミングに適したフォントの特徴
+        おすすめのプログラミングフォント
+        はくげん
+        リガチャ
+
+
+        ものたりなくないですか?
+        例) このフォントがあればなぁ...
+
+        フォントつくりましょう
+
+        その前に
+        フォントについて
+
+    章2：カスタムフォントの作成
+        フォント作成ツールの紹介
+        基本的なフォント作成の手順
+        特殊文字やシンボルの作り方
+
+        fontforge
+        手書きフォント
+
+        ちょってぃフォント
+        - svg
+        - png
+
+    章4：ターミナルにフォントを適用する
+        フォントのインストール方法
+        ターミナルにフォントを適用する方法
+
+        Macにインストールする
+        VSCodeに適用
+        ターミナルに適用
+
+
+    結論：自分だけのターミナルを楽しむ
+        カスタムフォントの価値
+        継続的な改善とアップデート
+
+        よいフォントライフを
