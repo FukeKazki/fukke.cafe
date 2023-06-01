@@ -1,0 +1,131 @@
+---
+title: 'Angular"s Jamstack!!'
+date: 2023-05-31
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+# Angularのプロジェクトを作成
+`npx @angular/cli new angular-jamstack --standalone`
+
+`npm run start`で起動
+
+SPAです。
+JavaScriptを無効化するとなにも表示されません。 (cmd + shift + p)
+
+# SSR化
+`npx ng add @nguniversal/express-engine`
+
+`npm run dev:ssr`
+
+# Hydration
+SSRされてDocumentがくる。Frontに表示後またJSでbootstrapしておきかえてる。
+それをしないのが Hydration機能。
+
+bootstrap前に操作したのが消える可能性がある。 Hydrationしたい。
+
+```js:app.config.ts
+import { provideClientHydration } from '@angular/platform-browser';
+
+export const appConfig: ApplicationConfig = {
+  providers: [, provideClientHydration()]
+};
+```
+
+console ↓
+
+```
+Angular hydrated 1 component(s) and 161 node(s), 0 component(s) were skipped. Note: this feature is in Developer Preview mode. Learn more at https://angular.io/guide/hydration.
+```
+
+失敗することもある。フロント側でAngularの外からDOMを追加したときなど。
+
+app-rootにもどのように描画されたかでる。
+```html
+<app-root _nghost-ng-c2702990751="" ng-version="16.0.3" ngh="0" ng-server-context="ssr|httpcache,hydration">
+```
+
+### httpcache
+サーバー側でリクエストしたAPIにはフロント側ではキャッシュしてあって最初の1回は再利用する。
+
+> サーバー側(cdn等)でキャッシュが変えってきた場合、フロントからもリクエストしないのでめっちゃ古いデータを表示する可能性もある。
+> うまく使えばすごい便利そう。
+
+app.config.ts
+```typescript
+  providers: [provideHttpClient(), ]
+```
+
+app.component.ts
+```typescript
+  user = signal<any>(undefined);
+
+  http = inject(HttpClient);
+
+  ngOnInit() {
+    this.http.get('https://jsonplaceholder.typicode.com/users/1').subscribe(user => {
+      this.user.set(user);
+    })
+  }
+```
+
+app.component.html
+```html
+{{ user() | json }}
+```
+
+で表示される。ネットワークタブをみると通信されていないことがわかる。
+
+DOMにjsonがいる
+
+[![Image from Gyazo](https://i.gyazo.com/0c064c3d613ad63ab02a22a78f69e5df.png)](https://gyazo.com/0c064c3d613ad63ab02a22a78f69e5df)
+
+# コンポーネントの作成
+`npx ng generate component profile`
+
+app.router.ts
+```typescript
+export const routes: Routes = [{
+  path: 'profile',
+  component: ProfileComponent
+}];
+```
+
+app.component.html
+```html
+<router-outlet></router-outlet>
+
+{{ user() | json }}
+```
+
+# /profileをプリレンダリング(SG)する
+
+`npm run prerender`
+
+`dist/angular-jamstack/browser/index.html`に生成されている。
+
+`/profile`もSGする。
+
+angular.json
+
+```json
+"prerender": {
+  "builder": "@nguniversal/builders:prerender",
+  "options": {
+    "routes": [
+      "/",
+      "/profile"
+    ]
+  }
+```
+
+ビルド時に全部コンテンツが確定できるなら全てのページをプリレンダリング(SG)できる。
+S3などにそのままホスティングできる!!
+
+> デメリット
+> パスの設定がまだ手動です
+
+`npx http-server dist/angular-jamstack/browser`
+
+[![Image from Gyazo](https://i.gyazo.com/b55e7d2d577d569780ffc0aaa64ef74b.png)](https://gyazo.com/b55e7d2d577d569780ffc0aaa64ef74b)
