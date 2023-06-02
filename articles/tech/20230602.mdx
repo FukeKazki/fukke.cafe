@@ -1,0 +1,155 @@
+---
+title: 'AstroNvim'
+date: 2023-06-02
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+# はじめに
+
+このブログでは、コンテナ環境に [AstroNvim](https://astronvim.com/) を導入して、NeoVim を体験してもらいます。
+
+AstroNvim とはオールインワンの Nvim でつかいやすい状態で NeoVim がセットアップされています。
+
+カスタマイズも簡単にできるため、NeoVim 初心者にはとても良いです。
+筆者も AstroNvim から NeoVim に入門しており、いまも使い続けています。
+
+# AstroNvim のインストール
+
+今回は lima で作成した ubuntu コンテナで AstroNvim を作成します。
+
+lima は Docker コンテナを管理するツールです。DockerDesktop でも同様の手順で導入できます。lima についての紹介は省略します。
+
+以下に手順を紹介します。
+
+```
+# Neovimのインストール (自前でビルドする)
+## パッケージを導入
+sudo apt-get update
+sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+
+# 便利なパッケージを追加
+sudo apt-get install ripgrep
+
+## NeoVimをクローン
+git clone https://github.com/neovim/neovim
+cd neovim/
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
+
+# AstroNvimのインストール
+cd .config/
+git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+
+# NeoVimを起動
+exec $SHELL -l
+nvim
+```
+
+以上の手順が完了すれば AstroNvim が起動します。
+
+[![Image from Gyazo](https://i.gyazo.com/90aecb7e64df39122eaf8aae640ff2ca.png)](https://gyazo.com/90aecb7e64df39122eaf8aae640ff2ca)
+
+# AstroNvim のカスタマイズ
+
+AstroNvim のカスタマイズについて紹介します。
+
+https://github.com/AstroNvim/user_example の 「Create a new Repository」からリポジトリをフォークして自分用の設定ファイルを作成します。
+
+[![Image from Gyazo](https://i.gyazo.com/324b4b788858c641a088759dfbfc73ba.jpg)](https://gyazo.com/324b4b788858c641a088759dfbfc73ba)
+
+フォークしたらリポジトリを `.config/nvim/lua/user`にクローンします。
+
+```
+git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim/lua/user
+```
+
+## Treesitter
+
+Treesitter はプログラムをハイライトするプラグインです。
+
+都度インストールするのが面倒な人は
+`:TSInstall all`
+で全てのハイライトをインストールできます。
+
+// png
+
+## LSP
+
+[mason-lsp-config](https://github.com/williamboman/mason-lspconfig.nvim) というプラグインが導入されています。
+mason-lsp-config は language server, linter, formatter を統一して管理するためのプラグインです。
+
+`:Mason`でインストールしている LSP が確認できます。
+
+TypeScript の LSP をインストールするときは`:MasonInstall typescript-language-server`でインストールできます。
+
+また `plugins/mason.lua`ファイルにあらかじめ書くことで自動インストールも可能です。
+
+```
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = { "lua_ls", "tsserver", "jsonlsp", "yaml-language-server", "tailwindcss" },
+    },
+  },
+```
+
+// pic
+
+## Telescope
+
+[Telescope](https://github.com/nvim-telescope/telescope.nvim) はファインダー機能を提供しているプラグインです。
+
+例えば `ff` でファイル検索 (VSCode での cmd + P) や `fw`でワード検索が可能です。
+カスタマイズせず、とても便利に扱えるので好きなプラグインです。
+
+// gif
+
+## Git 操作
+
+筆者は Git 操作に [NeoGit](https://github.com/TimUntersberger/neogit) を使っています。
+NeoGit は AstroNvi には含まれていないので、カスタマイズします。
+
+`plugins/user.lua`に以下を書くとプラグインを導入できます。
+
+```
+  {
+    "TimUntersberger/neogit",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    dependencies = {
+      "sindrets/diffview.nvim",
+    },
+    config = function()
+      require("neogit").setup {
+        integrations = {
+          diffview = true,
+        },
+      }
+    end,
+  },
+```
+
+// gif
+
+# AstroNvim での日常的な作業
+
+ファイル作成から git への push までの gif
+
+# トラブルシューティング
+
+NeoVim 初心者のころは設定ファイルの書きかたや、プラグインのインストールなどでつまづくことがあります。
+
+AstroNvim は記事が少ないため、[公式ドキュメント](https://astronvim.com/)に頼ることが多いです。
+
+また、copilot のサジェストや[grep.app](https://grep.app/)というプログラムの検索サービスを使って他人の設定ファイルを参考にすることが多いです。
+
+参考に筆者の設定ファイルを載せておきます。
+
+https://github.com/FukeKazki/astronvim3-user
+
+# おわりに
+
+AstroNvim を使った NeoVim の入門方法について解説しました。
+自分だけのエディタを作って最高の NeoVim ライフをお過ごしください！
