@@ -51,7 +51,7 @@ nvim
 
 [![Image from Gyazo](https://i.gyazo.com/90aecb7e64df39122eaf8aae640ff2ca.png)](https://gyazo.com/90aecb7e64df39122eaf8aae640ff2ca)
 
-# AstroNvim のカスタマイズ
+# 自分だけの AstroNvim にカスタマイズ
 
 AstroNvim のカスタマイズについて紹介します。
 
@@ -65,15 +65,20 @@ https://github.com/AstroNvim/user_example の 「Create a new Repository」か�
 git clone https://github.com/<your_user>/<your_repository> ~/.config/nvim/lua/user
 ```
 
+主に `plugins`フォルダ以下でカスタマイズをします。
+おすすめのカスタマイズ例を紹介します。
+
 ## Treesitter
 
 Treesitter はプログラムをハイライトするプラグインです。
+
+lua のハイライトが必要なときは`:TSInstall lua`でインストールできます。
 
 都度インストールするのが面倒な人は
 `:TSInstall all`
 で全てのハイライトをインストールできます。
 
-// png
+ハイライトをカスタマイズしたい人は `plugins/treesitter.lua`ファイルでカスタムできます。
 
 ## LSP
 
@@ -95,7 +100,8 @@ TypeScript の LSP をインストールするときは`:MasonInstall typescript
   },
 ```
 
-// pic
+tailwindcss の LSP が動作している例
+[![Image from Gyazo](https://i.gyazo.com/5c9b760146a0d6c04102838426fd73a9.png)](https://gyazo.com/5c9b760146a0d6c04102838426fd73a9)
 
 ## Telescope
 
