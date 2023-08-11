@@ -60,15 +60,14 @@ const BookCard = ({ book }: Book) => {}
 
 ```
 
-他にもBookCardProps で個別で `bookTitle: string` や `user: User` のような命名をすると、チーム開発時に表記揺れが生じることがあります。
+またBookCardProps で個別で命名をすることによる、チーム開発時表記揺れを防げます。
 
 ```typescript
+// チーム開発時あるある
 type BookCardProps = {
   name: string; // Book.title のこと
   thumbnail: string; // Book.coverImageKey のこと
 };
 ```
-
-Pick を使うことでこれを防ぐこともできます。
 
 以上、最近のコンポーネント設計で考えていることでした。
