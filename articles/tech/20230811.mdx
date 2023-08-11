@@ -1,0 +1,74 @@
+---
+title: '最近のコンポーネント設計'
+date: 2023-08-11
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+最近、Graphql の組み合わさったフロントエンドの案件を担当しています。
+そのときに考えた、良い感じのコンポーネント設計について話します。
+
+Book という型が GraphqlCodegen などのツールによって生成されているとき、
+その型を最大限利用しながらコンポーネントを組むのがよいです。
+以下がその例です。
+
+```typescript
+type Book = {
+  title: string;
+  author: User;
+  publishedAt: number;
+  ISBN: string;
+  genre: string[];
+  summary: string;
+  coverImageKey?: string;
+  publisher?: string;
+  price?: number;
+};
+
+// 必要なものだけをPick する
+type BookCardProps = {
+  book: Pick<
+    Book,
+    'title' | 'author' | 'publishedAt' | 'coverImageKey' | 'genre'
+  >;
+};
+const BookCard = ({ book }: BookCardProps) => {};
+```
+
+TypeScript の Pick を使って必要な型だけを取り出します。
+この設計の良いところは、必要十分なドメイン知識のみをコンポーネントに露出できるところです。
+
+Storybook を利用しているプロジェクトでは 必要以上の型をProps に渡しているとで、無駄なプロパティを渡す必要がでてきます。
+
+```typescript
+type BookCardProps = {
+  book: Book;
+}
+// 実際は title と coverImageKey しかつかわない
+const BookCard = ({ book }: Book) => {}
+
+--- storybook ---
+
+<BookCard book={{
+  title: 'エンジニアの知的生産術',
+  coverImageKey: '/cover/hoge.jpg',
+  // ↓ 不要なプロパティを渡す必要がある
+  ISBN: '',
+  summary: '',
+}}
+
+```
+
+他にもBookCardProps で個別で `bookTitle: string` や `user: User` のような命名をすると、チーム開発時に表記揺れが生じることがあります。
+
+```typescript
+type BookCardProps = {
+  name: string; // Book.title のこと
+  thumbnail: string; // Book.coverImageKey のこと
+};
+```
+
+Pick を使うことでこれを防ぐこともできます。
+
+以上、最近のコンポーネント設計で考えていることでした。
