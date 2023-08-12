@@ -44,27 +44,28 @@ export const text = css`
 
 export const mdx = {
   h1: css`
-    margin-top: 24px;
+    margin-top: 54px;
     font-size: 32px;
     font-weight: 500;
     color: var(--dark-gray-1);
   `,
   h2: css`
-    margin-top: 24px;
+    margin-top: 54px;
     font-size: 32px;
     font-weight: 500;
     color: var(--dark-gray-1);
   `,
   h3: css`
-    margin-top: 24px;
+    margin-top: 54px;
     font-size: 32px;
     font-weight: 500;
     color: var(--dark-gray-1);
   `,
   p: css`
-    margin-top: 16px;
-    font-size: 16px;
+    margin-top: 36px;
+    font-size: 18px;
     color: var(--dark-gray-2);
+    line-height: 36px;
   `,
   ul: css`
     padding-left: 20px;
@@ -91,7 +92,7 @@ export const mokuji = css`
 `;
 
 export const publishDate = css`
-  font-size: 14px; ;
+  font-size: 14px;
 `;
 
 export const recommend = css`
