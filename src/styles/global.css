@@ -18,7 +18,7 @@ img {
   --light-gray-1: #f4f4ef;
   --light-gray-2: #d5d8d7;
   --primary: #a01d26;
-    --dark-gray-1: #20232A;
+  --dark-gray-1: #20232a;
   --dark-gray-2: #52605c;
   --dark-gray-3: #788783;
   --dark-gray-4: #e2e4e3;
@@ -40,4 +40,11 @@ img {
 }
 * {
   word-break: break-all;
+}
+code[class*='language-'],
+pre[class*='language-'] {
+  text-shadow: none !important;
+}
+.token.operator {
+  background: none !important;
 }
