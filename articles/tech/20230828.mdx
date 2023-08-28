@@ -1,0 +1,59 @@
+---
+title: 'Tips'
+date: 2023-08-28
+tags: []
+category: 'ウェブフロント'
+subCategory: ''
+---
+
+# 画像のアスペクト比をいいかんじにする
+
+```typescript
+const containerRef = useRef<HTMLDivElement>(null);
+useEffect(() => {
+  // アスペクト比を計算
+  const image = new Image();
+  image.src = `${process.env.NEXT_PUBLIC_S3_DOMAIN}/${content.assetKey}`;
+
+  image.onload = () => {
+    const imageWidth = image.width;
+    const imageHeight = image.height;
+    const imageAspect = imageWidth / imageHeight;
+    const containerWidth = window.innerWidth * 0.8;
+    const contaierHeight = window.innerHeight * 0.8;
+    const containerAspect = containerWidth / contaierHeight;
+
+    let newWidth: number;
+    let newHeight: number;
+    if (imageAspect > containerAspect) {
+      newWidth = containerWidth;
+      newHeight = containerWidth / imageAspect;
+    } else {
+      newHeight = contaierHeight;
+      newWidth = contaierHeight * imageAspect;
+    }
+    containerRef.current?.style.setProperty('width', `${newWidth}px`);
+    containerRef.current?.style.setProperty('height', `${newHeight}px`);
+  };
+}, [content]);
+```
+
+# dayjs
+
+```typescript
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja';
+import utc from 'dayjs/plugin/utc';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(utc);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+dayjs.locale('ja');
+dayjs.extend(relativeTime); // 相対日付
+
+export const getRelativeDateByStartAt = (startAt: number) => {
+  return dayjs.unix(startAt).fromNow();
+};
+```
