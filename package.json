@@ -15,8 +15,7 @@
     "clean": "gatsby clean",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write src/**/*.{tsx,ts,css}",
-    "deploy": "firebase deploy",
-    "prepare": "git config --local core.hooksPath .githooks"
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
