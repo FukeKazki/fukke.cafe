@@ -5,7 +5,7 @@ export const useDailyArticles = () => {
     query UseDailyArticles {
       allMdx(
         filter: { fields: { category: { eq: "daily" } } }
-        sort: { fields: fields___name, order: DESC }
+        sort: { fields: { name: DESC } }
       ) {
         edges {
           node {
