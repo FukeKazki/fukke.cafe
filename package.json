@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "https://fukke.cafe",
+  "engines": {
+    "node": ">=25.9.0"
+  },
   "author": "FukeKazki",
   "keywords": [
     "gatsby"
@@ -18,38 +21,60 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@mdx-js/react": "^2.3.0",
     "@reach/disclosure": "^0.18.0",
-    "firebase-tools": "^11.30.0",
-    "gatsby": "^5.13.7",
-    "gatsby-plugin-emotion": "^8.13.1",
-    "gatsby-plugin-mdx": "^5.13.1",
-    "gatsby-plugin-sharp": "^5.13.1",
-    "gatsby-plugin-sitemap": "^6.13.1",
-    "gatsby-remark-autolink-headers": "^6.13.1",
-    "gatsby-remark-images": "^7.13.1",
-    "gatsby-remark-katex": "7.11.0",
-    "gatsby-remark-prismjs": "^7.13.1",
+    "firebase-tools": "^15.17.0",
+    "gatsby": "^5.16.1",
+    "gatsby-plugin-emotion": "^8.16.0",
+    "gatsby-plugin-mdx": "^5.16.0",
+    "gatsby-plugin-sharp": "^5.16.0",
+    "gatsby-plugin-sitemap": "^6.16.0",
+    "gatsby-remark-autolink-headers": "^6.16.0",
+    "gatsby-remark-images": "^7.16.0",
+    "gatsby-remark-katex": "^7.16.0",
+    "gatsby-remark-prismjs": "^7.16.0",
     "gatsby-remark-prismjs-title": "^1.0.0",
-    "gatsby-source-filesystem": "^5.13.1",
-    "gatsby-transformer-sharp": "^5.13.1",
-    "katex": "^0.16.11",
-    "prismjs": "^1.29.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-intersection-observer": "^9.13.0"
+    "gatsby-source-filesystem": "^5.16.0",
+    "gatsby-transformer-sharp": "^5.16.0",
+    "katex": "^0.16.25",
+    "prismjs": "^1.30.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-intersection-observer": "^10.0.0"
   },
   "devDependencies": {
-    "@types/node": "^18.19.41",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "eslint-config-prettier": "^8.10.0",
+    "@types/node": "^25.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint-config-prettier": "^10.1.1",
     "eslint-config-react-app": "^7.0.1",
-    "lint-staged": "^13.3.0",
-    "prettier": "^2.8.8",
-    "typescript": "^4.9.5"
+    "lint-staged": "^17.0.0",
+    "prettier": "^3.6.0",
+    "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
+  "packageManager": "pnpm@10.33.4",
+  "pnpm": {
+    "overrides": {
+      "msgpackr": "^2.0.1",
+      "lmdb": "^3.5.4"
+    },
+    "onlyBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
+      "es5-ext",
+      "gatsby",
+      "gatsby-cli",
+      "lmdb",
+      "msgpackr-extract",
+      "protobufjs",
+      "sharp"
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "gatsby-remark-katex>katex": "0.16.0"
+      }
+    }
+  }
 }
