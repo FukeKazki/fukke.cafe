@@ -25,7 +25,7 @@ SSRされてDocumentがくる。Frontに表示後またJSでbootstrapしてお�
 
 bootstrap前に操作したのが消える可能性がある。 Hydrationしたい。
 
-```js:app.config.ts
+```typescript:title=app.config.ts
 import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
