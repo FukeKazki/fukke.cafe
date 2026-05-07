@@ -9,7 +9,7 @@ subCategory: 'tmux'
 ## tmuxの起動時にサーバーを立てる
 tmuxが終了したらプロセスを止める
 
-```tmux:title=plugin-name.tmux
+```bash:title=plugin-name.tmux
 #!/usr/bin/env bash
 # 相対パスを計算してる
 SCRIPT_PATH="$(cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P)/src/server.ts"

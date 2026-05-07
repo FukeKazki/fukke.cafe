@@ -18,7 +18,7 @@ HLSとはHTTP Live StreamingというApple社が開発している通信プロ�
 詳細は省きますが簡単にTypescript環境が準備できます。
 任意のディレクトリで以下のコマンドを実行してください。
 
-```zsh
+```bash
 yarn create vite --template vanilla-ts
 ```
 
@@ -26,14 +26,14 @@ yarn create vite --template vanilla-ts
 [hls.js](https://github.com/video-dev/hls.js/)の登場です。
 プロジェクト内で以下のコマンドを実行してください。
 
-```zsh
+```bash
 yarn add hls.js
 ```
 
 # ストリーミングするコードを書く
 src/main.tsの中身を以下に書き換えます。
 
-```main.ts
+```typescript
 import Hls from "hls.js";
 
 if (Hls.isSupported()) {
@@ -50,7 +50,7 @@ if (Hls.isSupported()) {
 
 つづいてプロジェクト直下にあるindex.htmlにvideoタグを配置します。
 
-```index.html
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -72,7 +72,7 @@ if (Hls.isSupported()) {
 今回は[焼き肉の動画](https://www2.nhk.or.jp/archives/creative/material/view.cgi?m=D0002160659_00000)を用いました。
 
 動画のダウンロードが終わったら、プロジェクト直下にpublicフォルダを作成してください。
-```zsh
+```bash
 mkdir public
 ```
 
@@ -81,7 +81,7 @@ publicフォルダ中に動画ファイル(.mp4)を移動してください。
 
 publicに移動し、ffmpegを使ってセグメントファイル・インデックスファイルを生成します。
 
-```zsh
+```bash
 cd public
 ffmpeg -i yakiniku.mp4 output.m3u8
 ```
@@ -89,7 +89,7 @@ ffmpeg -i yakiniku.mp4 output.m3u8
 # 動作確認
 開発サーバーを立ち上げます。
 
-```zsh
+```bash
 yarn dev
 ```
 

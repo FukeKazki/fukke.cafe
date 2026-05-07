@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 export const useArticles = () => {
   const { allMdx } = useStaticQuery<Queries.UseArticlesQuery>(graphql`
     query UseArticles {
-      allMdx(sort: { fields: fields___name, order: DESC }) {
+      allMdx(sort: { fields: { name: DESC } }) {
         edges {
           node {
             body

@@ -5,7 +5,7 @@ export const useTechArticles = () => {
     query UseTechArticles {
       allMdx(
         filter: { fields: { category: { eq: "tech" } } }
-        sort: { fields: fields___name, order: DESC }
+        sort: { fields: { name: DESC } }
       ) {
         edges {
           node {
