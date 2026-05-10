@@ -71,14 +71,18 @@ export const ctaPrimary = css`
   gap: 8px;
   padding: 10px 16px;
   background: var(--fg);
-  color: var(--bg);
   font-family: var(--font-mono);
   font-size: 12px;
   border-radius: var(--r-sm);
   border: 0;
   text-decoration: none;
   transition: background 160ms ease-out;
-  &:hover {
+  &,
+  &:visited {
+    color: var(--bg);
+  }
+  &:hover,
+  &:visited:hover {
     background: var(--accent);
     color: var(--accent-fg);
   }
@@ -139,7 +143,7 @@ export const dottedDivider = css`
 
 export const statRow = css`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
 `;
 
@@ -198,46 +202,8 @@ export const grid3 = css`
   }
 `;
 
-export const splitSection = css`
-  padding: 40px 20px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-  @media (min-width: ${breakpoints.md}px) {
-    padding: 40px 48px;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 48px;
-  }
-`;
-
 export const tagsWrap = css`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-`;
-
-export const archiveGrid = css`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-`;
-
-export const archiveCell = (active: boolean) => css`
-  padding: 6px 0;
-  text-align: center;
-  background: ${active
-    ? 'color-mix(in oklab, var(--accent) 18%, transparent)'
-    : 'var(--bg-elev)'};
-  color: ${active ? 'var(--fg)' : 'var(--fg-soft)'};
-  border: 1px solid var(--rule-soft);
-  border-radius: 3px;
-`;
-
-export const archiveCaption = css`
-  margin-top: 8px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--fg-soft);
 `;

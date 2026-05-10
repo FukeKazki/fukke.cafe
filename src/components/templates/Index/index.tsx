@@ -39,31 +39,6 @@ export const IndexTemplate = () => {
 
   const tagCloud = tagCounts.slice(0, 24);
 
-  const archive = useMemo(() => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const months = Array.from({ length: 12 }, (_, i) =>
-      String(i + 1).padStart(2, '0')
-    );
-    const counts = new Map<string, number>();
-    techArticles.forEach(a => {
-      const name = a.fields?.name ?? '';
-      if (name.length < 6) return;
-      if (name.substring(0, 4) !== String(year)) return;
-      const m = name.substring(4, 6);
-      counts.set(m, (counts.get(m) ?? 0) + 1);
-    });
-    return months.map(m => ({ m, count: counts.get(m) ?? 0 }));
-  }, [techArticles]);
-
-  const stats = {
-    posts: allArticles.length,
-    since: '2019',
-    monthly: techArticles.length > 0
-      ? Math.max(1, Math.round(techArticles.length / 36))
-      : 1
-  };
-
   return (
     <DetailLayout>
       <div css={styles.container}>
@@ -102,16 +77,8 @@ export const IndexTemplate = () => {
             <div css={styles.dottedDivider} />
             <div css={styles.statRow}>
               <div>
-                <div css={styles.statValue}>{stats.posts}</div>
+                <div css={styles.statValue}>{allArticles.length}</div>
                 <div css={styles.statLabel}>POSTS</div>
-              </div>
-              <div>
-                <div css={styles.statValue}>'{stats.since.slice(2)}—</div>
-                <div css={styles.statLabel}>SINCE</div>
-              </div>
-              <div>
-                <div css={styles.statValue}>{stats.monthly}</div>
-                <div css={styles.statLabel}>/MONTH</div>
               </div>
             </div>
           </aside>
@@ -141,29 +108,13 @@ export const IndexTemplate = () => {
           </div>
         </section>
 
-        {/* Tags / Archive */}
-        <section css={styles.splitSection}>
-          <div>
-            <div css={styles.eyebrow}>Tags</div>
-            <div css={styles.tagsWrap}>
-              {tagCloud.map(t => (
-                <Tag key={t.name}>#{t.name}</Tag>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div css={styles.eyebrow}>Archive</div>
-            <div css={styles.archiveGrid}>
-              {archive.map(a => (
-                <div key={a.m} css={styles.archiveCell(a.count > 0)}>
-                  {a.m}
-                </div>
-              ))}
-            </div>
-            <div css={styles.archiveCaption}>
-              {new Date().getFullYear()} —{' '}
-              {archive.reduce((s, a) => s + a.count, 0)} posts so far
-            </div>
+        {/* Tags */}
+        <section css={styles.section}>
+          <div css={styles.eyebrow}>Tags</div>
+          <div css={styles.tagsWrap}>
+            {tagCloud.map(t => (
+              <Tag key={t.name}>#{t.name}</Tag>
+            ))}
           </div>
         </section>
       </div>
