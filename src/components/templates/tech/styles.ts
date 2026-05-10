@@ -75,31 +75,6 @@ export const searchInput = css`
   }
 `;
 
-export const pillRow = css`
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-`;
-
-export const pill = (active: boolean) => css`
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  font-family: var(--font-sans);
-  font-size: 12px;
-  color: ${active ? 'var(--bg)' : 'var(--fg-muted)'};
-  background: ${active ? 'var(--fg)' : 'transparent'};
-  border: 1px solid ${active ? 'var(--fg)' : 'var(--rule)'};
-  border-radius: var(--r-pill);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 160ms ease-out;
-  &:hover {
-    border-color: var(--accent);
-    color: ${active ? 'var(--bg)' : 'var(--accent)'};
-  }
-`;
-
 export const tagFilter = css`
   margin-top: 14px;
   display: flex;
@@ -114,12 +89,6 @@ export const tagFilterLabel = css`
   color: var(--fg-soft);
   letter-spacing: 0.06em;
   margin-right: 4px;
-`;
-
-export const tagFilterMore = css`
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--fg-soft);
 `;
 
 export const body = css`

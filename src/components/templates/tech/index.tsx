@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { useTechArticles } from '../../../hooks/useTechArticles';
 import { DetailLayout } from '../../layouts/Detail';
 import { PostCard } from '../../shared/PostCard';
@@ -13,32 +13,23 @@ const formatDate = (name: string | null | undefined) => {
 export const TechTemplate = () => {
   const articles = useTechArticles();
   const [query, setQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState<string>('All');
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    articles.forEach(a => {
-      const c = a.frontmatter?.category;
-      if (c) set.add(c);
-    });
-    return ['All', ...Array.from(set)];
-  }, [articles]);
-
   const tags = useMemo(() => {
-    const set = new Set<string>();
+    const counts = new Map<string, number>();
     articles.forEach(a => {
       (a.frontmatter?.tags ?? []).forEach(t => {
-        if (t) set.add(t);
+        if (!t) return;
+        counts.set(t, (counts.get(t) ?? 0) + 1);
       });
     });
-    return Array.from(set);
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([t]) => t);
   }, [articles]);
 
   const filtered = useMemo(() => {
     return articles.filter(a => {
-      if (activeCategory !== 'All' && a.frontmatter?.category !== activeCategory)
-        return false;
       if (
         activeTag &&
         !(a.frontmatter?.tags ?? []).some(t => t === activeTag)
@@ -52,14 +43,9 @@ export const TechTemplate = () => {
       }
       return true;
     });
-  }, [articles, activeCategory, activeTag, query]);
+  }, [articles, activeTag, query]);
 
-  const filterLabel = [
-    activeCategory !== 'All' ? activeCategory : null,
-    activeTag ? `#${activeTag}` : null
-  ]
-    .filter(Boolean)
-    .join(' × ');
+  const filterLabel = activeTag ? `#${activeTag}` : '';
 
   return (
     <DetailLayout>
@@ -80,24 +66,12 @@ export const TechTemplate = () => {
                 css={styles.searchInput}
               />
             </div>
-            <div css={styles.pillRow}>
-              {categories.map(c => (
-                <button
-                  key={c}
-                  type='button'
-                  css={styles.pill(c === activeCategory)}
-                  onClick={() => setActiveCategory(c)}
-                >
-                  {c}
-                </button>
-              ))}
-            </div>
           </div>
 
           {tags.length > 0 && (
             <div css={styles.tagFilter}>
               <span css={styles.tagFilterLabel}>TAGS</span>
-              {tags.slice(0, 12).map(t => (
+              {tags.map(t => (
                 <button
                   key={t}
                   type='button'
@@ -112,9 +86,6 @@ export const TechTemplate = () => {
                   <Tag active={activeTag === t}>#{t}</Tag>
                 </button>
               ))}
-              {tags.length > 12 && (
-                <span css={styles.tagFilterMore}>+ {tags.length - 12} more</span>
-              )}
             </div>
           )}
         </section>
@@ -124,9 +95,9 @@ export const TechTemplate = () => {
             <span>
               Showing {filtered.length} of {articles.length}
               {filterLabel && (
-                <>
+                <Fragment>
                   {' '}· Filter: <span css={styles.metaStrong}>{filterLabel}</span>
-                </>
+                </Fragment>
               )}
             </span>
             <span>Sort: latest ↓</span>
@@ -145,7 +116,6 @@ export const TechTemplate = () => {
                   tags={(article.frontmatter?.tags ?? []).filter(
                     (t): t is string => Boolean(t)
                   )}
-                  category={article.frontmatter?.category ?? undefined}
                 />
               ))}
             </div>

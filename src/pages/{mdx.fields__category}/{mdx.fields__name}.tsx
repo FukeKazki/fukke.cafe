@@ -75,8 +75,6 @@ export const query = graphql`
       frontmatter {
         title
         date
-        category
-        subCategory
         tags
       }
       body

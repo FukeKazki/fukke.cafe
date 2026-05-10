@@ -29,8 +29,11 @@ export const ArticleTemplate = ({
   ...props
 }: PageProps<Queries.ArticlePageQuery>) => {
   const { mdx } = data;
+  const tags = (mdx?.frontmatter?.tags ?? []).filter(
+    (t): t is string => Boolean(t)
+  );
   const recommendArticles = useRecommendArticles({
-    category: mdx?.frontmatter?.category ?? 'その他',
+    tags,
     id: mdx?.id ?? ''
   });
   const title =
@@ -52,9 +55,6 @@ export const ArticleTemplate = ({
     }
   };
 
-  const tags = ((mdx?.frontmatter as { tags?: string[] | null })?.tags ?? [])
-    .filter((t): t is string => Boolean(t));
-
   const activeTocIndex = toc?.findIndex(v => v.title === currentContent) ?? 0;
 
   return (
@@ -63,13 +63,9 @@ export const ArticleTemplate = ({
         <article css={styles.body}>
           <header>
             <div css={styles.headerMeta}>
-              {mdx?.frontmatter?.category && (
-                <Tag>{mdx.frontmatter.category}</Tag>
-              )}
-              {(mdx?.frontmatter as { subCategory?: string | null })
-                ?.subCategory && (
-                <Tag>{(mdx?.frontmatter as { subCategory: string }).subCategory}</Tag>
-              )}
+              {tags.map(t => (
+                <Tag key={t}>#{t}</Tag>
+              ))}
               <span css={styles.metaText}>{formatDate(mdx?.fields?.name)}</span>
             </div>
             <h1 css={styles.title}>{title}</h1>
