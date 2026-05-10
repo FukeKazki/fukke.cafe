@@ -16,11 +16,6 @@ import * as styles from "./styles"
 
 const shortcodes = { CounterButton }
 
-export const convertString = (v: string | null | undefined): string => {
-  if (!v) return ""
-  return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`
-}
-
 const formatDate = (v: string | null | undefined): string => {
   if (!v) return ""
   return `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}`
@@ -116,7 +111,7 @@ export const ArticleTemplate = ({
 
           <div css={styles.share}>
             <a
-              href={`http://twitter.com/share?url=${props.location.href}&text=${title ?? ""}`}
+              href={`https://x.com/intent/post?text=${encodeURIComponent(title ?? "")}&url=${encodeURIComponent(props.location.href)}`}
               target="_blank"
               rel="noreferrer"
               css={styles.twitter}
