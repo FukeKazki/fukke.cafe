@@ -9,7 +9,6 @@ type Props = {
   excerpt: string
   date: string
   tags: string[]
-  readMin?: number
 }
 
 const card = css`
@@ -87,21 +86,7 @@ const tagList = css`
   flex-wrap: wrap;
 `
 
-const readTime = css`
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--fg-soft);
-  white-space: nowrap;
-`
-
-export const PostCard = ({
-  to,
-  title,
-  excerpt,
-  date,
-  tags,
-  readMin,
-}: Props) => {
+export const PostCard = ({ to, title, excerpt, date, tags }: Props) => {
   const lead = tags[0] ?? "post"
   return (
     <Link to={to} css={card}>
@@ -118,7 +103,6 @@ export const PostCard = ({
             <Tag key={t}>#{t}</Tag>
           ))}
         </div>
-        {readMin && <span css={readTime}>{readMin} min</span>}
       </div>
     </Link>
   )
