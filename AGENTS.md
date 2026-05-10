@@ -17,7 +17,7 @@
 | `src/pages/` | ページとファイルベースルーティング（動的ルート含む）。 |
 | `src/components/` | レイアウト・テンプレート・共有 UI。 |
 | `src/hooks/` | 記事取得などのデータフック。 |
-| `articles/` | MDX コンテンツ。公開対象は `tech`, `other`, `blog`, `category`（`gatsby-config.ts` の `gatsby-source-filesystem` と対応）。`articles/daily/` と `articles/book/` は登録されていない**下書き保管庫**で、ビルドに含まれない。 |
+| `articles/` | MDX コンテンツ。公開対象は `tech` のみ（`gatsby-config.ts` の `gatsby-source-filesystem` と対応）。 |
 | `images/` | 画像アセット。 |
 | `gatsby-config.ts` | プラグイン・コンテンツパス設定。 |
 | `gatsby-node.ts` | ビルド時の Node API（フィールド生成など）。 |

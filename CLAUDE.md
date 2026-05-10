@@ -37,8 +37,7 @@ pnpm run deploy       # firebase deploy（通常は CI で実行）
 
 ### コンテンツ → ページ生成パイプライン
 
-1. `gatsby-config.ts` が `articles/` 配下のサブディレクトリ（`tech`, `other`, `blog`, `category`）を **別々の `gatsby-source-filesystem` インスタンス** として登録し、それぞれの `name` を `sourceInstanceName` として保持する。
-   - `articles/daily/` と `articles/book/` はファイルシステム上に残っているが `gatsby-config.ts` に**意図的に登録されていない下書き保管庫**。ビルドに含まれず公開もされない。公開したくなったらここから `articles/tech/` などに移動する運用。
+1. `gatsby-config.ts` が `articles/tech/` を `gatsby-source-filesystem` として登録し、`name: "tech"` を `sourceInstanceName` として保持する。公開対象は `tech` のみ。
 2. `gatsby-node.ts` の `onCreateNode` が Mdx ノードに対し以下のフィールドを生成する：
    - `fields.category` ← 親 File ノードの `sourceInstanceName`（例: `tech`）
    - `fields.name` ← ファイル名（例: `20200103`）
