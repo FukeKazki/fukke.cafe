@@ -40,13 +40,10 @@ pnpm run lint         # ESLint（@yoshinani/style-guide/eslint/react-internal）
 pnpm run clean        # Gatsby キャッシュ削除（不調時）
 ```
 
-手動デプロイが必要な場合は `pnpm run deploy`（Firebase CLI）。
-
 ## デプロイと CI
 
-- **`main` ブランチへの push** で GitHub Actions が Firebase Hosting にデプロイする（`.github/workflows/firebase-hosting-merge.yml`）。
-- PR でも同一 Node / pnpm でビルドする（`.github/workflows/firebase-hosting-pull-request.yml`）。
-- Node **25.9.0**、ビルドは `pnpm run build`。
+- デプロイ先は **Cloudflare Pages**。Git 連携により `main` への push で本番、PR でプレビューが自動デプロイされる。
+- Node **25.9.0**、ビルドは `pnpm run build`、公開ディレクトリは `public/`。
 
 ローカルでビルドが通ることをマージ前に確認すると安全である。
 
