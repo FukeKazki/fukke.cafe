@@ -1,50 +1,153 @@
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-serif);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "palt";
+}
+
+body,
+* {
+  box-sizing: border-box;
+}
+
 li {
   list-style: none;
 }
 
 a,
-a:visited,
-a:hover,
-a:active {
+a:visited {
   color: inherit;
   text-decoration: none;
 }
 
 img {
   max-width: 100%;
+  height: auto;
 }
-:root {
-  --white: #ffffff;
-  --light-gray-1: #f4f4ef;
-  --light-gray-2: #d5d8d7;
-  --primary: #a01d26;
-  --dark-gray-1: #20232a;
-  --dark-gray-2: #52605c;
-  --dark-gray-3: #788783;
-  --dark-gray-4: #e2e4e3;
+
+* {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+  color: var(--fg);
+}
+
+/* PrismJS overrides (gatsby-remark-prismjs) */
+.gatsby-highlight {
+  margin: 1.6em 0;
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.gatsby-highlight pre[class*='language-'] {
+  margin: 0 !important;
+  padding: 14px 16px !important;
+  background: var(--code-bg) !important;
+  color: var(--code-fg) !important;
+  text-shadow: none !important;
+  font-family: var(--font-mono) !important;
+  font-size: 12.5px !important;
+  line-height: 1.7 !important;
 }
 
 .gatsby-code-title {
-  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--code-tab-bg);
+  color: var(--code-tab-fg);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  margin-top: 1.6em;
+}
+
+.gatsby-code-title + .gatsby-highlight {
+  margin-top: 0;
+  border-top-left-radius: 0;
 }
 
 .gatsby-code-title span {
-  background-color: #f5f2f0;
-  padding: 4px 8px;
-  font-size: 12px;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
 }
 
-.gatsby-highlight * {
-  margin: 0 !important;
+/* PrismJS token recolor — terracotta palette */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--code-comment) !important;
 }
-* {
-  word-break: break-all;
+
+.token.string,
+.token.attr-value,
+.token.char {
+  color: var(--code-string) !important;
 }
+
+.token.keyword,
+.token.builtin,
+.token.atrule,
+.token.attr-name,
+.token.boolean,
+.token.tag {
+  color: var(--code-keyword) !important;
+}
+
+.token.number,
+.token.constant,
+.token.symbol {
+  color: var(--code-num) !important;
+}
+
+.token.function,
+.token.class-name,
+.token.method {
+  color: var(--code-fn) !important;
+}
+
+.token.operator,
+.token.punctuation {
+  background: none !important;
+  color: var(--fg-muted) !important;
+}
+
 code[class*='language-'],
 pre[class*='language-'] {
   text-shadow: none !important;
 }
-.token.operator {
-  background: none !important;
+
+/* Inline code (within MDX prose) */
+:not(pre) > code[class*='language-'],
+:not(pre) > code {
+  background: var(--code-bg-inline);
+  color: var(--fg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+/* Autolink heading anchors */
+.custom-class svg {
+  fill: var(--fg-soft);
 }

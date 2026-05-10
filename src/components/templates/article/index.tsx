@@ -4,17 +4,23 @@ import { Fragment, useState } from 'react';
 import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
 import { DetailLayout } from '../../layouts/Detail';
 import { TwitterIcon } from '../../shared/icons/TwitterIcon';
-import * as styles from './styles';
-import { CounterButton } from '../../examples/CounterButton';
+import { PostCard } from '../../shared/PostCard';
+import { Tag } from '../../shared/Tag';
 import { TableOfContents } from '../../shared/TableOfContents';
+import { CounterButton } from '../../examples/CounterButton';
 import { IntersectionHeader } from './components/IntersectionHeader';
+import * as styles from './styles';
 
-// mdx内で使いたいコンポーネントを入れる
 const shortcodes = { CounterButton };
 
 export const convertString = (v: string | null | undefined): string => {
   if (!v) return '';
   return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`;
+};
+
+const formatDate = (v: string | null | undefined): string => {
+  if (!v) return '';
+  return `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}`;
 };
 
 export const ArticleTemplate = ({
@@ -30,126 +36,154 @@ export const ArticleTemplate = ({
   const title =
     mdx?.fields?.category === 'tech'
       ? mdx?.frontmatter?.title
-      : mdx?.fields?.category === 'daily'
-      ? `${convertString(mdx?.fields?.name)}の日報`
       : mdx?.fields?.name;
 
-  const toc = mdx?.tableOfContents?.items as [{ title: string; url: string }];
+  const toc = mdx?.tableOfContents?.items as
+    | [{ title: string; url: string }]
+    | undefined;
 
   const [currentContent, setCurrentContent] = useState<string>(
     toc?.[0]?.title ?? ''
   );
 
-  const inView = (inView: boolean, props?: string) => {
-    if (inView && props) {
-      setCurrentContent(props);
+  const inView = (inView: boolean, headingTitle?: string) => {
+    if (inView && headingTitle) {
+      setCurrentContent(headingTitle);
     }
   };
 
+  const tags = ((mdx?.frontmatter as { tags?: string[] | null })?.tags ?? [])
+    .filter((t): t is string => Boolean(t));
+
+  const activeTocIndex = toc?.findIndex(v => v.title === currentContent) ?? 0;
+
   return (
     <DetailLayout>
-      <div css={styles.contents}>
-        <div css={styles.body}>
-          <h1 css={styles.title}>{title}</h1>
+      <div css={styles.wrapper}>
+        <article css={styles.body}>
+          <header>
+            <div css={styles.headerMeta}>
+              {mdx?.frontmatter?.category && (
+                <Tag>{mdx.frontmatter.category}</Tag>
+              )}
+              {(mdx?.frontmatter as { subCategory?: string | null })
+                ?.subCategory && (
+                <Tag>{(mdx?.frontmatter as { subCategory: string }).subCategory}</Tag>
+              )}
+              <span css={styles.metaText}>{formatDate(mdx?.fields?.name)}</span>
+            </div>
+            <h1 css={styles.title}>{title}</h1>
+            {mdx?.excerpt && <p css={styles.excerpt}>{mdx.excerpt}</p>}
+            <div css={styles.headerRule} />
+          </header>
+
           <MDXProvider
             css={styles.text}
             components={{
-              h1: props => (
+              h1: hprops => (
                 <IntersectionHeader
-                  {...props}
+                  {...hprops}
                   css={styles.mdx.h1}
                   inViewCallback={inView}
                 />
               ),
-              h2: props => (
+              h2: hprops => (
                 <IntersectionHeader
-                  {...props}
+                  {...hprops}
                   css={styles.mdx.h2}
                   inViewCallback={inView}
                 />
               ),
-              h3: props => <h2 {...props} css={styles.mdx.h3} />,
-              p: props => <div {...props} css={styles.mdx.p} />,
-              ul: props => <ul {...props} css={styles.mdx.ul} />,
-              li: props => <li {...props} css={styles.mdx.li} />,
-              a: props => <a {...props} css={styles.mdx.a} target='__blank' />,
+              h3: hprops => <h3 {...hprops} css={styles.mdx.h3} />,
+              p: pprops => <p {...pprops} css={styles.mdx.p} />,
+              ul: uprops => <ul {...uprops} css={styles.mdx.ul} />,
+              li: lprops => <li {...lprops} css={styles.mdx.li} />,
+              a: aprops => (
+                <a {...aprops} css={styles.mdx.a} target='_blank' rel='noreferrer' />
+              ),
+              blockquote: bprops => (
+                <blockquote {...bprops} css={styles.mdx.blockquote} />
+              ),
               ...shortcodes
             }}
           >
             {children}
           </MDXProvider>
-          {/* シェア */}
+
           <div css={styles.share}>
             <a
-              href={`http://twitter.com/share?url=${props.location.href}&text=${title}`}
-              target='__blank'
+              href={`http://twitter.com/share?url=${props.location.href}&text=${title ?? ''}`}
+              target='_blank'
+              rel='noreferrer'
+              css={styles.twitter}
             >
-              <span css={styles.twitter}>
-                <TwitterIcon />
-                ツイート
-              </span>
+              <TwitterIcon />
+              Share on X
             </a>
           </div>
-          {/* 下部 */}
-          <div css={styles.recommend}>
-            <h3 css={styles.recommendTitle}>その他の記事</h3>
-            <ul css={styles.recommendList}>
-              {recommendArticles.map(article => (
-                <li key={article.id}>
-                  <Link to={`/tech/${article.fields?.name}`}>
-                    <div css={styles.recommendArticle}>
-                      <p>{convertString(article.fields?.name)}</p>
-                      <p>{article.frontmatter?.title}</p>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
 
-        <div css={styles.sub}>
+          {recommendArticles.length > 0 && (
+            <div css={styles.recommend}>
+              <h3 css={styles.recommendTitle}>Related writing</h3>
+              <ul css={styles.recommendList}>
+                {recommendArticles.slice(0, 4).map(article => (
+                  <li key={article.id}>
+                    <PostCard
+                      to={`/${article.fields?.category}/${article.fields?.name}`}
+                      title={article.frontmatter?.title ?? ''}
+                      excerpt={article.excerpt ?? ''}
+                      date={formatDate(article.fields?.name)}
+                      tags={(article.frontmatter?.tags ?? []).filter(
+                        (t): t is string => Boolean(t)
+                      )}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </article>
+
+        <aside css={styles.sub}>
           <div css={styles.subContainer}>
-            <p css={styles.publishDate}>
-              公開日 {convertString(mdx?.fields?.name)}
-            </p>
-
-            {(mdx?.tableOfContents?.items as [
-              { title: string; url: string }
-            ]) && (
-              <Fragment>
-                <p css={styles.mokuji}>目次</p>
-                <ul css={styles.toc}>
-                  {(
-                    mdx?.tableOfContents?.items as [
-                      { title: string; url: string }
-                    ]
-                  ).map((item, index) => (
-                    <li key={`${item.title}-${index}`}>
-                      <Link to={item.url}>{item.title}</Link>
+            <div css={styles.tocEyebrow}>On this page</div>
+            {toc && toc.length > 0 ? (
+              <ol css={styles.tocList}>
+                {toc.map((item, i) => {
+                  const active = i === activeTocIndex;
+                  const passed = i < activeTocIndex;
+                  return (
+                    <li
+                      key={`${item.title}-${i}`}
+                      css={styles.tocItem(active, passed)}
+                    >
+                      {active && <span css={styles.tocDot} />}
+                      <Link to={item.url} css={styles.tocLink(active)}>
+                        {item.title}
+                      </Link>
                     </li>
-                  ))}
-                </ul>
+                  );
+                })}
+              </ol>
+            ) : (
+              <Fragment>
+                <p css={styles.metaText}>目次なし</p>
               </Fragment>
             )}
           </div>
-        </div>
+        </aside>
       </div>
 
-      {toc && (
+      {toc && toc.length > 0 && (
         <TableOfContents
           toc={toc}
           css={styles.mobileToc}
           current={{
             title: currentContent,
-            index: toc.findIndex(v => v.title === currentContent)
+            index: activeTocIndex
           }}
         />
       )}
-
-      <div css={styles.footer}>
-        <p>Thanks you for reading.</p>
-      </div>
     </DetailLayout>
   );
 };

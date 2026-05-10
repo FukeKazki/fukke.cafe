@@ -12,3 +12,6 @@ src/gatsby-types.d.ts
 !.yarn/versions
 # firebase
 .firebase/
+
+# APM dependencies
+apm_modules/

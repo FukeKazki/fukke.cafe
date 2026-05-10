@@ -1,8 +1,5 @@
 import { graphql, HeadProps, PageProps } from 'gatsby';
-import {
-  ArticleTemplate,
-  convertString
-} from '../../components/templates/article';
+import { ArticleTemplate } from '../../components/templates/article';
 
 export default function ArticlePage({
   ...props
@@ -19,9 +16,6 @@ export const Head = ({
   switch (params.fields__category) {
     case 'tech':
       title = props.data.mdx?.frontmatter?.title ?? '';
-      break;
-    case 'daily':
-      title = `${convertString(props.data.mdx?.fields?.name)}の日報`;
       break;
     default:
       title = props.data.mdx?.fields?.name ?? '';
@@ -82,6 +76,8 @@ export const query = graphql`
         title
         date
         category
+        subCategory
+        tags
       }
       body
       tableOfContents

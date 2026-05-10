@@ -1,0 +1,54 @@
+lockfile_version: '1'
+generated_at: '2026-05-10T18:53:10.806563+00:00'
+apm_version: 0.12.0
+dependencies:
+- repo_url: vercel-labs/agent-browser
+  host: github.com
+  resolved_commit: 82eadcee41240b1c8477870f846bc8528e77a8a6
+  virtual_path: skills/agent-browser
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/agent-browser
+  - .claude/skills/agent-browser
+  content_hash: sha256:edad4d958bc4baf821e3391bb9889a03a8bbc0e4d7f54ee4a5f30837654fed83
+- repo_url: vercel-labs/agent-skills
+  host: github.com
+  resolved_commit: b9c8ee0643d87d3c5a953d1e22382ff2ead39229
+  virtual_path: skills/react-best-practices
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/react-best-practices
+  - .claude/skills/react-best-practices
+  content_hash: sha256:74f142d28d360d78e8bac4f239a84c87f0ced9015729bc72b5458d82ff45b015
+- repo_url: vercel-labs/next-skills
+  host: github.com
+  resolved_commit: dc1de9caf7612d73f56a8dec3cb1bd6c9ec096b9
+  virtual_path: skills/next-best-practices
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/next-best-practices
+  - .claude/skills/next-best-practices
+  content_hash: sha256:4bf1b21f7a66848642c150cab284f24c004ad6da0f717eed4fe9db74eaa6b6a8
+- repo_url: vercel-labs/next-skills
+  host: github.com
+  resolved_commit: dc1de9caf7612d73f56a8dec3cb1bd6c9ec096b9
+  virtual_path: skills/next-cache-components
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/next-cache-components
+  - .claude/skills/next-cache-components
+  content_hash: sha256:a94b83ddcd2ff1c30722577f693b1bfe32f2e1a83abdd6c08c2d6cc6753b53c8
+- repo_url: yoshinani-dev/skills
+  host: github.com
+  resolved_commit: 676a5ff794f9300e58c5a81325b89dcfc4b2f0b9
+  virtual_path: skills/submit-pr
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/submit-pr
+  - .claude/skills/submit-pr
+  content_hash: sha256:17056f9be95b2d534a20dc9912027b941d683778c7b6f46049ec67bc69070d89

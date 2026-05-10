@@ -1,0 +1,13 @@
+name: fukke.cafe
+version: 1.0.0
+description: APM project for fukke.cafe
+author: FukeKazki
+dependencies:
+  apm:
+    - yoshinani-dev/skills/skills/submit-pr
+    - vercel-labs/next-skills/skills/next-best-practices
+    - vercel-labs/next-skills/skills/next-cache-components
+    - vercel-labs/agent-skills/skills/react-best-practices
+    - vercel-labs/agent-browser/skills/agent-browser
+includes: auto
+scripts: {}

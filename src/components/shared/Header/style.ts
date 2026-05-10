@@ -3,30 +3,69 @@ import { breakpoints } from '../../../styles/breakpoint';
 
 export const header = css`
   display: flex;
-  padding: 24px 14px;
-  background-color: var(--light-gray-1);
+  align-items: center;
   justify-content: space-between;
-`;
-
-export const title = css`
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--dark-gray-1);
-  @media (min-width: ${breakpoints.lg}px) {
-    font-size: 24px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg);
+  @media (min-width: ${breakpoints.md}px) {
+    padding: 20px 32px;
   }
 `;
 
-export const navigation = css``;
+export const logo = css`
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  cursor: pointer;
+  border: 0;
+`;
+
+export const logoMain = css`
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+`;
+
+export const logoSub = css`
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-soft);
+`;
+
+export const nav = css`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
 
 export const list = css`
   display: flex;
-  gap: 20px;
-  list-style: none;
+  align-items: center;
+  gap: 0;
 `;
 
 export const item = css``;
 
 export const link = css`
-  color: var(--dark-gray-2);
+  display: inline-block;
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-muted);
+  text-decoration: none;
+  border: 0;
+  transition: color 160ms ease-out;
+  &:hover {
+    color: var(--accent);
+  }
+`;
+
+export const divider = css`
+  width: 1px;
+  height: 14px;
+  background: var(--rule);
+  margin: 0 6px;
 `;

@@ -10,7 +10,7 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
   <Fragment>
     <title>fukke.cafe</title>
     <html lang='ja' />
-    <meta name='description' content='技術ブログや日報を書きます。' />
+    <meta name='description' content='技術ブログを書きます。' />
     <link
       rel='canonical'
       href={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`}
@@ -24,9 +24,9 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
       content={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`}
     />
     <meta property='og:type' content='website' />
-    <meta property='og:title' content='技術ブログや日報を書きます。' />
+    <meta property='og:title' content='技術ブログを書きます。' />
     <meta property='og:site_name' content='fukke.cafe' />
-    <meta property='og:description' content='技術ブログや日報を書きます。' />
+    <meta property='og:description' content='技術ブログを書きます。' />
     <meta
       property='og:image'
       content={`https://fukke-blog-og-image.vercel.app/fukke.cafe`}
@@ -36,7 +36,7 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => (
     <meta property='twitter:title' content='fukke.cafe' />
     <meta
       property='twitter:description'
-      content='技術ブログや日報を書きます。'
+      content='技術ブログを書きます。'
     />
   </Fragment>
 );
