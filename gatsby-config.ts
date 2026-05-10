@@ -1,79 +1,79 @@
-import type { GatsbyConfig } from 'gatsby';
+import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `fukke.cafe`,
-    siteUrl: `https://fukke.cafe`
+    siteUrl: `https://fukke.cafe`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
-    'gatsby-plugin-emotion',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
-    'gatsby-plugin-sitemap',
+    "gatsby-plugin-emotion",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
+    "gatsby-plugin-sitemap",
     {
-      resolve: 'gatsby-plugin-mdx',
+      resolve: "gatsby-plugin-mdx",
       options: {
         gatsbyRemarkPlugins: [
           {
-            resolve: 'gatsby-remark-autolink-headers',
+            resolve: "gatsby-remark-autolink-headers",
             options: {
               offsetY: `100`,
               icon: false,
               className: `custom-class`,
-              maintainCase: false
-            }
+              maintainCase: false,
+            },
           },
-          'gatsby-remark-prismjs-title',
-          'gatsby-remark-prismjs',
+          "gatsby-remark-prismjs-title",
+          "gatsby-remark-prismjs",
           {
-            resolve: 'gatsby-remark-images',
+            resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 1000
-            }
+              maxWidth: 1000,
+            },
           },
-          'gatsby-remark-katex'
-        ]
-      }
+          "gatsby-remark-katex",
+        ],
+      },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'tech',
-        path: './articles/tech/'
-      }
+        name: "tech",
+        path: "./articles/tech/",
+      },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'other',
-        path: './articles/other/'
-      }
+        name: "other",
+        path: "./articles/other/",
+      },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'blog',
-        path: './articles/blog/'
-      }
+        name: "blog",
+        path: "./articles/blog/",
+      },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'category',
-        path: './articles/category/'
-      }
+        name: "category",
+        path: "./articles/category/",
+      },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        path: './images/'
-      }
-    }
-  ]
-};
+        path: "./images/",
+      },
+    },
+  ],
+}
 
-export default config;
+export default config

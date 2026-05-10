@@ -52,7 +52,7 @@ img {
   line-height: 1.7;
 }
 
-.gatsby-highlight pre[class*='language-'] {
+.gatsby-highlight pre[class*="language-"] {
   margin: 0 !important;
   padding: 14px 16px !important;
   background: var(--code-bg) !important;
@@ -131,13 +131,13 @@ img {
   color: var(--fg-muted) !important;
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
+code[class*="language-"],
+pre[class*="language-"] {
   text-shadow: none !important;
 }
 
 /* Inline code (within MDX prose) */
-:not(pre) > code[class*='language-'],
+:not(pre) > code[class*="language-"],
 :not(pre) > code {
   background: var(--code-bg-inline);
   color: var(--fg);

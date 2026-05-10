@@ -1,5 +1,6 @@
-import { css } from '@emotion/react';
-import { breakpoints } from '../../../styles/breakpoint';
+import { css } from "@emotion/react"
+
+import { breakpoints } from "../../../styles/breakpoint"
 
 const footer = css`
   padding: 32px 20px;
@@ -16,21 +17,21 @@ const footer = css`
   @media (min-width: ${breakpoints.md}px) {
     padding: 32px 48px;
   }
-`;
+`
 
 const meta = css`
   color: var(--fg-muted);
-`;
+`
 
 const tagline = css`
   margin-top: 4px;
-`;
+`
 
 const links = css`
   display: flex;
   gap: 14px;
   align-items: center;
-`;
+`
 
 const link = css`
   display: inline-flex;
@@ -43,7 +44,7 @@ const link = css`
   &:hover {
     color: var(--accent);
   }
-`;
+`
 
 export const Footer = () => (
   <footer css={footer}>
@@ -53,21 +54,21 @@ export const Footer = () => (
     </div>
     <div css={links}>
       <a
-        href='https://github.com/FukeKazki'
-        target='_blank'
-        rel='noreferrer'
+        href="https://github.com/FukeKazki"
+        target="_blank"
+        rel="noreferrer"
         css={link}
       >
         GitHub
       </a>
       <a
-        href='https://twitter.com/fukke0906'
-        target='_blank'
-        rel='noreferrer'
+        href="https://twitter.com/fukke0906"
+        target="_blank"
+        rel="noreferrer"
         css={link}
       >
         Twitter
       </a>
     </div>
   </footer>
-);
+)

@@ -1,14 +1,14 @@
-import { css, keyframes } from '@emotion/react';
+import { css, keyframes } from "@emotion/react"
 
 const open = keyframes`
   0% { opacity: 0; transform: translateY(8px); }
   100% { opacity: 1; transform: translateY(0); }
-`;
+`
 
 const close = keyframes`
   0% { opacity: 1; }
   100% { opacity: 0; }
-`;
+`
 
 export const container = css`
   display: grid;
@@ -19,7 +19,7 @@ export const container = css`
   [data-reach-disclosure-panel][data-state='collapsed'] {
     animation: ${close} 0.25s ease-out;
   }
-`;
+`
 
 export const list = css`
   display: grid;
@@ -30,10 +30,10 @@ export const list = css`
   border: 1px solid var(--rule);
   border-radius: var(--r-md);
   padding: 8px;
-`;
+`
 
-export const first = css``;
-export const end = css``;
+export const first = css``
+export const end = css``
 
 export const content = css`
   background: var(--bg);
@@ -51,7 +51,7 @@ export const content = css`
   &:hover {
     border-color: var(--accent);
   }
-`;
+`
 
 export const bottom = css`
   position: relative;
@@ -69,14 +69,14 @@ export const bottom = css`
     left: 16px;
     border-radius: 2px 2px 0 0;
   }
-`;
+`
 
 export const index = css`
   margin-right: 12px;
   color: var(--accent);
   font-weight: 600;
   font-family: var(--font-mono);
-`;
+`
 
 export const text = css`
   font-size: 12px;
@@ -84,7 +84,7 @@ export const text = css`
   font-family: var(--font-mono);
   display: inline-flex;
   align-items: center;
-`;
+`
 
 export const toggle = css`
   display: grid;
@@ -94,4 +94,4 @@ export const toggle = css`
   width: 22px;
   height: 22px;
   border-radius: 50%;
-`;
+`

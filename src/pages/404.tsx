@@ -1,14 +1,16 @@
-import { css } from '@emotion/react';
-import { HeadFC, Link } from 'gatsby';
-import { Fragment } from 'react';
-import { DetailLayout } from '../components/layouts/Detail';
+import { css } from "@emotion/react"
+import type { HeadFC } from "gatsby"
+import { Link } from "gatsby"
+import { Fragment } from "react"
+
+import { DetailLayout } from "../components/layouts/Detail"
 
 const wrap = css`
   max-width: 720px;
   margin: 0 auto;
   padding: 80px 20px;
   text-align: center;
-`;
+`
 
 const code = css`
   font-family: var(--font-mono);
@@ -17,7 +19,7 @@ const code = css`
   line-height: 1;
   color: var(--accent);
   letter-spacing: -0.02em;
-`;
+`
 
 const heading = css`
   margin: 24px 0 0;
@@ -25,7 +27,7 @@ const heading = css`
   font-weight: 700;
   font-size: 26px;
   color: var(--fg);
-`;
+`
 
 const shell = css`
   margin: 24px auto 0;
@@ -39,11 +41,11 @@ const shell = css`
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--fg-muted);
-`;
+`
 
 const shellPrompt = css`
   color: var(--accent);
-`;
+`
 
 const actions = css`
   margin-top: 32px;
@@ -51,7 +53,7 @@ const actions = css`
   gap: 8px;
   justify-content: center;
   flex-wrap: wrap;
-`;
+`
 
 const primary = css`
   display: inline-flex;
@@ -70,7 +72,7 @@ const primary = css`
     background: var(--accent);
     color: var(--accent-fg);
   }
-`;
+`
 
 const secondary = css`
   padding: 10px 14px;
@@ -85,7 +87,7 @@ const secondary = css`
     color: var(--accent);
     border-color: var(--accent);
   }
-`;
+`
 
 const NotFoundPage = () => {
   return (
@@ -98,23 +100,23 @@ const NotFoundPage = () => {
           <span>cd ~ &amp;&amp; ls posts/</span>
         </div>
         <div css={actions}>
-          <Link to='/' css={primary}>
+          <Link to="/" css={primary}>
             ← トップへ戻る
           </Link>
-          <Link to='/tech' css={secondary}>
+          <Link to="/tech" css={secondary}>
             記事一覧
           </Link>
         </div>
       </div>
     </DetailLayout>
-  );
-};
+  )
+}
 
-export default NotFoundPage;
+export default NotFoundPage
 
 export const Head: HeadFC = () => (
   <Fragment>
     <title>Not found — fukke.cafe</title>
-    <html lang='ja' />
+    <html lang="ja" />
   </Fragment>
-);
+)

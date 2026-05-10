@@ -34,7 +34,9 @@ pnpm run develop      # 開発サーバー（別名: pnpm start）
 pnpm run build        # 本番ビルド
 pnpm run serve        # ビルド結果のローカル確認
 pnpm run typecheck    # TypeScript（tsc --noEmit）
-pnpm run format       # Prettier（src の ts/tsx/css）
+pnpm run format       # Biome（リポジトリ全体）
+pnpm run check        # Biome check（フォーマット + import 整列）
+pnpm run lint         # ESLint（@yoshinani/style-guide/eslint/react-internal）
 pnpm run clean        # Gatsby キャッシュ削除（不調時）
 ```
 

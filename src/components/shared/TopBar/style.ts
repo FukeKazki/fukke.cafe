@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css } from "@emotion/react"
 
 export const topBar = css`
   height: 32px;
@@ -8,4 +8,4 @@ export const topBar = css`
   place-items: center;
   font-size: 16px;
   font-weight: bold;
-`;
+`

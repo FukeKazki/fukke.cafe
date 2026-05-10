@@ -1,10 +1,12 @@
-import { graphql, HeadProps, PageProps } from 'gatsby';
-import { ArticleTemplate } from '../../components/templates/article';
+import type { HeadProps, PageProps } from "gatsby"
+import { graphql } from "gatsby"
+
+import { ArticleTemplate } from "../../components/templates/article"
 
 export default function ArticlePage({
   ...props
 }: PageProps<Queries.ArticlePageQuery>) {
-  return <ArticleTemplate {...props} />;
+  return <ArticleTemplate {...props} />
 }
 
 export const Head = ({
@@ -12,51 +14,51 @@ export const Head = ({
   ...props
 }: HeadProps<Queries.ArticlePageQuery>) => {
   // タイトルを決める
-  let title = '';
+  let title = ""
   switch (params.fields__category) {
-    case 'tech':
-      title = props.data.mdx?.frontmatter?.title ?? '';
-      break;
+    case "tech":
+      title = props.data.mdx?.frontmatter?.title ?? ""
+      break
     default:
-      title = props.data.mdx?.fields?.name ?? '';
-      break;
+      title = props.data.mdx?.fields?.name ?? ""
+      break
   }
 
   return (
     <>
       <title>{title}</title>
-      <html lang='ja' />
-      <meta name='description' content={props.data.mdx?.excerpt ?? ''} />
+      <html lang="ja" />
+      <meta name="description" content={props.data.mdx?.excerpt ?? ""} />
       <link
-        rel='canonical'
-        href={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`}
+        rel="canonical"
+        href={`${props.data.site?.siteMetadata?.siteUrl ?? ""}${props.location.pathname}`}
       />
       <meta
-        name='image'
+        name="image"
         content={`https://fukke-blog-og-image.vercel.app/${title}`}
       />
       <meta
-        property='og:url'
-        content={`${props.data.site?.siteMetadata?.siteUrl}${props.location.pathname}`}
+        property="og:url"
+        content={`${props.data.site?.siteMetadata?.siteUrl ?? ""}${props.location.pathname}`}
       />
-      <meta property='og:type' content='website' />
-      <meta property='og:title' content={title ?? ''} />
-      <meta property='og:site_name' content='fukke.cafe' />
-      <meta property='og:description' content={props.data.mdx?.excerpt ?? ''} />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={title} />
+      <meta property="og:site_name" content="fukke.cafe" />
+      <meta property="og:description" content={props.data.mdx?.excerpt ?? ""} />
       <meta
-        property='og:image'
+        property="og:image"
         content={`https://fukke-blog-og-image.vercel.app/${title}`}
       />
-      <meta property='twitter:site' content='@fukke0906' />
-      <meta property='twitter:card' content='summary_large_image' />
-      <meta property='twitter:title' content={title ?? ''} />
+      <meta property="twitter:site" content="@fukke0906" />
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:title" content={title} />
       <meta
-        property='twitter:description'
-        content={props.data.mdx?.excerpt ?? ''}
+        property="twitter:description"
+        content={props.data.mdx?.excerpt ?? ""}
       />
     </>
-  );
-};
+  )
+}
 
 export const query = graphql`
   query ArticlePage($id: String) {
@@ -81,4 +83,4 @@ export const query = graphql`
       tableOfContents
     }
   }
-`;
+`

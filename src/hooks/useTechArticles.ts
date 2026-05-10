@@ -1,4 +1,4 @@
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery } from "gatsby"
 
 export const useTechArticles = () => {
   const { allMdx } = useStaticQuery<Queries.UseTechArticlesQuery>(graphql`
@@ -26,7 +26,7 @@ export const useTechArticles = () => {
         }
       }
     }
-  `);
+  `)
 
-  return allMdx.edges.map(({ node }) => node);
-};
+  return allMdx.edges.map(({ node }) => node)
+}
