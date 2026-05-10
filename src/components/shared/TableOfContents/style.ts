@@ -13,10 +13,10 @@ const close = keyframes`
 export const container = css`
   display: grid;
   gap: 8px;
-  [data-reach-disclosure-panel][data-state='open'] {
+  [data-state='open'] {
     animation: ${open} 0.25s ease-out;
   }
-  [data-reach-disclosure-panel][data-state='collapsed'] {
+  [data-state='collapsed'] {
     animation: ${close} 0.25s ease-out;
   }
 `
