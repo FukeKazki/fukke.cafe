@@ -1,31 +1,35 @@
 import { useMemo } from 'react';
-import { useTaggedArticles } from './useTaggedArticles';
+import { useArticles } from './useArticles';
 
 type Props = {
-  category: 'ウェブフロント' | 'サーバー' | 'その他' | string;
+  tags: readonly (string | null)[];
   id: string;
 };
 
-export const useRecommendArticles = ({ category, id }: Props) => {
-  const articles = useTaggedArticles();
+export const useRecommendArticles = ({ tags, id }: Props) => {
+  const articles = useArticles();
 
   return useMemo(() => {
-    const matched = articles.find(v => v.fieldValue === category);
-    if (!matched) return [];
+    const tagSet = new Set(tags.filter((t): t is string => Boolean(t)));
+    if (tagSet.size === 0) return [];
 
-    const pool = matched.nodes.filter(v => v.id !== id);
+    const scored = articles
+      .filter(a => a.id !== id)
+      .map(a => {
+        const overlap = (a.frontmatter?.tags ?? []).reduce(
+          (n, t) => (t && tagSet.has(t) ? n + 1 : n),
+          0
+        );
+        return { node: a, overlap };
+      })
+      .filter(s => s.overlap > 0)
+      .sort((a, b) => {
+        if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+        return (b.node.fields?.name ?? '').localeCompare(
+          a.node.fields?.name ?? ''
+        );
+      });
 
-    // Stable pseudo-random ordering seeded by article id so each
-    // render of the same article shows the same recommendations.
-    const seed = Array.from(id).reduce(
-      (acc, ch) => acc + ch.charCodeAt(0),
-      0
-    );
-    const scored = pool.map((node, i) => ({
-      node,
-      key: ((seed + i * 2654435761) >>> 0) % 1000003
-    }));
-    scored.sort((a, b) => a.key - b.key);
     return scored.slice(0, 6).map(s => s.node);
-  }, [articles, category, id]);
+  }, [articles, tags, id]);
 };

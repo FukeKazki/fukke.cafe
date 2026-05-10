@@ -12,8 +12,6 @@ export const useArticles = () => {
               title
               tags
               date
-              category
-              subCategory
             }
             id
             tableOfContents

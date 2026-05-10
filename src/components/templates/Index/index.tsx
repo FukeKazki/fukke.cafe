@@ -24,34 +24,20 @@ export const IndexTemplate = () => {
 
   const latest = techArticles.slice(0, 3);
 
-  const categories = useMemo(() => {
-    const map = new Map<string, { count: number; subs: Set<string> }>();
+  const tagCounts = useMemo(() => {
+    const map = new Map<string, number>();
     techArticles.forEach(a => {
-      const cat = a.frontmatter?.category ?? 'その他';
-      const sub = a.frontmatter?.subCategory ?? '';
-      const prev = map.get(cat) ?? { count: 0, subs: new Set<string>() };
-      prev.count += 1;
-      if (sub) prev.subs.add(sub);
-      map.set(cat, prev);
+      (a.frontmatter?.tags ?? []).forEach(t => {
+        if (!t) return;
+        map.set(t, (map.get(t) ?? 0) + 1);
+      });
     });
     return Array.from(map.entries())
-      .map(([name, v]) => ({
-        name,
-        count: v.count,
-        subs: Array.from(v.subs)
-      }))
+      .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
   }, [techArticles]);
 
-  const tags = useMemo(() => {
-    const set = new Set<string>();
-    techArticles.forEach(a => {
-      (a.frontmatter?.tags ?? []).forEach(t => {
-        if (t) set.add(t);
-      });
-    });
-    return Array.from(set).slice(0, 24);
-  }, [techArticles]);
+  const tagCloud = tagCounts.slice(0, 24);
 
   const archive = useMemo(() => {
     const now = new Date();
@@ -155,41 +141,17 @@ export const IndexTemplate = () => {
           </div>
         </section>
 
-        {/* Categories + Tags */}
+        {/* Tags / Archive */}
         <section css={styles.splitSection}>
-          <div>
-            <div css={styles.eyebrow}>Categories</div>
-            <ul css={styles.categoryList}>
-              {categories.map((c, i) => (
-                <li key={c.name}>
-                  <Link to={`/category/${c.name}`} css={styles.categoryItem}>
-                    <span css={styles.categoryNum}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <div>
-                      <div css={styles.categoryName} className='cat-name'>
-                        {c.name}
-                      </div>
-                      {c.subs.length > 0 && (
-                        <div css={styles.categorySub}>
-                          {c.subs.slice(0, 4).join(' · ')}
-                        </div>
-                      )}
-                    </div>
-                    <span css={styles.categoryCount}>{c.count}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
           <div>
             <div css={styles.eyebrow}>Tags</div>
             <div css={styles.tagsWrap}>
-              {tags.map(t => (
-                <Tag key={t}>#{t}</Tag>
+              {tagCloud.map(t => (
+                <Tag key={t.name}>#{t.name}</Tag>
               ))}
             </div>
-            <div css={styles.dottedDivider} />
+          </div>
+          <div>
             <div css={styles.eyebrow}>Archive</div>
             <div css={styles.archiveGrid}>
               {archive.map(a => (

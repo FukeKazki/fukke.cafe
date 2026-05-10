@@ -9,7 +9,6 @@ type Props = {
   date: string;
   tags: string[];
   readMin?: number;
-  category?: string;
 };
 
 const card = css`
@@ -100,10 +99,9 @@ export const PostCard = ({
   excerpt,
   date,
   tags,
-  readMin,
-  category
+  readMin
 }: Props) => {
-  const lead = category ?? tags[0] ?? 'post';
+  const lead = tags[0] ?? 'post';
   return (
     <Link to={to} css={card}>
       <div css={topRow}>

@@ -210,59 +210,6 @@ export const splitSection = css`
   }
 `;
 
-export const categoryList = css`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const categoryItem = css`
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: baseline;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--rule-soft);
-  text-decoration: none;
-  color: inherit;
-  &:first-of-type {
-    border-top: 1px solid var(--rule);
-  }
-  &:hover .cat-name {
-    color: var(--accent);
-  }
-`;
-
-export const categoryNum = css`
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--fg-faint);
-  width: 24px;
-`;
-
-export const categoryName = css`
-  font-family: var(--font-serif);
-  font-size: 18px;
-  color: var(--fg);
-  font-weight: 600;
-  transition: color 160ms ease-out;
-`;
-
-export const categorySub = css`
-  margin-top: 2px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--fg-soft);
-`;
-
-export const categoryCount = css`
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--fg-muted);
-`;
-
 export const tagsWrap = css`
   display: flex;
   flex-wrap: wrap;
