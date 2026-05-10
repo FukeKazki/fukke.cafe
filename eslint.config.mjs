@@ -1,4 +1,3 @@
-// @ts-nocheck
 import reactInternal from "@yoshinani/style-guide/eslint/react-internal"
 
 const eslintConfig = [
