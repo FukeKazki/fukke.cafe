@@ -46,12 +46,6 @@ const config: GatsbyConfig = {
         path: "./articles/tech/",
       },
     },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: "./images/",
-      },
-    },
   ],
 }
 
