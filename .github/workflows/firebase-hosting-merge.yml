@@ -27,6 +27,21 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
 
+      - name: Smoke check build artifacts
+        run: |
+          set -e
+          for f in public/index.html public/tech/index.html public/404.html public/sitemap-index.xml; do
+            if [ ! -s "$f" ]; then
+              echo "missing or empty: $f" >&2
+              exit 1
+            fi
+          done
+          count=$(find public -type d -path 'public/tech/*' | wc -l | tr -d ' ')
+          if [ "$count" -lt 10 ]; then
+            echo "expected at least 10 tech article pages, got $count" >&2
+            exit 1
+          fi
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
