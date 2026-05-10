@@ -26,7 +26,6 @@ pnpm run format       # biome format --write .
 pnpm run check        # biome check --write .（フォーマット + import 整列）
 pnpm run lint         # eslint .
 pnpm run clean        # gatsby clean（キャッシュ不調時）
-pnpm run deploy       # firebase deploy（通常は CI で実行）
 ```
 
 テストフレームワークは導入されていない。変更検証は `pnpm run typecheck` と `pnpm run build` で行う。
@@ -68,7 +67,7 @@ pnpm run deploy       # firebase deploy（通常は CI で実行）
 
 ## デプロイ
 
-`main` への push で GitHub Actions（`.github/workflows/firebase-hosting-merge.yml`）が Firebase Hosting にデプロイする。PR では `firebase-hosting-pull-request.yml` がプレビュービルドする。手動デプロイ（`pnpm run deploy`）は通常不要。
+Cloudflare Pages の Git 連携によりデプロイされる。`main` への push で本番、PR でプレビューが自動生成される。GitHub Actions 側でのデプロイ用ワークフローは存在しない。
 
 ## コーディング規約（プロジェクト固有）
 
