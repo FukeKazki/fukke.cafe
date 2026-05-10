@@ -1,15 +1,16 @@
-import { css } from '@emotion/react';
-import { Link } from 'gatsby';
-import { Tag } from '../Tag';
+import { css } from "@emotion/react"
+import { Link } from "gatsby"
+
+import { Tag } from "../Tag"
 
 type Props = {
-  to: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  tags: string[];
-  readMin?: number;
-};
+  to: string
+  title: string
+  excerpt: string
+  date: string
+  tags: string[]
+  readMin?: number
+}
 
 const card = css`
   display: flex;
@@ -29,7 +30,7 @@ const card = css`
   &:hover h3 {
     color: var(--accent);
   }
-`;
+`
 
 const topRow = css`
   display: flex;
@@ -38,17 +39,17 @@ const topRow = css`
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--fg-soft);
-`;
+`
 
 const topTag = css`
   color: var(--accent);
-`;
+`
 
 const rule = css`
   flex: 1;
   height: 1px;
   background: var(--rule);
-`;
+`
 
 const titleCss = css`
   margin: 0;
@@ -59,7 +60,7 @@ const titleCss = css`
   font-weight: 600;
   letter-spacing: -0.005em;
   transition: color 160ms ease-out;
-`;
+`
 
 const excerptCss = css`
   margin: 0;
@@ -70,7 +71,7 @@ const excerptCss = css`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-`;
+`
 
 const bottomRow = css`
   display: flex;
@@ -78,20 +79,20 @@ const bottomRow = css`
   align-items: center;
   margin-top: auto;
   padding-top: 6px;
-`;
+`
 
 const tagList = css`
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
-`;
+`
 
 const readTime = css`
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--fg-soft);
   white-space: nowrap;
-`;
+`
 
 export const PostCard = ({
   to,
@@ -99,9 +100,9 @@ export const PostCard = ({
   excerpt,
   date,
   tags,
-  readMin
+  readMin,
 }: Props) => {
-  const lead = tags[0] ?? 'post';
+  const lead = tags[0] ?? "post"
   return (
     <Link to={to} css={card}>
       <div css={topRow}>
@@ -113,12 +114,12 @@ export const PostCard = ({
       {excerpt && <p css={excerptCss}>{excerpt}</p>}
       <div css={bottomRow}>
         <div css={tagList}>
-          {tags.slice(0, 3).map(t => (
+          {tags.slice(0, 3).map((t) => (
             <Tag key={t}>#{t}</Tag>
           ))}
         </div>
         {readMin && <span css={readTime}>{readMin} min</span>}
       </div>
     </Link>
-  );
-};
+  )
+}

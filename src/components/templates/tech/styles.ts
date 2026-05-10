@@ -1,10 +1,11 @@
-import { css } from '@emotion/react';
-import { breakpoints } from '../../../styles/breakpoint';
+import { css } from "@emotion/react"
+
+import { breakpoints } from "../../../styles/breakpoint"
 
 export const container = css`
   max-width: 1080px;
   margin: 0 auto;
-`;
+`
 
 export const head = css`
   padding: 32px 20px 20px;
@@ -12,7 +13,7 @@ export const head = css`
   @media (min-width: ${breakpoints.md}px) {
     padding: 32px 48px 20px;
   }
-`;
+`
 
 export const eyebrow = css`
   font-family: var(--font-mono);
@@ -21,7 +22,7 @@ export const eyebrow = css`
   color: var(--fg-soft);
   text-transform: uppercase;
   margin-bottom: 8px;
-`;
+`
 
 export const title = css`
   margin: 0;
@@ -33,14 +34,14 @@ export const title = css`
   @media (min-width: ${breakpoints.md}px) {
     font-size: 32px;
   }
-`;
+`
 
 export const description = css`
   margin-top: 12px;
   font-size: 14.5px;
   color: var(--fg-muted);
   line-height: 1.85;
-`;
+`
 
 export const filterRow = css`
   margin-top: 18px;
@@ -48,7 +49,7 @@ export const filterRow = css`
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
-`;
+`
 
 export const search = css`
   display: flex;
@@ -60,7 +61,7 @@ export const search = css`
   background: var(--bg-elev);
   border: 1px solid var(--rule);
   border-radius: var(--r-sm);
-`;
+`
 
 export const searchInput = css`
   flex: 1;
@@ -73,7 +74,7 @@ export const searchInput = css`
   &::placeholder {
     color: var(--fg-soft);
   }
-`;
+`
 
 export const tagFilter = css`
   margin-top: 14px;
@@ -81,7 +82,7 @@ export const tagFilter = css`
   flex-wrap: wrap;
   gap: 6px;
   align-items: center;
-`;
+`
 
 export const tagFilterLabel = css`
   font-family: var(--font-mono);
@@ -89,14 +90,14 @@ export const tagFilterLabel = css`
   color: var(--fg-soft);
   letter-spacing: 0.06em;
   margin-right: 4px;
-`;
+`
 
 export const body = css`
   padding: 24px 20px 48px;
   @media (min-width: ${breakpoints.md}px) {
     padding: 24px 48px 64px;
   }
-`;
+`
 
 export const meta = css`
   margin-bottom: 14px;
@@ -107,11 +108,11 @@ export const meta = css`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
-`;
+`
 
 export const metaStrong = css`
   color: var(--fg);
-`;
+`
 
 export const grid = css`
   display: grid;
@@ -120,7 +121,7 @@ export const grid = css`
   @media (min-width: ${breakpoints.sm}px) {
     grid-template-columns: 1fr 1fr;
   }
-`;
+`
 
 export const empty = css`
   padding: 48px 0;
@@ -128,4 +129,4 @@ export const empty = css`
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--fg-soft);
-`;
+`

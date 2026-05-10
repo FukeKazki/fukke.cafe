@@ -1,10 +1,10 @@
-import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import { css } from "@emotion/react"
+import type { ReactNode } from "react"
 
 type Props = {
-  children: ReactNode;
-  active?: boolean;
-};
+  children: ReactNode
+  active?: boolean
+}
 
 const base = css`
   display: inline-flex;
@@ -20,13 +20,13 @@ const base = css`
   background: var(--tag-bg);
   color: var(--tag-fg);
   transition: background 160ms ease-out, color 160ms ease-out;
-`;
+`
 
 const activeStyle = css`
   background: var(--accent);
   color: var(--accent-fg);
-`;
+`
 
 export const Tag = ({ children, active = false }: Props) => (
   <span css={[base, active && activeStyle]}>{children}</span>
-);
+)

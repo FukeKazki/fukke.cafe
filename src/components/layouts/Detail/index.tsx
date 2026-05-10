@@ -1,18 +1,21 @@
-import { Slice } from 'gatsby';
-import { ComponentPropsWithRef, Fragment, ReactNode } from 'react';
-import { Footer } from '../../shared/Footer';
-import * as styles from './styles';
+import { Slice } from "gatsby"
+import type { ComponentPropsWithRef, ReactNode } from "react"
+import { Fragment } from "react"
 
-interface Props extends ComponentPropsWithRef<'div'> {
-  children: ReactNode;
+import { Footer } from "../../shared/Footer"
+
+import * as styles from "./styles"
+
+interface Props extends ComponentPropsWithRef<"div"> {
+  children: ReactNode
 }
 
 export const DetailLayout = ({ children }: Props) => {
   return (
     <Fragment>
-      <Slice alias='header' />
+      <Slice alias="header" />
       <main css={styles.main}>{children}</main>
       <Footer />
     </Fragment>
-  );
-};
+  )
+}

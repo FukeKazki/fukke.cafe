@@ -22,7 +22,9 @@ pnpm run develop      # 開発サーバー（= pnpm start）
 pnpm run build        # 本番ビルド
 pnpm run serve        # ビルド成果物のローカル確認
 pnpm run typecheck    # tsc --noEmit
-pnpm run format       # prettier --write src/**/*.{tsx,ts,css}
+pnpm run format       # biome format --write .
+pnpm run check        # biome check --write .（フォーマット + import 整列）
+pnpm run lint         # eslint .
 pnpm run clean        # gatsby clean（キャッシュ不調時）
 pnpm run deploy       # firebase deploy（通常は CI で実行）
 ```
@@ -70,7 +72,9 @@ pnpm run deploy       # firebase deploy（通常は CI で実行）
 
 ## コーディング規約（プロジェクト固有）
 
-- Prettier 設定: シングルクォート、セミコロンあり、`trailingComma: none`、`arrowParens: avoid`、JSX もシングルクォート。
+- フォーマッタは **Biome**（`biome.jsonc` が [`@yoshinani/style-guide/biome`](https://github.com/yoshinani-dev/style-guide) を extend）。ダブルクォート、セミコロン asNeeded、`trailingComma: "all"`、2 スペースインデント。
+- Lint は **ESLint flat config**（`eslint.config.mjs` が `@yoshinani/style-guide/eslint/react-internal` を読み込み）。型情報を使った lint なので tsconfig 経由で projectService が必要。
+- TypeScript の base は `@yoshinani/style-guide/typescript/react-library` を extend。Gatsby との互換のため `module` / `moduleResolution` / `target` / `lib` / `noEmit` などを `tsconfig.json` でローカル上書きしている。
 - import はファイル先頭にまとめる。インライン import は避ける。
 - 既存の Emotion パターン（`styled` / `css` prop の使い分け）に合わせる。
 - TypeScript の union / enum 分岐は網羅的に書く方針。

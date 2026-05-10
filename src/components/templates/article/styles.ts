@@ -1,5 +1,6 @@
-import { css } from '@emotion/react';
-import { breakpoints } from '../../../styles/breakpoint';
+import { css } from "@emotion/react"
+
+import { breakpoints } from "../../../styles/breakpoint"
 
 export const wrapper = css`
   max-width: 1240px;
@@ -13,14 +14,14 @@ export const wrapper = css`
     grid-template-columns: minmax(0, 1fr) 220px;
     column-gap: 48px;
   }
-`;
+`
 
 export const body = css`
   min-width: 0;
   max-width: 720px;
   margin: 0 auto;
   width: 100%;
-`;
+`
 
 export const headerMeta = css`
   display: flex;
@@ -28,13 +29,13 @@ export const headerMeta = css`
   gap: 10px;
   margin-bottom: 16px;
   flex-wrap: wrap;
-`;
+`
 
 export const metaText = css`
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--fg-soft);
-`;
+`
 
 export const title = css`
   margin: 0;
@@ -47,23 +48,23 @@ export const title = css`
   @media (min-width: ${breakpoints.md}px) {
     font-size: 34px;
   }
-`;
+`
 
 export const excerpt = css`
   margin-top: 14px;
   font-size: 15px;
   color: var(--fg-muted);
   line-height: 1.85;
-`;
+`
 
 export const headerRule = css`
   margin: 20px 0;
   border-top: 1px solid var(--rule);
-`;
+`
 
 export const text = css`
   color: var(--fg);
-`;
+`
 
 export const mdx = {
   h1: css`
@@ -127,20 +128,20 @@ export const mdx = {
     color: var(--fg-muted);
     font-style: italic;
     font-size: 15px;
-  `
-};
+  `,
+}
 
 export const sub = css`
   display: none;
   @media (min-width: ${breakpoints.md}px) {
     display: block;
   }
-`;
+`
 
 export const subContainer = css`
   position: sticky;
   top: 24px;
-`;
+`
 
 export const tocEyebrow = css`
   font-family: var(--font-mono);
@@ -149,7 +150,7 @@ export const tocEyebrow = css`
   color: var(--fg-soft);
   text-transform: uppercase;
   margin-bottom: 12px;
-`;
+`
 
 export const tocList = css`
   margin: 0;
@@ -157,7 +158,7 @@ export const tocList = css`
   list-style: none;
   display: flex;
   flex-direction: column;
-`;
+`
 
 export const tocItem = (active: boolean, passed: boolean) => css`
   display: flex;
@@ -172,9 +173,9 @@ export const tocItem = (active: boolean, passed: boolean) => css`
     top: 0;
     bottom: 0;
     width: 2px;
-    background: ${passed || active ? 'var(--accent)' : 'var(--rule)'};
+    background: ${passed || active ? "var(--accent)" : "var(--rule)"};
   }
-`;
+`
 
 export const tocDot = css`
   position: absolute;
@@ -185,14 +186,14 @@ export const tocDot = css`
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 3px var(--bg);
-`;
+`
 
 export const tocLink = (active: boolean) => css`
   display: block;
   padding: 4px 0 4px 16px;
   font-family: var(--font-mono);
   font-size: 11.5px;
-  color: ${active ? 'var(--fg)' : 'var(--fg-soft)'};
+  color: ${active ? "var(--fg)" : "var(--fg-soft)"};
   font-weight: ${active ? 600 : 400};
   flex: 1;
   min-width: 0;
@@ -205,13 +206,13 @@ export const tocLink = (active: boolean) => css`
   &:hover {
     color: var(--accent);
   }
-`;
+`
 
 export const recommend = css`
   margin-top: 64px;
   padding-top: 32px;
   border-top: 1px solid var(--rule);
-`;
+`
 
 export const recommendTitle = css`
   margin: 0 0 18px;
@@ -220,7 +221,7 @@ export const recommendTitle = css`
   letter-spacing: var(--tracking-caps);
   color: var(--fg-soft);
   text-transform: uppercase;
-`;
+`
 
 export const recommendList = css`
   margin: 0;
@@ -232,13 +233,13 @@ export const recommendList = css`
   @media (min-width: ${breakpoints.sm}px) {
     grid-template-columns: 1fr 1fr;
   }
-`;
+`
 
 export const share = css`
   margin-top: 40px;
   display: flex;
   flex-direction: row-reverse;
-`;
+`
 
 export const twitter = css`
   display: inline-flex;
@@ -266,7 +267,7 @@ export const twitter = css`
     width: 16px;
     height: 16px;
   }
-`;
+`
 
 export const mobileToc = css`
   @media (min-width: ${breakpoints.md}px) {
@@ -277,4 +278,4 @@ export const mobileToc = css`
   left: 14px;
   right: 14px;
   z-index: 50;
-`;
+`

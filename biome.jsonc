@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["@yoshinani/style-guide/biome"],
+  "files": {
+    "includes": [
+      "**",
+      "!**/.cache",
+      "!**/public",
+      "!**/node_modules",
+      "!**/apm_modules",
+      "!**/pnpm-lock.yaml",
+      "!**/src/gatsby-types.d.ts"
+    ]
+  }
+}

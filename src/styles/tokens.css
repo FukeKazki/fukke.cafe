@@ -5,7 +5,8 @@
 
 :root {
   /* Type stacks */
-  --font-serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  --font-serif:
+    "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
   --font-sans: "Inter", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 

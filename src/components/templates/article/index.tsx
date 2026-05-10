@@ -1,61 +1,64 @@
-import { MDXProvider } from '@mdx-js/react';
-import { Link, PageProps } from 'gatsby';
-import { Fragment, useState } from 'react';
-import { useRecommendArticles } from '../../../hooks/useRecommendArticles';
-import { DetailLayout } from '../../layouts/Detail';
-import { TwitterIcon } from '../../shared/icons/TwitterIcon';
-import { PostCard } from '../../shared/PostCard';
-import { Tag } from '../../shared/Tag';
-import { TableOfContents } from '../../shared/TableOfContents';
-import { CounterButton } from '../../examples/CounterButton';
-import { IntersectionHeader } from './components/IntersectionHeader';
-import * as styles from './styles';
+import { MDXProvider } from "@mdx-js/react"
+import type { PageProps } from "gatsby"
+import { Link } from "gatsby"
+import { useState } from "react"
 
-const shortcodes = { CounterButton };
+import { useRecommendArticles } from "../../../hooks/useRecommendArticles"
+import { CounterButton } from "../../examples/CounterButton"
+import { DetailLayout } from "../../layouts/Detail"
+import { PostCard } from "../../shared/PostCard"
+import { TableOfContents } from "../../shared/TableOfContents"
+import { Tag } from "../../shared/Tag"
+import { TwitterIcon } from "../../shared/icons/TwitterIcon"
+
+import { IntersectionHeader } from "./components/IntersectionHeader"
+import * as styles from "./styles"
+
+const shortcodes = { CounterButton }
 
 export const convertString = (v: string | null | undefined): string => {
-  if (!v) return '';
-  return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`;
-};
+  if (!v) return ""
+  return `${v.substring(0, 4)}/${v.substring(4, 6)}/${v.substring(6, 8)}`
+}
 
 const formatDate = (v: string | null | undefined): string => {
-  if (!v) return '';
-  return `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}`;
-};
+  if (!v) return ""
+  return `${v.substring(0, 4)}-${v.substring(4, 6)}-${v.substring(6, 8)}`
+}
 
 export const ArticleTemplate = ({
   data,
   children,
   ...props
 }: PageProps<Queries.ArticlePageQuery>) => {
-  const { mdx } = data;
-  const tags = (mdx?.frontmatter?.tags ?? []).filter(
-    (t): t is string => Boolean(t)
-  );
+  const { mdx } = data
+  const tags = (mdx?.frontmatter?.tags ?? []).filter((t): t is string =>
+    Boolean(t),
+  )
   const recommendArticles = useRecommendArticles({
     tags,
-    id: mdx?.id ?? ''
-  });
+    id: mdx?.id ?? "",
+  })
   const title =
-    mdx?.fields?.category === 'tech'
-      ? mdx?.frontmatter?.title
-      : mdx?.fields?.name;
+    mdx?.fields?.category === "tech"
+      ? mdx.frontmatter?.title
+      : mdx?.fields?.name
 
   const toc = mdx?.tableOfContents?.items as
-    | [{ title: string; url: string }]
-    | undefined;
+    | { title: string; url: string }[]
+    | undefined
 
   const [currentContent, setCurrentContent] = useState<string>(
-    toc?.[0]?.title ?? ''
-  );
+    toc?.[0]?.title ?? "",
+  )
 
   const inView = (inView: boolean, headingTitle?: string) => {
     if (inView && headingTitle) {
-      setCurrentContent(headingTitle);
+      setCurrentContent(headingTitle)
     }
-  };
+  }
 
-  const activeTocIndex = toc?.findIndex(v => v.title === currentContent) ?? 0;
+  const activeTocIndex = toc?.findIndex((v) => v.title === currentContent) ?? 0
 
   return (
     <DetailLayout>
@@ -63,7 +66,7 @@ export const ArticleTemplate = ({
         <article css={styles.body}>
           <header>
             <div css={styles.headerMeta}>
-              {tags.map(t => (
+              {tags.map((t) => (
                 <Tag key={t}>#{t}</Tag>
               ))}
               <span css={styles.metaText}>{formatDate(mdx?.fields?.name)}</span>
@@ -76,31 +79,36 @@ export const ArticleTemplate = ({
           <MDXProvider
             css={styles.text}
             components={{
-              h1: hprops => (
+              h1: (hprops) => (
                 <IntersectionHeader
                   {...hprops}
                   css={styles.mdx.h1}
                   inViewCallback={inView}
                 />
               ),
-              h2: hprops => (
+              h2: (hprops) => (
                 <IntersectionHeader
                   {...hprops}
                   css={styles.mdx.h2}
                   inViewCallback={inView}
                 />
               ),
-              h3: hprops => <h3 {...hprops} css={styles.mdx.h3} />,
-              p: pprops => <p {...pprops} css={styles.mdx.p} />,
-              ul: uprops => <ul {...uprops} css={styles.mdx.ul} />,
-              li: lprops => <li {...lprops} css={styles.mdx.li} />,
-              a: aprops => (
-                <a {...aprops} css={styles.mdx.a} target='_blank' rel='noreferrer' />
+              h3: (hprops) => <h3 {...hprops} css={styles.mdx.h3} />,
+              p: (pprops) => <p {...pprops} css={styles.mdx.p} />,
+              ul: (uprops) => <ul {...uprops} css={styles.mdx.ul} />,
+              li: (lprops) => <li {...lprops} css={styles.mdx.li} />,
+              a: (aprops) => (
+                <a
+                  {...aprops}
+                  css={styles.mdx.a}
+                  target="_blank"
+                  rel="noreferrer"
+                />
               ),
-              blockquote: bprops => (
+              blockquote: (bprops) => (
                 <blockquote {...bprops} css={styles.mdx.blockquote} />
               ),
-              ...shortcodes
+              ...shortcodes,
             }}
           >
             {children}
@@ -108,9 +116,9 @@ export const ArticleTemplate = ({
 
           <div css={styles.share}>
             <a
-              href={`http://twitter.com/share?url=${props.location.href}&text=${title ?? ''}`}
-              target='_blank'
-              rel='noreferrer'
+              href={`http://twitter.com/share?url=${props.location.href}&text=${title ?? ""}`}
+              target="_blank"
+              rel="noreferrer"
               css={styles.twitter}
             >
               <TwitterIcon />
@@ -122,15 +130,15 @@ export const ArticleTemplate = ({
             <div css={styles.recommend}>
               <h3 css={styles.recommendTitle}>Related writing</h3>
               <ul css={styles.recommendList}>
-                {recommendArticles.slice(0, 4).map(article => (
+                {recommendArticles.slice(0, 4).map((article) => (
                   <li key={article.id}>
                     <PostCard
-                      to={`/${article.fields?.category}/${article.fields?.name}`}
-                      title={article.frontmatter?.title ?? ''}
-                      excerpt={article.excerpt ?? ''}
+                      to={`/${article.fields?.category ?? ""}/${article.fields?.name ?? ""}`}
+                      title={article.frontmatter?.title ?? ""}
+                      excerpt={article.excerpt ?? ""}
                       date={formatDate(article.fields?.name)}
                       tags={(article.frontmatter?.tags ?? []).filter(
-                        (t): t is string => Boolean(t)
+                        (t): t is string => Boolean(t),
                       )}
                     />
                   </li>
@@ -146,8 +154,8 @@ export const ArticleTemplate = ({
             {toc && toc.length > 0 ? (
               <ol css={styles.tocList}>
                 {toc.map((item, i) => {
-                  const active = i === activeTocIndex;
-                  const passed = i < activeTocIndex;
+                  const active = i === activeTocIndex
+                  const passed = i < activeTocIndex
                   return (
                     <li
                       key={`${item.title}-${i}`}
@@ -158,13 +166,11 @@ export const ArticleTemplate = ({
                         {item.title}
                       </Link>
                     </li>
-                  );
+                  )
                 })}
               </ol>
             ) : (
-              <Fragment>
-                <p css={styles.metaText}>目次なし</p>
-              </Fragment>
+              <p css={styles.metaText}>目次なし</p>
             )}
           </div>
         </aside>
@@ -176,10 +182,10 @@ export const ArticleTemplate = ({
           css={styles.mobileToc}
           current={{
             title: currentContent,
-            index: activeTocIndex
+            index: activeTocIndex,
           }}
         />
       )}
     </DetailLayout>
-  );
-};
+  )
+}

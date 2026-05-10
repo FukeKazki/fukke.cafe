@@ -1,33 +1,35 @@
-import * as styles from './style';
-import { ToggleDownIcon } from '../icons/ToggleDownIcon';
-import { ToggleUpIcon } from '../icons/ToggleUpIcon';
-import { Link } from 'gatsby';
-import { useState } from 'react';
 import {
   Disclosure,
   DisclosureButton,
-  DisclosurePanel
-} from '@reach/disclosure';
+  DisclosurePanel,
+} from "@reach/disclosure"
+import { Link } from "gatsby"
+import { useState } from "react"
+
+import { ToggleDownIcon } from "../icons/ToggleDownIcon"
+import { ToggleUpIcon } from "../icons/ToggleUpIcon"
+
+import * as styles from "./style"
 
 type Props = {
   toc: {
-    title: string;
-    url: string;
-  }[];
+    title: string
+    url: string
+  }[]
   current: {
-    index: number;
-    title: string;
-  };
-};
+    index: number
+    title: string
+  }
+}
 
-const convertIndex = (index: number) => (index + 1).toString().padStart(2, '0');
+const convertIndex = (index: number) => (index + 1).toString().padStart(2, "0")
 
 export const TableOfContents = ({ toc, current, ...props }: Props) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false)
 
   const handleToggle = () => {
-    setOpen(prev => !prev);
-  };
+    setOpen((prev) => !prev)
+  }
 
   return (
     <div css={styles.container} {...props}>
@@ -41,7 +43,7 @@ export const TableOfContents = ({ toc, current, ...props }: Props) => {
                   css={[
                     styles.content,
                     index === 0 && styles.first,
-                    index === toc.length - 1 && styles.end
+                    index === toc.length - 1 && styles.end,
                   ]}
                 >
                   <p css={styles.text}>
@@ -65,5 +67,5 @@ export const TableOfContents = ({ toc, current, ...props }: Props) => {
         </DisclosureButton>
       </Disclosure>
     </div>
-  );
-};
+  )
+}

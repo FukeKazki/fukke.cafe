@@ -1,5 +1,6 @@
-import { css } from '@emotion/react';
-import { breakpoints } from '../../../styles/breakpoint';
+import { css } from "@emotion/react"
+
+import { breakpoints } from "../../../styles/breakpoint"
 
 export const header = css`
   display: flex;
@@ -11,7 +12,7 @@ export const header = css`
   @media (min-width: ${breakpoints.md}px) {
     padding: 20px 32px;
   }
-`;
+`
 
 export const logo = css`
   display: inline-flex;
@@ -19,7 +20,7 @@ export const logo = css`
   gap: 4px;
   cursor: pointer;
   border: 0;
-`;
+`
 
 export const logoMain = css`
   font-family: var(--font-serif);
@@ -27,27 +28,27 @@ export const logoMain = css`
   font-size: 18px;
   color: var(--fg);
   letter-spacing: -0.02em;
-`;
+`
 
 export const logoSub = css`
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--fg-soft);
-`;
+`
 
 export const nav = css`
   display: flex;
   align-items: center;
   gap: 4px;
-`;
+`
 
 export const list = css`
   display: flex;
   align-items: center;
   gap: 0;
-`;
+`
 
-export const item = css``;
+export const item = css``
 
 export const link = css`
   display: inline-block;
@@ -61,11 +62,11 @@ export const link = css`
   &:hover {
     color: var(--accent);
   }
-`;
+`
 
 export const divider = css`
   width: 1px;
   height: 14px;
   background: var(--rule);
   margin: 0 6px;
-`;
+`

@@ -1,10 +1,11 @@
-import { css } from '@emotion/react';
-import { breakpoints } from '../../../styles/breakpoint';
+import { css } from "@emotion/react"
+
+import { breakpoints } from "../../../styles/breakpoint"
 
 export const container = css`
   max-width: 1080px;
   margin: 0 auto;
-`;
+`
 
 export const hero = css`
   padding: 40px 20px 32px;
@@ -17,7 +18,7 @@ export const hero = css`
     grid-template-columns: 1fr 280px;
     gap: 48px;
   }
-`;
+`
 
 export const eyebrow = css`
   font-family: var(--font-mono);
@@ -29,11 +30,11 @@ export const eyebrow = css`
   align-items: center;
   gap: 6px;
   margin-bottom: 14px;
-`;
+`
 
 export const eyebrowDot = css`
   color: var(--accent);
-`;
+`
 
 export const title = css`
   margin: 0;
@@ -47,7 +48,7 @@ export const title = css`
   @media (min-width: ${breakpoints.md}px) {
     font-size: 38px;
   }
-`;
+`
 
 export const bio = css`
   margin: 20px 0 0;
@@ -55,7 +56,7 @@ export const bio = css`
   font-size: 15.5px;
   line-height: 1.85;
   color: var(--fg-muted);
-`;
+`
 
 export const ctaRow = css`
   margin-top: 24px;
@@ -63,7 +64,7 @@ export const ctaRow = css`
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
-`;
+`
 
 export const ctaPrimary = css`
   display: inline-flex;
@@ -86,7 +87,7 @@ export const ctaPrimary = css`
     background: var(--accent);
     color: var(--accent-fg);
   }
-`;
+`
 
 export const ctaSecondary = css`
   padding: 10px 14px;
@@ -101,14 +102,14 @@ export const ctaSecondary = css`
     color: var(--accent);
     border-color: var(--accent);
   }
-`;
+`
 
 export const nowCard = css`
   background: var(--bg-elev);
   border: 1px solid var(--rule);
   border-radius: var(--r-md);
   padding: 18px;
-`;
+`
 
 export const nowList = css`
   margin: 0;
@@ -117,7 +118,7 @@ export const nowList = css`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`;
+`
 
 export const nowItem = css`
   display: flex;
@@ -125,13 +126,13 @@ export const nowItem = css`
   font-size: 13px;
   line-height: 1.7;
   color: var(--fg-muted);
-`;
+`
 
 export const nowDash = css`
   color: var(--accent);
   font-family: var(--font-mono);
   flex: 0 0 auto;
-`;
+`
 
 export const dottedDivider = css`
   background-image: linear-gradient(to right, var(--rule) 50%, transparent 50%);
@@ -139,13 +140,13 @@ export const dottedDivider = css`
   background-repeat: repeat-x;
   height: 1px;
   margin: 16px 0;
-`;
+`
 
 export const statRow = css`
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
-`;
+`
 
 export const statValue = css`
   font-family: var(--font-mono);
@@ -153,7 +154,7 @@ export const statValue = css`
   line-height: 1.1;
   color: var(--fg);
   letter-spacing: -0.01em;
-`;
+`
 
 export const statLabel = css`
   margin-top: 4px;
@@ -162,7 +163,7 @@ export const statLabel = css`
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--fg-soft);
-`;
+`
 
 export const section = css`
   padding: 40px 20px;
@@ -170,14 +171,14 @@ export const section = css`
   @media (min-width: ${breakpoints.md}px) {
     padding: 40px 48px;
   }
-`;
+`
 
 export const sectionHeader = css`
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   margin-bottom: 20px;
-`;
+`
 
 export const seeAll = css`
   font-family: var(--font-mono);
@@ -188,7 +189,7 @@ export const seeAll = css`
   &:hover {
     color: var(--accent);
   }
-`;
+`
 
 export const grid3 = css`
   display: grid;
@@ -200,10 +201,10 @@ export const grid3 = css`
   @media (min-width: ${breakpoints.md}px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
-`;
+`
 
 export const tagsWrap = css`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-`;
+`

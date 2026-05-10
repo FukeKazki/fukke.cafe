@@ -1,51 +1,53 @@
-import { Fragment, useMemo, useState } from 'react';
-import { useTechArticles } from '../../../hooks/useTechArticles';
-import { DetailLayout } from '../../layouts/Detail';
-import { PostCard } from '../../shared/PostCard';
-import { Tag } from '../../shared/Tag';
-import * as styles from './styles';
+import { Fragment, useMemo, useState } from "react"
+
+import { useTechArticles } from "../../../hooks/useTechArticles"
+import { DetailLayout } from "../../layouts/Detail"
+import { PostCard } from "../../shared/PostCard"
+import { Tag } from "../../shared/Tag"
+
+import * as styles from "./styles"
 
 const formatDate = (name: string | null | undefined) => {
-  if (!name || name.length < 8) return '';
-  return `${name.substring(0, 4)}-${name.substring(4, 6)}-${name.substring(6, 8)}`;
-};
+  if (!name || name.length < 8) return ""
+  return `${name.substring(0, 4)}-${name.substring(4, 6)}-${name.substring(6, 8)}`
+}
 
 export const TechTemplate = () => {
-  const articles = useTechArticles();
-  const [query, setQuery] = useState('');
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const articles = useTechArticles()
+  const [query, setQuery] = useState("")
+  const [activeTag, setActiveTag] = useState<string | null>(null)
 
   const tags = useMemo(() => {
-    const counts = new Map<string, number>();
-    articles.forEach(a => {
-      (a.frontmatter?.tags ?? []).forEach(t => {
-        if (!t) return;
-        counts.set(t, (counts.get(t) ?? 0) + 1);
-      });
-    });
-    return Array.from(counts.entries())
+    const counts = articles.reduce<Record<string, number>>((outer, a) => {
+      const tagList = a.frontmatter?.tags ?? []
+      return tagList.reduce<Record<string, number>>((inner, t) => {
+        if (!t) return inner
+        return { ...inner, [t]: (inner[t] ?? 0) + 1 }
+      }, outer)
+    }, {})
+    return Object.entries(counts)
       .sort((a, b) => b[1] - a[1])
-      .map(([t]) => t);
-  }, [articles]);
+      .map(([t]) => t)
+  }, [articles])
 
   const filtered = useMemo(() => {
-    return articles.filter(a => {
+    return articles.filter((a) => {
       if (
         activeTag &&
-        !(a.frontmatter?.tags ?? []).some(t => t === activeTag)
+        !(a.frontmatter?.tags ?? []).some((t) => t === activeTag)
       )
-        return false;
+        return false
       if (query) {
-        const q = query.toLowerCase();
-        const title = (a.frontmatter?.title ?? '').toLowerCase();
-        const excerpt = (a.excerpt ?? '').toLowerCase();
-        if (!title.includes(q) && !excerpt.includes(q)) return false;
+        const q = query.toLowerCase()
+        const title = (a.frontmatter?.title ?? "").toLowerCase()
+        const excerpt = (a.excerpt ?? "").toLowerCase()
+        if (!title.includes(q) && !excerpt.includes(q)) return false
       }
-      return true;
-    });
-  }, [articles, activeTag, query]);
+      return true
+    })
+  }, [articles, activeTag, query])
 
-  const filterLabel = activeTag ? `#${activeTag}` : '';
+  const filterLabel = activeTag ? `#${activeTag}` : ""
 
   return (
     <DetailLayout>
@@ -60,9 +62,9 @@ export const TechTemplate = () => {
           <div css={styles.filterRow}>
             <div css={styles.search}>
               <input
-                placeholder='記事を検索  e.g. typescript, gatsby, react'
+                placeholder="記事を検索  e.g. typescript, gatsby, react"
                 value={query}
-                onChange={e => setQuery(e.target.value)}
+                onChange={(e) => setQuery(e.target.value)}
                 css={styles.searchInput}
               />
             </div>
@@ -71,16 +73,18 @@ export const TechTemplate = () => {
           {tags.length > 0 && (
             <div css={styles.tagFilter}>
               <span css={styles.tagFilterLabel}>TAGS</span>
-              {tags.map(t => (
+              {tags.map((t) => (
                 <button
                   key={t}
-                  type='button'
-                  onClick={() => setActiveTag(prev => (prev === t ? null : t))}
+                  type="button"
+                  onClick={() =>
+                    setActiveTag((prev) => (prev === t ? null : t))
+                  }
                   style={{
-                    background: 'none',
+                    background: "none",
                     border: 0,
                     padding: 0,
-                    cursor: 'pointer'
+                    cursor: "pointer",
                   }}
                 >
                   <Tag active={activeTag === t}>#{t}</Tag>
@@ -96,7 +100,8 @@ export const TechTemplate = () => {
               Showing {filtered.length} of {articles.length}
               {filterLabel && (
                 <Fragment>
-                  {' '}· Filter: <span css={styles.metaStrong}>{filterLabel}</span>
+                  {" "}
+                  · Filter: <span css={styles.metaStrong}>{filterLabel}</span>
                 </Fragment>
               )}
             </span>
@@ -106,15 +111,15 @@ export const TechTemplate = () => {
             <div css={styles.empty}>該当する記事は見つかりませんでした。</div>
           ) : (
             <div css={styles.grid}>
-              {filtered.map(article => (
+              {filtered.map((article) => (
                 <PostCard
                   key={article.id}
-                  to={`/tech/${article.fields?.name}`}
-                  title={article.frontmatter?.title ?? ''}
-                  excerpt={article.excerpt ?? ''}
+                  to={`/tech/${article.fields?.name ?? ""}`}
+                  title={article.frontmatter?.title ?? ""}
+                  excerpt={article.excerpt ?? ""}
                   date={formatDate(article.fields?.name)}
                   tags={(article.frontmatter?.tags ?? []).filter(
-                    (t): t is string => Boolean(t)
+                    (t): t is string => Boolean(t),
                   )}
                 />
               ))}
@@ -123,5 +128,5 @@ export const TechTemplate = () => {
         </section>
       </div>
     </DetailLayout>
-  );
-};
+  )
+}
