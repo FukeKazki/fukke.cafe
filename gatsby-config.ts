@@ -49,27 +49,6 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: "other",
-        path: "./articles/other/",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "blog",
-        path: "./articles/blog/",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "category",
-        path: "./articles/category/",
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
         path: "./images/",
       },
     },
