@@ -14,7 +14,7 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = ({
     const parent = getNode(node.parent);
     if (!parent) return;
 
-    // field属性に category: 'daily' | 'tech' を生成
+    // field属性に category: 'tech' などのソース名を生成
     createNodeField({
       node,
       name: 'category',
@@ -35,10 +35,6 @@ export const createPages: GatsbyNode['createPages'] = ({ actions }) => {
   createSlice({
     id: 'header',
     component: resolve('src/components/shared/Header/index.tsx')
-  });
-  createSlice({
-    id: 'sidemenu',
-    component: resolve('src/components/shared/SideMenu/index.tsx')
   });
 };
 

@@ -1,14 +1,209 @@
+import { Link } from 'gatsby';
+import { useMemo } from 'react';
+import { useArticles } from '../../../hooks/useArticles';
+import { useTechArticles } from '../../../hooks/useTechArticles';
 import { DetailLayout } from '../../layouts/Detail';
+import { PostCard } from '../../shared/PostCard';
+import { Tag } from '../../shared/Tag';
 import * as styles from './styles';
 
+const NOW = [
+  'Gatsby 5 ベースのブログをタイポグラフィ中心に再設計中',
+  'TypeScript の例外設計を Effect-TS で読み替え',
+  '個人ノートをまとまった文章に昇華する練習'
+];
+
+const formatDate = (name: string | null | undefined) => {
+  if (!name || name.length < 8) return '';
+  return `${name.substring(0, 4)}-${name.substring(4, 6)}-${name.substring(6, 8)}`;
+};
+
 export const IndexTemplate = () => {
+  const techArticles = useTechArticles();
+  const allArticles = useArticles();
+
+  const latest = techArticles.slice(0, 3);
+
+  const categories = useMemo(() => {
+    const map = new Map<string, { count: number; subs: Set<string> }>();
+    techArticles.forEach(a => {
+      const cat = a.frontmatter?.category ?? 'その他';
+      const sub = a.frontmatter?.subCategory ?? '';
+      const prev = map.get(cat) ?? { count: 0, subs: new Set<string>() };
+      prev.count += 1;
+      if (sub) prev.subs.add(sub);
+      map.set(cat, prev);
+    });
+    return Array.from(map.entries())
+      .map(([name, v]) => ({
+        name,
+        count: v.count,
+        subs: Array.from(v.subs)
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [techArticles]);
+
+  const tags = useMemo(() => {
+    const set = new Set<string>();
+    techArticles.forEach(a => {
+      (a.frontmatter?.tags ?? []).forEach(t => {
+        if (t) set.add(t);
+      });
+    });
+    return Array.from(set).slice(0, 24);
+  }, [techArticles]);
+
+  const archive = useMemo(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const months = Array.from({ length: 12 }, (_, i) =>
+      String(i + 1).padStart(2, '0')
+    );
+    const counts = new Map<string, number>();
+    techArticles.forEach(a => {
+      const name = a.fields?.name ?? '';
+      if (name.length < 6) return;
+      if (name.substring(0, 4) !== String(year)) return;
+      const m = name.substring(4, 6);
+      counts.set(m, (counts.get(m) ?? 0) + 1);
+    });
+    return months.map(m => ({ m, count: counts.get(m) ?? 0 }));
+  }, [techArticles]);
+
+  const stats = {
+    posts: allArticles.length,
+    since: '2019',
+    monthly: techArticles.length > 0
+      ? Math.max(1, Math.round(techArticles.length / 36))
+      : 1
+  };
+
   return (
     <DetailLayout>
       <div css={styles.container}>
-        <h1 css={styles.title}>fukke.cafe</h1>
-        <div css={styles.description}>
-          <p>技術ブログや日報を書きます。</p>
-        </div>
+        {/* Hero */}
+        <section css={styles.hero}>
+          <div>
+            <div css={styles.eyebrow}>
+              <span css={styles.eyebrowDot}>●</span> Field notes — fukke.cafe
+            </div>
+            <h1 css={styles.title}>
+              動くコードの裏で、
+              <br />
+              考えていたことを書き残す。
+            </h1>
+            <p css={styles.bio}>
+              技術ブログを中心に、日々の学びを文章として残しています。
+              フロントエンドから機械学習、競技プログラミングまで、
+              手を動かして気付いたことを検索できる形に変えるための個人ノート。
+            </p>
+            <div css={styles.ctaRow}>
+              <Link to='/tech' css={styles.ctaPrimary}>
+                記事を読む →
+              </Link>
+            </div>
+          </div>
+          <aside css={styles.nowCard}>
+            <div css={styles.eyebrow}>Now</div>
+            <ul css={styles.nowList}>
+              {NOW.map((n, i) => (
+                <li key={i} css={styles.nowItem}>
+                  <span css={styles.nowDash}>—</span>
+                  <span>{n}</span>
+                </li>
+              ))}
+            </ul>
+            <div css={styles.dottedDivider} />
+            <div css={styles.statRow}>
+              <div>
+                <div css={styles.statValue}>{stats.posts}</div>
+                <div css={styles.statLabel}>POSTS</div>
+              </div>
+              <div>
+                <div css={styles.statValue}>'{stats.since.slice(2)}—</div>
+                <div css={styles.statLabel}>SINCE</div>
+              </div>
+              <div>
+                <div css={styles.statValue}>{stats.monthly}</div>
+                <div css={styles.statLabel}>/MONTH</div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        {/* Latest */}
+        <section css={styles.section}>
+          <div css={styles.sectionHeader}>
+            <div css={styles.eyebrow}>Latest writing</div>
+            <Link to='/tech' css={styles.seeAll}>
+              See all {techArticles.length} →
+            </Link>
+          </div>
+          <div css={styles.grid3}>
+            {latest.map(article => (
+              <PostCard
+                key={article.id}
+                to={`/tech/${article.fields?.name}`}
+                title={article.frontmatter?.title ?? ''}
+                excerpt={article.excerpt ?? ''}
+                date={formatDate(article.fields?.name)}
+                tags={(article.frontmatter?.tags ?? []).filter(
+                  (t): t is string => Boolean(t)
+                )}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* Categories + Tags */}
+        <section css={styles.splitSection}>
+          <div>
+            <div css={styles.eyebrow}>Categories</div>
+            <ul css={styles.categoryList}>
+              {categories.map((c, i) => (
+                <li key={c.name}>
+                  <Link to={`/category/${c.name}`} css={styles.categoryItem}>
+                    <span css={styles.categoryNum}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <div css={styles.categoryName} className='cat-name'>
+                        {c.name}
+                      </div>
+                      {c.subs.length > 0 && (
+                        <div css={styles.categorySub}>
+                          {c.subs.slice(0, 4).join(' · ')}
+                        </div>
+                      )}
+                    </div>
+                    <span css={styles.categoryCount}>{c.count}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <div css={styles.eyebrow}>Tags</div>
+            <div css={styles.tagsWrap}>
+              {tags.map(t => (
+                <Tag key={t}>#{t}</Tag>
+              ))}
+            </div>
+            <div css={styles.dottedDivider} />
+            <div css={styles.eyebrow}>Archive</div>
+            <div css={styles.archiveGrid}>
+              {archive.map(a => (
+                <div key={a.m} css={styles.archiveCell(a.count > 0)}>
+                  {a.m}
+                </div>
+              ))}
+            </div>
+            <div css={styles.archiveCaption}>
+              {new Date().getFullYear()} —{' '}
+              {archive.reduce((s, a) => s + a.count, 0)} posts so far
+            </div>
+          </div>
+        </section>
       </div>
     </DetailLayout>
   );

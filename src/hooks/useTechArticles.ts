@@ -15,6 +15,8 @@ export const useTechArticles = () => {
               title
               tags
               date
+              category
+              subCategory
             }
             id
             tableOfContents

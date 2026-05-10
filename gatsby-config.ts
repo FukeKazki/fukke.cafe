@@ -42,13 +42,6 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'daily',
-        path: './articles/daily/'
-      }
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
         name: 'tech',
         path: './articles/tech/'
       }
