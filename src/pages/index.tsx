@@ -17,6 +17,14 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => {
   const title = meta?.title ?? "fukke.cafe"
   const url = `${siteUrl}${props.location.pathname}`
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: title,
+    url: siteUrl,
+    description,
+  }
+
   return (
     <Fragment>
       <title>{title}</title>
@@ -34,6 +42,11 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => {
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
+      <script
+        type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD は dangerouslySetInnerHTML が公式パターン
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </Fragment>
   )
 }
