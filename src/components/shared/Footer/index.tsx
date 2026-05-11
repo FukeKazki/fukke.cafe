@@ -46,7 +46,7 @@ const link = css`
   }
 `
 
-export const Footer = () => (
+const Footer = () => (
   <footer css={footer}>
     <div>
       <div css={meta}>© 2021–{new Date().getFullYear()} FukeKazki</div>
@@ -72,3 +72,5 @@ export const Footer = () => (
     </div>
   </footer>
 )
+
+export default Footer
