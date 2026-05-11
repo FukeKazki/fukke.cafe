@@ -68,19 +68,7 @@ export const query = graphql`
       }
     }
     mdx(id: { eq: $id }) {
-      id
-      fields {
-        name
-        category
-      }
-      excerpt
-      frontmatter {
-        title
-        date
-        tags
-      }
-      body
-      tableOfContents
+      ...MdxArticle
     }
   }
 `

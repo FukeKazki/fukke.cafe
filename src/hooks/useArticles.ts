@@ -6,19 +6,7 @@ export const useArticles = () => {
       allMdx(sort: { fields: { name: DESC } }) {
         edges {
           node {
-            body
-            excerpt
-            frontmatter {
-              title
-              tags
-              date
-            }
-            id
-            tableOfContents
-            fields {
-              category
-              name
-            }
+            ...MdxArticle
           }
         }
       }
