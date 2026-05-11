@@ -4,6 +4,13 @@ const config: GatsbyConfig = {
   siteMetadata: {
     title: `fukke.cafe`,
     siteUrl: `https://fukke.cafe`,
+    description: `技術ブログを書きます。`,
+    author: `FukeKazki`,
+    image: `https://fukke-blog-og-image.vercel.app/fukke.cafe`,
+    social: {
+      twitter: `@fukke0906`,
+      github: `https://github.com/FukeKazki`,
+    },
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
