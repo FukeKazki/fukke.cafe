@@ -6,6 +6,8 @@ import { useState } from "react"
 import { useRecommendArticles } from "../../../hooks/useRecommendArticles"
 import { CounterButton } from "../../examples/CounterButton"
 import { DetailLayout } from "../../layouts/Detail"
+import { Alert } from "../../mdx/Alert"
+import { Callout } from "../../mdx/Callout"
 import { PostCard } from "../../shared/PostCard"
 import { TableOfContents } from "../../shared/TableOfContents"
 import { Tag } from "../../shared/Tag"
@@ -14,7 +16,7 @@ import { TwitterIcon } from "../../shared/icons/TwitterIcon"
 import { IntersectionHeader } from "./components/IntersectionHeader"
 import * as styles from "./styles"
 
-const shortcodes = { CounterButton }
+const shortcodes = { CounterButton, Alert, Callout }
 
 const formatDate = (v: string | null | undefined): string => {
   if (!v) return ""

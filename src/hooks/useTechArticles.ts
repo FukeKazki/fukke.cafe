@@ -9,19 +9,7 @@ export const useTechArticles = () => {
       ) {
         edges {
           node {
-            body
-            excerpt
-            frontmatter {
-              title
-              tags
-              date
-            }
-            id
-            tableOfContents
-            fields {
-              category
-              name
-            }
+            ...MdxArticle
           }
         }
       }

@@ -37,6 +37,10 @@ export const createPages: GatsbyNode["createPages"] = ({ actions }) => {
     id: "header",
     component: resolve("src/components/shared/Header/index.tsx"),
   })
+  createSlice({
+    id: "footer",
+    component: resolve("src/components/shared/Footer/index.tsx"),
+  })
 }
 
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({

@@ -2,8 +2,6 @@ import { Slice } from "gatsby"
 import type { ComponentPropsWithRef, ReactNode } from "react"
 import { Fragment } from "react"
 
-import { Footer } from "../../shared/Footer"
-
 import * as styles from "./styles"
 
 interface Props extends ComponentPropsWithRef<"div"> {
@@ -15,7 +13,7 @@ export const DetailLayout = ({ children }: Props) => {
     <Fragment>
       <Slice alias="header" />
       <main css={styles.main}>{children}</main>
-      <Footer />
+      <Slice alias="footer" />
     </Fragment>
   )
 }
