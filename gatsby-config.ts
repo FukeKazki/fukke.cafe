@@ -129,8 +129,8 @@ const config: GatsbyConfig = {
                   url: `${site.siteMetadata.siteUrl}${path}`,
                   guid: `${site.siteMetadata.siteUrl}${path}`,
                   categories:
-                    node.frontmatter?.tags?.filter(
-                      (t): t is string => Boolean(t),
+                    node.frontmatter?.tags?.filter((t): t is string =>
+                      Boolean(t),
                     ) ?? [],
                 }
               }),

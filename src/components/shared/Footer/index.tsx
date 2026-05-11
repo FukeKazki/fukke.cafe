@@ -51,12 +51,17 @@ const Footer = () => {
   const meta = useSiteMetadata()
   const author = meta?.author ?? "FukeKazki"
   const github = meta?.social?.github ?? "https://github.com/FukeKazki"
-  const twitterHandle = (meta?.social?.twitter ?? "@fukke0906").replace(/^@/, "")
+  const twitterHandle = (meta?.social?.twitter ?? "@fukke0906").replace(
+    /^@/,
+    "",
+  )
 
   return (
     <footer css={footer}>
       <div>
-        <div css={metaText}>© 2021–{new Date().getFullYear()} {author}</div>
+        <div css={metaText}>
+          © 2021–{new Date().getFullYear()} {author}
+        </div>
         <div css={tagline}>
           fukke.cafe — field notes from a working engineer.
         </div>
