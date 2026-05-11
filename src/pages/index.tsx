@@ -31,6 +31,12 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => {
       <html lang="ja" />
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`${title} RSS Feed`}
+        href={`${siteUrl}/rss.xml`}
+      />
       <meta name="image" content={image} />
       <meta property="og:url" content={url} />
       <meta property="og:type" content="website" />

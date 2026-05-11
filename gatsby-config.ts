@@ -53,6 +53,91 @@ const config: GatsbyConfig = {
         path: "./articles/tech/",
       },
     },
+    {
+      resolve: "gatsby-plugin-feed",
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({
+              query: { site, allMdx },
+            }: {
+              query: {
+                site: { siteMetadata: { siteUrl: string } }
+                allMdx: {
+                  nodes: Array<{
+                    excerpt: string | null
+                    frontmatter: {
+                      title: string | null
+                      date: string | null
+                      tags: ReadonlyArray<string | null> | null
+                    } | null
+                    fields: {
+                      category: string | null
+                      name: string | null
+                    } | null
+                  }>
+                }
+              }
+            }) =>
+              allMdx.nodes.map((node) => {
+                const path = `/${node.fields?.category ?? ""}/${node.fields?.name ?? ""}`
+                const name = node.fields?.name ?? ""
+                const date =
+                  node.frontmatter?.date ??
+                  (name.length >= 8
+                    ? `${name.slice(0, 4)}-${name.slice(4, 6)}-${name.slice(6, 8)}`
+                    : undefined)
+                return {
+                  title: node.frontmatter?.title ?? name,
+                  description: node.excerpt ?? "",
+                  date,
+                  url: `${site.siteMetadata.siteUrl}${path}`,
+                  guid: `${site.siteMetadata.siteUrl}${path}`,
+                  categories:
+                    node.frontmatter?.tags?.filter(
+                      (t): t is string => Boolean(t),
+                    ) ?? [],
+                }
+              }),
+            query: `
+              {
+                allMdx(
+                  filter: { fields: { category: { eq: "tech" } } }
+                  sort: { fields: { name: DESC } }
+                ) {
+                  nodes {
+                    excerpt
+                    frontmatter {
+                      title
+                      date
+                      tags
+                    }
+                    fields {
+                      category
+                      name
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "fukke.cafe — Tech",
+          },
+        ],
+      },
+    },
   ],
 }
 
