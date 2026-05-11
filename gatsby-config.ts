@@ -117,10 +117,11 @@ const config: GatsbyConfig = {
                 const path = `/${node.fields?.category ?? ""}/${node.fields?.name ?? ""}`
                 const name = node.fields?.name ?? ""
                 const date =
-                  node.frontmatter?.date ??
-                  (name.length >= 8
-                    ? `${name.slice(0, 4)}-${name.slice(4, 6)}-${name.slice(6, 8)}`
-                    : undefined)
+                  name.length >= 8
+                    ? new Date(
+                        `${name.slice(0, 4)}-${name.slice(4, 6)}-${name.slice(6, 8)}T00:00:00Z`,
+                      )
+                    : undefined
                 return {
                   title: node.frontmatter?.title ?? name,
                   description: node.excerpt ?? "",

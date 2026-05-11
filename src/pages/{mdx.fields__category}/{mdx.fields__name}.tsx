@@ -7,9 +7,14 @@ const formatPublishedDate = (
   date: string | null | undefined,
   name: string | null | undefined,
 ): string | undefined => {
-  if (date) return date
   if (name && /^\d{8}$/.test(name)) {
     return `${name.slice(0, 4)}-${name.slice(4, 6)}-${name.slice(6, 8)}`
+  }
+  if (date) {
+    const d = new Date(date)
+    if (!Number.isNaN(d.getTime())) {
+      return d.toISOString().slice(0, 10)
+    }
   }
   return undefined
 }
