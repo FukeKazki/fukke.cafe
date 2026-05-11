@@ -2,11 +2,11 @@ import type { GatsbyConfig } from "gatsby"
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `fukke.cafe`,
-    siteUrl: `https://fukke.cafe`,
+    title: `tech.fukke.cafe`,
+    siteUrl: `https://tech.fukke.cafe`,
     description: `技術ブログを書きます。`,
     author: `FukeKazki`,
-    image: `https://fukke-blog-og-image.vercel.app/fukke.cafe`,
+    image: `https://fukke-blog-og-image.vercel.app/tech.fukke.cafe`,
     social: {
       twitter: `@fukke0906`,
       github: `https://github.com/FukeKazki`,
@@ -25,16 +25,16 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-plugin-robots-txt",
       options: {
-        host: "https://fukke.cafe",
-        sitemap: "https://fukke.cafe/sitemap-index.xml",
+        host: "https://tech.fukke.cafe",
+        sitemap: "https://tech.fukke.cafe/sitemap-index.xml",
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
     {
       resolve: "gatsby-plugin-manifest",
       options: {
-        name: "fukke.cafe",
-        short_name: "fukke.cafe",
+        name: "tech.fukke.cafe",
+        short_name: "tech.fukke.cafe",
         start_url: "/",
         background_color: "#ffffff",
         theme_color: "#0a0a0a",
@@ -156,7 +156,7 @@ const config: GatsbyConfig = {
               }
             `,
             output: "/rss.xml",
-            title: "fukke.cafe — Tech",
+            title: "tech.fukke.cafe",
           },
         ],
       },

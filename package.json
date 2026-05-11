@@ -1,8 +1,8 @@
 {
-  "name": "fukke.cafe",
+  "name": "tech.fukke.cafe",
   "version": "1.0.0",
   "private": true,
-  "description": "https://fukke.cafe",
+  "description": "https://tech.fukke.cafe",
   "engines": {
     "node": ">=25.9.0"
   },

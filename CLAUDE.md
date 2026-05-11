@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト
 
-[fukke.cafe](https://fukke.cafe) — Gatsby 5 + React 19 + TypeScript + MDX による個人ブログ。スタイルは Emotion（`@emotion/react` / `@emotion/styled`）。
+[tech.fukke.cafe](https://tech.fukke.cafe) — Gatsby 5 + React 19 + TypeScript + MDX による個人ブログ。スタイルは Emotion（`@emotion/react` / `@emotion/styled`）。
 
 ## ランタイム前提（重要）
 

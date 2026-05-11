@@ -48,7 +48,7 @@ export const IndexTemplate = () => {
         <section css={styles.hero}>
           <div>
             <div css={styles.eyebrow}>
-              <span css={styles.eyebrowDot}>●</span> Field notes — fukke.cafe
+              <span css={styles.eyebrowDot}>●</span> Field notes — tech.fukke.cafe
             </div>
             <h1 css={styles.title}>
               動くコードの裏で、

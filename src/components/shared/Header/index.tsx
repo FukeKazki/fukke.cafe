@@ -13,9 +13,9 @@ const activeStyle = {
 const Header = () => {
   return (
     <div css={styles.header}>
-      <Link to="/" css={styles.logo} aria-label="fukke.cafe">
-        <span css={styles.logoMain}>fukke</span>
-        <span css={styles.logoSub}>.cafe</span>
+      <Link to="/" css={styles.logo} aria-label="tech.fukke.cafe">
+        <span css={styles.logoMain}>tech</span>
+        <span css={styles.logoSub}>.fukke.cafe</span>
       </Link>
       <nav css={styles.nav}>
         <ul css={styles.list}>
