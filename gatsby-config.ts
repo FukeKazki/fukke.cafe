@@ -22,6 +22,14 @@ const config: GatsbyConfig = {
     "gatsby-transformer-sharp",
     "gatsby-plugin-sitemap",
     {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://fukke.cafe",
+        sitemap: "https://fukke.cafe/sitemap-index.xml",
+        policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
+    {
       resolve: "gatsby-plugin-mdx",
       options: {
         gatsbyRemarkPlugins: [
