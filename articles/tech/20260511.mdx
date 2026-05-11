@@ -1,0 +1,37 @@
+---
+title: 'SquarespaceのドメインをCloudflare DNSに移管する'
+date: 2026-05-11
+tags: ["dns"]
+---
+
+fukke.cafeドメインSquarespaceからCloudflare DNSに移管した。
+まとまっている方が管理しやすいからね。
+
+
+## Cloudflareに移管するドメインを登録
+Cloudflare Domain Transferにドメインを登録します。
+登録後にプランを選ぶが、今回はFreeを選択。
+既存のDNSレコード設定が読み込まれるためOKする。
+
+## Squarespaceにカスタムネームサーバーを登録
+Clouflareの画面で2つのネームサーバーを登録する指示があるためSquarespaceで設定。
+また、セキュリティ回りの設定などを一旦外すように設定される。
+設定後、反映されるまで30分ほど待つ。
+ActivateされるとCloudflareからメールが届く。
+
+一旦ここまでで、Cloudflare DNSのproxy経由でアクセスされるようはなっている。
+
+ここからは、ドメイン自体を移管する手順。
+
+## Squarespacで移管コードをリクエスト
+ドメインのOverviewページの下部に「移管コードをリクエスト」があるためやる。
+3時間ほどでメールが届く。
+
+## Cloudflareに移管する
+移管コードを入力し、クレジットカード情報を入力し決済。
+
+数日で移管が完了する。
+
+## まとめ
+時間はかかるが移管ができた。
+ドメイン料金はちょっと高かった。
