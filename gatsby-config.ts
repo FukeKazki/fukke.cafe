@@ -30,6 +30,19 @@ const config: GatsbyConfig = {
       },
     },
     {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: "fukke.cafe",
+        short_name: "fukke.cafe",
+        start_url: "/",
+        background_color: "#ffffff",
+        theme_color: "#0a0a0a",
+        display: "standalone",
+        icon: "src/images/icon.png",
+        lang: "ja",
+      },
+    },
+    {
       resolve: "gatsby-plugin-mdx",
       options: {
         gatsbyRemarkPlugins: [
