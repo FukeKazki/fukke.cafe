@@ -46,10 +46,23 @@ export const createPages: GatsbyNode["createPages"] = ({ actions }) => {
 export const onCreateWebpackConfig: GatsbyNode["onCreateWebpackConfig"] = ({
   stage,
   actions,
+  getConfig,
 }) => {
   if (stage === "build-javascript") {
     actions.setWebpackConfig({
       devtool: false,
     })
+  }
+
+  // Gatsby 内蔵の ESLint webpack プラグインは eslint-config-react-app v6 を
+  // 経由して eslint-plugin-flowtype@5 を読み込むため、ESLint 9 と非互換。
+  // lint は pnpm run lint (flat config) 側に任せ、webpack からは外す。
+  const config = getConfig()
+  if (config?.plugins) {
+    config.plugins = config.plugins.filter(
+      (plugin: { constructor: { name: string } }) =>
+        plugin.constructor.name !== "ESLintWebpackPlugin",
+    )
+    actions.replaceWebpackConfig(config)
   }
 }

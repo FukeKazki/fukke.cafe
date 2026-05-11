@@ -18,7 +18,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 主要コマンド
 
 ```bash
-pnpm run develop      # 開発サーバー（= pnpm start）
+pnpm run dev          # 開発サーバー（portless 経由）。ローカルは https://tech.fukke.cafe.localhost/ で開く
+pnpm start            # portless を介さず gatsby develop のみ起動（http://127.0.0.1:8000）
 pnpm run build        # 本番ビルド
 pnpm run serve        # ビルド成果物のローカル確認
 pnpm run typecheck    # tsc --noEmit

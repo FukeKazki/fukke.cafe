@@ -30,7 +30,8 @@ GraphQL の型は `graphqlTypegen: true` により生成される。クエリを
 
 ```bash
 pnpm install          # 依存関係のインストール
-pnpm run develop      # 開発サーバー（別名: pnpm start）
+pnpm run dev          # 開発サーバー（portless 経由）。ローカルは https://tech.fukke.cafe.localhost/ で開く
+pnpm start            # portless を介さず gatsby develop のみ起動（http://127.0.0.1:8000）
 pnpm run build        # 本番ビルド
 pnpm run serve        # ビルド結果のローカル確認
 pnpm run typecheck    # TypeScript（tsc --noEmit）
