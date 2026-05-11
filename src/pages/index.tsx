@@ -14,7 +14,7 @@ export const Head = (props: HeadProps<Queries.IndexPageQuery>) => {
   const description = meta?.description ?? ""
   const image = meta?.image ?? ""
   const twitter = meta?.social?.twitter ?? ""
-  const title = meta?.title ?? "fukke.cafe"
+  const title = meta?.title ?? "tech.fukke.cafe"
   const url = `${siteUrl}${props.location.pathname}`
 
   const jsonLd = {

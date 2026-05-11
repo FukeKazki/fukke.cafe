@@ -33,7 +33,7 @@ export const Head = ({
   const meta = props.data.site?.siteMetadata
   const siteUrl = meta?.siteUrl ?? ""
   const description = mdx?.excerpt ?? meta?.description ?? ""
-  const siteName = meta?.title ?? "fukke.cafe"
+  const siteName = meta?.title ?? "tech.fukke.cafe"
   const twitter = meta?.social?.twitter ?? ""
 
   let title = ""

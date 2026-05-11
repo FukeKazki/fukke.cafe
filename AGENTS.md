@@ -4,7 +4,7 @@
 
 ## プロジェクト概要
 
-- **サイト**: [fukke.cafe](https://fukke.cafe) — 個人ブログ／技術記事サイト。
+- **サイト**: [tech.fukke.cafe](https://tech.fukke.cafe) — 個人ブログ／技術記事サイト。
 - **スタック**: Gatsby 5、React 19、TypeScript、MDX、スタイルは Emotion（`@emotion/react` / `@emotion/styled`）。
 - **ランタイム**: Node.js **25.9.0 以上**（`mise.toml` と `engines.node` を参照）。
 - **パッケージマネージャ**: `package.json` の `packageManager`（pnpm 10）に従う。**CI** は `corepack enable` → `pnpm install --frozen-lockfile` → `pnpm run build`。

@@ -13,7 +13,7 @@ export const Head = (props: HeadProps<Queries.TechPageQuery>) => {
   const siteUrl = meta?.siteUrl ?? ""
   const description = meta?.description ?? ""
   const twitter = meta?.social?.twitter ?? ""
-  const title = meta?.title ?? "fukke.cafe"
+  const title = meta?.title ?? "tech.fukke.cafe"
   const url = `${siteUrl}${props.location.pathname}`
   const image = `https://fukke-blog-og-image.vercel.app/技術ブログ`
 

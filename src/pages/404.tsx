@@ -116,7 +116,7 @@ export default NotFoundPage
 
 export const Head: HeadFC = () => (
   <Fragment>
-    <title>Not found — fukke.cafe</title>
+    <title>Not found — tech.fukke.cafe</title>
     <html lang="ja" />
   </Fragment>
 )

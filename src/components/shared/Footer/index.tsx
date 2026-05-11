@@ -63,7 +63,7 @@ const Footer = () => {
           © 2021–{new Date().getFullYear()} {author}
         </div>
         <div css={tagline}>
-          fukke.cafe — field notes from a working engineer.
+          tech.fukke.cafe — field notes from a working engineer.
         </div>
       </div>
       <div css={links}>
