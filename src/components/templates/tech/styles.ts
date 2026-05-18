@@ -92,6 +92,13 @@ export const tagFilterLabel = css`
   margin-right: 4px;
 `
 
+export const tagButton = css`
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+`
+
 export const body = css`
   padding: 24px 20px 48px;
   @media (min-width: ${breakpoints.md}px) {

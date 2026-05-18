@@ -80,12 +80,7 @@ export const TechTemplate = () => {
                   onClick={() =>
                     setActiveTag((prev) => (prev === t ? null : t))
                   }
-                  style={{
-                    background: "none",
-                    border: 0,
-                    padding: 0,
-                    cursor: "pointer",
-                  }}
+                  css={styles.tagButton}
                 >
                   <Tag active={activeTag === t}>#{t}</Tag>
                 </button>

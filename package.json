@@ -59,8 +59,8 @@
   "packageManager": "pnpm@10.33.4",
   "pnpm": {
     "overrides": {
-      "msgpackr": "^2.0.1",
-      "lmdb": "^3.5.4"
+      "msgpackr": "2.0.1",
+      "lmdb": "3.5.4"
     },
     "onlyBuiltDependencies": [
       "core-js",
