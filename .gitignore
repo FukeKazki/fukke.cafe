@@ -15,3 +15,5 @@ src/gatsby-types.d.ts
 
 # APM dependencies
 apm_modules/
+
+.issues/
