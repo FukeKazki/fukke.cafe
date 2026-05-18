@@ -9,8 +9,6 @@ const template = outdent`
 title: ''
 date: ${format(now, "yyyy-MM-dd")}
 tags: []
-category: 'ウェブフロント'
-subCategory: ''
 ---`
 
 try {

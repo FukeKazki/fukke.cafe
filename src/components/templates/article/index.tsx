@@ -8,6 +8,7 @@ import { CounterButton } from "../../examples/CounterButton"
 import { DetailLayout } from "../../layouts/Detail"
 import { Alert } from "../../mdx/Alert"
 import { Callout } from "../../mdx/Callout"
+import { Figure } from "../../mdx/Figure"
 import { PostCard } from "../../shared/PostCard"
 import { TableOfContents } from "../../shared/TableOfContents"
 import { Tag } from "../../shared/Tag"
@@ -105,6 +106,7 @@ export const ArticleTemplate = ({
               blockquote: (bprops) => (
                 <blockquote {...bprops} css={styles.mdx.blockquote} />
               ),
+              img: (iprops) => <Figure {...iprops} />,
               ...shortcodes,
             }}
           >
