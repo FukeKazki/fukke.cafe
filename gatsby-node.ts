@@ -45,6 +45,49 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = ({
   }
 }
 
+export const createResolvers: GatsbyNode["createResolvers"] = ({
+  createResolvers,
+}) => {
+  createResolvers({
+    Mdx: {
+      excerpt: {
+        type: "String",
+        args: {
+          pruneLength: { type: "Int", defaultValue: 140 },
+        },
+        resolve: (
+          source: { body?: string | null },
+          args: { pruneLength: number },
+        ) => {
+          const body = source.body ?? ""
+          const cleaned = body
+            // fenced code blocks
+            .replace(/```[\s\S]*?```/g, "")
+            // ATX headings (# 〜 ######)
+            .replace(/^[ \t]*#{1,6}[ \t].*$/gm, "")
+            // Setext headings (underlined with === or ---)
+            .replace(/^.+\n[=-]{2,}\s*$/gm, "")
+            // images
+            .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+            // links: keep the text
+            .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+            // blockquote / list markers at line start
+            .replace(/^[ \t]*[>\-*+][ \t]+/gm, "")
+            // inline code: keep the text
+            .replace(/`([^`]+)`/g, "$1")
+            // emphasis markers
+            .replace(/[*_~]/g, "")
+            // collapse whitespace
+            .replace(/\s+/g, " ")
+            .trim()
+          if (cleaned.length <= args.pruneLength) return cleaned
+          return `${cleaned.slice(0, args.pruneLength).trimEnd()}…`
+        },
+      },
+    },
+  })
+}
+
 export const createPages: GatsbyNode["createPages"] = ({ actions }) => {
   const { createSlice } = actions
   createSlice({
