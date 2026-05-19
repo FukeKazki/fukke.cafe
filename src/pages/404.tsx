@@ -103,7 +103,7 @@ const NotFoundPage = () => {
           <Link to="/" css={primary}>
             ← トップへ戻る
           </Link>
-          <Link to="/tech" css={secondary}>
+          <Link to="/list" css={secondary}>
             記事一覧
           </Link>
         </div>

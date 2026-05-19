@@ -2,13 +2,13 @@ import type { HeadProps } from "gatsby"
 import { graphql } from "gatsby"
 import { Fragment } from "react"
 
-import { TechTemplate } from "../components/templates/tech"
+import { ListTemplate } from "../components/templates/list"
 
-export default function TechPage() {
-  return <TechTemplate />
+export default function ListPage() {
+  return <ListTemplate />
 }
 
-export const Head = (props: HeadProps<Queries.TechPageQuery>) => {
+export const Head = (props: HeadProps<Queries.ListPageQuery>) => {
   const meta = props.data.site?.siteMetadata
   const siteUrl = meta?.siteUrl ?? ""
   const description = meta?.description ?? ""
@@ -58,7 +58,7 @@ export const Head = (props: HeadProps<Queries.TechPageQuery>) => {
 }
 
 export const query = graphql`
-  query TechPage {
+  query ListPage {
     site {
       siteMetadata {
         title

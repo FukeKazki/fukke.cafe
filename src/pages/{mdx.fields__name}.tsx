@@ -1,7 +1,7 @@
 import type { HeadProps, PageProps } from "gatsby"
 import { graphql } from "gatsby"
 
-import { ArticleTemplate } from "../../components/templates/article"
+import { ArticleTemplate } from "../components/templates/article"
 
 const formatPublishedDate = (
   date: string | null | undefined,
@@ -25,10 +25,7 @@ export default function ArticlePage({
   return <ArticleTemplate {...props} />
 }
 
-export const Head = ({
-  params,
-  ...props
-}: HeadProps<Queries.ArticlePageQuery>) => {
+export const Head = (props: HeadProps<Queries.ArticlePageQuery>) => {
   const mdx = props.data.mdx
   const meta = props.data.site?.siteMetadata
   const siteUrl = meta?.siteUrl ?? ""
@@ -36,15 +33,7 @@ export const Head = ({
   const siteName = meta?.title ?? "tech.fukke.cafe"
   const twitter = meta?.social?.twitter ?? ""
 
-  let title = ""
-  switch (params.fields__category) {
-    case "tech":
-      title = mdx?.frontmatter?.title ?? ""
-      break
-    default:
-      title = mdx?.fields?.name ?? ""
-      break
-  }
+  const title = mdx?.frontmatter?.title ?? mdx?.fields?.name ?? ""
 
   const url = `${siteUrl}${props.location.pathname}`
   const image = `https://fukke-blog-og-image.vercel.app/${title}`

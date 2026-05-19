@@ -37,10 +37,7 @@ export const ArticleTemplate = ({
     tags,
     id: mdx?.id ?? "",
   })
-  const title =
-    mdx?.fields?.category === "tech"
-      ? mdx.frontmatter?.title
-      : mdx?.fields?.name
+  const title = mdx?.frontmatter?.title ?? mdx?.fields?.name
 
   const toc = mdx?.tableOfContents?.items as
     | { title: string; url: string }[]
@@ -132,7 +129,7 @@ export const ArticleTemplate = ({
                 {recommendArticles.slice(0, 4).map((article) => (
                   <li key={article.id}>
                     <PostCard
-                      to={`/${article.fields?.category ?? ""}/${article.fields?.name ?? ""}`}
+                      to={`/${article.fields?.name ?? ""}`}
                       title={article.frontmatter?.title ?? ""}
                       excerpt={article.excerpt ?? ""}
                       date={formatDate(article.fields?.name)}

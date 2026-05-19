@@ -36,13 +36,6 @@ export const onCreateNode: GatsbyNode["onCreateNode"] = ({
       }
     }
 
-    // field属性に category: 'tech' などのソース名を生成
-    createNodeField({
-      node,
-      name: "category",
-      value: parent.sourceInstanceName,
-    })
-
     // field属性に name: '20220906' を生成
     createNodeField({
       node,

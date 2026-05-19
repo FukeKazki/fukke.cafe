@@ -106,7 +106,6 @@ const config: GatsbyConfig = {
                       tags: ReadonlyArray<string | null> | null
                     } | null
                     fields: {
-                      category: string | null
                       name: string | null
                     } | null
                   }>
@@ -114,8 +113,8 @@ const config: GatsbyConfig = {
               }
             }) =>
               allMdx.nodes.map((node) => {
-                const path = `/${node.fields?.category ?? ""}/${node.fields?.name ?? ""}`
                 const name = node.fields?.name ?? ""
+                const path = `/${name}`
                 const date =
                   name.length >= 8
                     ? new Date(
@@ -136,10 +135,7 @@ const config: GatsbyConfig = {
               }),
             query: `
               {
-                allMdx(
-                  filter: { fields: { category: { eq: "tech" } } }
-                  sort: { fields: { name: DESC } }
-                ) {
+                allMdx(sort: { fields: { name: DESC } }) {
                   nodes {
                     excerpt
                     frontmatter {
@@ -148,7 +144,6 @@ const config: GatsbyConfig = {
                       tags
                     }
                     fields {
-                      category
                       name
                     }
                   }
