@@ -27,11 +27,11 @@ const Header = () => {
           <li css={styles.item}>
             <Link
               partiallyActive
-              to="/tech"
+              to="/list"
               css={styles.link}
               activeStyle={activeStyle}
             >
-              Tech
+              List
             </Link>
           </li>
         </ul>

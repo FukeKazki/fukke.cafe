@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from "react"
 
-import { useTechArticles } from "../../../hooks/useTechArticles"
+import { useArticles } from "../../../hooks/useArticles"
 import { DetailLayout } from "../../layouts/Detail"
 import { PostCard } from "../../shared/PostCard"
 import { Tag } from "../../shared/Tag"
@@ -12,8 +12,8 @@ const formatDate = (name: string | null | undefined) => {
   return `${name.substring(0, 4)}-${name.substring(4, 6)}-${name.substring(6, 8)}`
 }
 
-export const TechTemplate = () => {
-  const articles = useTechArticles()
+export const ListTemplate = () => {
+  const articles = useArticles()
   const [query, setQuery] = useState("")
   const [activeTag, setActiveTag] = useState<string | null>(null)
 
@@ -53,7 +53,7 @@ export const TechTemplate = () => {
     <DetailLayout>
       <div css={styles.container}>
         <section css={styles.head}>
-          <div css={styles.eyebrow}>/tech — {articles.length} entries</div>
+          <div css={styles.eyebrow}>/list — {articles.length} entries</div>
           <h1 css={styles.title}>技術記事</h1>
           <p css={styles.description}>
             経験から生まれた知識を、検索できる形に変えるための個人ノート。
@@ -109,7 +109,7 @@ export const TechTemplate = () => {
               {filtered.map((article) => (
                 <PostCard
                   key={article.id}
-                  to={`/tech/${article.fields?.name ?? ""}`}
+                  to={`/${article.fields?.name ?? ""}`}
                   title={article.frontmatter?.title ?? ""}
                   excerpt={article.excerpt ?? ""}
                   date={formatDate(article.fields?.name)}

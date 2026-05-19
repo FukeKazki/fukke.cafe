@@ -11,7 +11,6 @@ export const MdxArticleFragment = graphql`
       date
     }
     fields {
-      category
       name
     }
     tableOfContents
